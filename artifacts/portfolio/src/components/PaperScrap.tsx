@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const DEFAULT_TEXT = "& sometimes artist :)";
-const CHAR_INTERVAL_MS = 68;
-const CURSOR_BLINK_DURATION = 2400;
+const PHRASES = [
+  "& sometimes artist :)",
+  "& sometimes writer",
+  "& sometimes traveler",
+];
+
+const TYPE_MS = 68;
+const ERASE_MS = 38;
+const PAUSE_AFTER_MS = 1800;
+const PAUSE_BEFORE_MS = 400;
 
 const NOTES = [
   { bg: '#BAD4D8', rotate: 7,  x: 14, y: 18 },
@@ -16,43 +23,86 @@ interface PaperScrapProps {
   text?: string;
 }
 
-export default function PaperScrap({ animate, text = DEFAULT_TEXT }: PaperScrapProps) {
+type Phase = 'idle' | 'typing' | 'pausing' | 'erasing' | 'waiting';
+
+export default function PaperScrap({ animate }: PaperScrapProps) {
   const [revealed, setRevealed] = useState('');
-  const [showCursor, setShowCursor] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(true);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [phase, setPhase] = useState<Phase>('idle');
+  const phraseIndexRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blinkRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const blinkTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clear = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (blinkRef.current) clearInterval(blinkRef.current);
+  };
+
+  const startBlink = () => {
+    setCursorVisible(true);
+    blinkRef.current = setInterval(() => setCursorVisible(v => !v), 500);
+  };
+
+  const stopBlink = () => {
+    if (blinkRef.current) { clearInterval(blinkRef.current); blinkRef.current = null; }
+    setCursorVisible(true);
+  };
 
   useEffect(() => {
     if (!animate) return;
-
-    let index = 0;
+    phraseIndexRef.current = 0;
     setRevealed('');
-    setShowCursor(true);
-    setCursorVisible(true);
+    setPhase('typing');
+  }, [animate]);
 
-    intervalRef.current = setInterval(() => {
-      index += 1;
-      setRevealed(text.slice(0, index));
-      if (index >= text.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        blinkRef.current = setInterval(() => {
-          setCursorVisible(v => !v);
-        }, 500);
-        blinkTimeoutRef.current = setTimeout(() => {
-          if (blinkRef.current) clearInterval(blinkRef.current);
-          setShowCursor(false);
-        }, CURSOR_BLINK_DURATION);
-      }
-    }, CHAR_INTERVAL_MS);
+  useEffect(() => {
+    if (phase === 'idle') return;
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (blinkRef.current) clearInterval(blinkRef.current);
-      if (blinkTimeoutRef.current) clearTimeout(blinkTimeoutRef.current);
-    };
-  }, [animate, text]);
+    const phrase = PHRASES[phraseIndexRef.current % PHRASES.length];
+
+    if (phase === 'typing') {
+      stopBlink();
+      let i = revealed.length;
+      const tick = () => {
+        i += 1;
+        setRevealed(phrase.slice(0, i));
+        if (i < phrase.length) {
+          timerRef.current = setTimeout(tick, TYPE_MS);
+        } else {
+          setPhase('pausing');
+        }
+      };
+      timerRef.current = setTimeout(tick, TYPE_MS);
+
+    } else if (phase === 'pausing') {
+      startBlink();
+      timerRef.current = setTimeout(() => {
+        stopBlink();
+        setPhase('erasing');
+      }, PAUSE_AFTER_MS);
+
+    } else if (phase === 'erasing') {
+      let i = revealed.length;
+      const tick = () => {
+        i -= 1;
+        setRevealed(phrase.slice(0, i));
+        if (i > 0) {
+          timerRef.current = setTimeout(tick, ERASE_MS);
+        } else {
+          phraseIndexRef.current += 1;
+          setPhase('waiting');
+        }
+      };
+      timerRef.current = setTimeout(tick, ERASE_MS);
+
+    } else if (phase === 'waiting') {
+      timerRef.current = setTimeout(() => setPhase('typing'), PAUSE_BEFORE_MS);
+    }
+
+    return clear;
+  }, [phase]);
+
+  useEffect(() => () => clear(), []);
 
   const size = 'clamp(150px, 17vw, 220px)';
 
@@ -74,11 +124,7 @@ export default function PaperScrap({ animate, text = DEFAULT_TEXT }: PaperScrapP
             animate={animate
               ? { rotate: note.rotate, opacity: 1, scale: 1 }
               : { rotate: note.rotate - 4, opacity: 0, scale: 0.92 }}
-            transition={{
-              duration: 0.6,
-              ease: [0.16, 1, 0.3, 1],
-              delay: 0.15 + i * 0.08,
-            }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.08 }}
             style={{
               position: 'absolute',
               inset: 0,
@@ -110,9 +156,7 @@ export default function PaperScrap({ animate, text = DEFAULT_TEXT }: PaperScrapP
                   }}
                 >
                   {revealed}
-                  {showCursor && (
-                    <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
-                  )}
+                  <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
                 </p>
               </div>
             )}
