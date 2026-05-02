@@ -45,11 +45,11 @@ const fadeUp = {
 export default function Home() {
   const [active, setActive] = useState<Filter>("All");
   const [showIntro, setShowIntro] = useState(() => {
-    try { return !sessionStorage.getItem('intro_seen'); } catch { return true; }
+    try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
   });
 
   const handleIntroExit = () => {
-    try { sessionStorage.setItem('intro_seen', '1'); } catch {}
+    try { sessionStorage.setItem('intro_v3', '1'); } catch {}
     setShowIntro(false);
   };
 
