@@ -109,6 +109,8 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
   useEffect(() => {
     if (!visible) return;
 
+    const autoHideTimer = setTimeout(() => dismissHint(), 4500);
+
     const dismissOnMove = () => {
       if (Date.now() - shownAtRef.current < MOUSEMOVE_DISMISS_GRACE_MS) return;
       dismissHint();
@@ -122,6 +124,7 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
     window.addEventListener('touchstart', dismiss, { passive: true });
 
     return () => {
+      clearTimeout(autoHideTimer);
       window.removeEventListener('mousemove', dismissOnMove);
       window.removeEventListener('click', dismiss);
       window.removeEventListener('keydown', dismiss);
