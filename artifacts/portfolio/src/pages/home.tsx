@@ -62,13 +62,6 @@ export default function Home() {
     <div className="w-full">
       <AnimatePresence>{showIntro && <IntroScreen onExit={handleIntroExit} />}</AnimatePresence>
       <section className="min-h-[85vh] flex flex-col justify-center items-start pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
-        <motion.div
-          className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, hsl(var(--accent) / 0.12) 0%, transparent 70%)" }}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.05 }}
           className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-6"
