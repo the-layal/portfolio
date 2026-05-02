@@ -104,7 +104,7 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <PaperScrap animate={wordsAnimated} />
+          <div className="mt-16"><PaperScrap animate={wordsAnimated} /></div>
         </div>
       </section>
 
