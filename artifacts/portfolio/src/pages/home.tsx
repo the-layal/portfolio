@@ -70,42 +70,40 @@ export default function Home() {
           Layal Barakat &mdash; Portfolio
         </motion.p>
 
-        <div className="flex flex-row items-start gap-12 xl:gap-20">
-          <div className="flex-1 min-w-0">
-            <motion.h1
-              variants={container} initial="hidden" animate="show"
-              onAnimationComplete={() => setWordsAnimated(true)}
-              className="font-serif text-foreground leading-[1.05] tracking-tight mb-8"
-              style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
-            >
-              {words.map((word) => (
-                <span key={word} className="block overflow-hidden">
-                  <motion.span
-                    className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
-                    variants={wordVariant}
-                  >{word}</motion.span>
-                </span>
-              ))}
-            </motion.h1>
+        <div className="flex flex-row items-center gap-12 xl:gap-20">
+          <motion.h1
+            variants={container} initial="hidden" animate="show"
+            onAnimationComplete={() => setWordsAnimated(true)}
+            className="font-serif text-foreground leading-[1.05] tracking-tight"
+            style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
+          >
+            {words.map((word) => (
+              <span key={word} className="block overflow-hidden">
+                <motion.span
+                  className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
+                  variants={wordVariant}
+                >{word}</motion.span>
+              </span>
+            ))}
+          </motion.h1>
 
-            <motion.div
-              className="h-px bg-accent mb-8 origin-left"
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ width: "clamp(80px, 12vw, 160px)" }}
-            />
-
-            <motion.p
-              variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.8 }}
-              className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
-            >
-              MIT BS '23, MS '25. Helping others through functional and accessible design.
-            </motion.p>
-          </div>
-
-          <div className="mt-16"><PaperScrap animate={wordsAnimated} /></div>
+          <PaperScrap animate={wordsAnimated} />
         </div>
+
+        <motion.div
+          className="h-px bg-accent mt-8 mb-8 origin-left"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ width: "clamp(80px, 12vw, 160px)" }}
+        />
+
+        <motion.p
+          variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.8 }}
+          className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
+        >
+          MIT BS '23, MS '25. Helping others through functional and accessible design.
+        </motion.p>
       </section>
 
       <section className="py-24 px-6 md:px-12">
