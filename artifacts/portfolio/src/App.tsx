@@ -12,6 +12,7 @@ import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
 import BlueprintHint from "@/components/ui/BlueprintHint";
 import BlueprintCornerTrigger from "@/components/ui/BlueprintCornerTrigger";
 import BlobBackground from "@/components/ui/BlobBackground";
+import StickyNote from "@/components/StickyNote";
 import Layout from "@/components/layout/Layout";
 import { useBlueprintMode } from "@/hooks/use-blueprint-mode";
 
@@ -45,6 +46,7 @@ function App() {
           <Layout>
             <Router />
           </Layout>
+          <StickyNote />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>
