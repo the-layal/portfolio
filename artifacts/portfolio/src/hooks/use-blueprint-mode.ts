@@ -46,5 +46,13 @@ export function useBlueprintMode() {
     };
   }, [enter, exit]);
 
-  return { isBlueprint };
+  const toggle = useCallback(() => {
+    if (isBlueprintRef.current) {
+      exit();
+    } else {
+      enter();
+    }
+  }, [enter, exit]);
+
+  return { isBlueprint, toggle, enter, exit };
 }

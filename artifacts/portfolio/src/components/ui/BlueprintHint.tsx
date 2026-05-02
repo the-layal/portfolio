@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const INACTIVITY_MS = 12000;
+const INACTIVITY_MS = 7000;
 const PROJECTS_THRESHOLD = 3;
 const SESSION_KEY = 'blueprint-hint-shown';
 

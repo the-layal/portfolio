@@ -9,6 +9,7 @@ import About from "@/pages/about";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
 import BlueprintHint from "@/components/ui/BlueprintHint";
+import BlueprintCornerTrigger from "@/components/ui/BlueprintCornerTrigger";
 import BlobBackground from "@/components/ui/BlobBackground";
 import Layout from "@/components/layout/Layout";
 import { useBlueprintMode } from "@/hooks/use-blueprint-mode";
@@ -26,7 +27,7 @@ function Router() {
 }
 
 function App() {
-  const { isBlueprint } = useBlueprintMode();
+  const { isBlueprint, toggle } = useBlueprintMode();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -35,6 +36,7 @@ function App() {
           <BlobBackground isBlueprint={isBlueprint} />
           <CustomCursor isBlueprint={isBlueprint} />
           <BlueprintHint isBlueprint={isBlueprint} />
+          <BlueprintCornerTrigger isBlueprint={isBlueprint} onActivate={toggle} />
           <AnimatePresence>
             {isBlueprint && <BlueprintOverlay key="blueprint" />}
           </AnimatePresence>
