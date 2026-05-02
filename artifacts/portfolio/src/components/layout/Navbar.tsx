@@ -8,7 +8,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Resume', path: '#resume', external: true },
+    { name: 'Resume', path: '/resume' },
     { name: 'Contact', path: 'mailto:layalb@mit.edu', external: true },
   ];
 

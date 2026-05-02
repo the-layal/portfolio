@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
+import Resume from "@/pages/resume";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
 import BlueprintHint from "@/components/ui/BlueprintHint";
@@ -21,6 +22,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
+      <Route path="/resume" component={Resume} />
       <Route component={NotFound} />
     </Switch>
   );
