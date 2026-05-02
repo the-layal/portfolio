@@ -36,6 +36,7 @@ export function useBlueprintMode() {
   // Stable keydown listener — registered once, reads state via ref
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
       const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
       if (tag === 'input' || tag === 'textarea') return;
       if ((e.target as HTMLElement)?.isContentEditable) return;
