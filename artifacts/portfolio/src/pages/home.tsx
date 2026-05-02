@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import IntroScreen from '@/components/IntroScreen';
 import PaperScrap from '@/components/PaperScrap';
+import TickerStrip from '@/components/TickerStrip';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "https://layal.info/thesis/",                                          image: "https://layal.info/wp-content/uploads/2025/08/dfp.png",                                                                                              tags: ["Research"] },
@@ -105,6 +106,8 @@ export default function Home() {
           MIT BS '23, MS '25. Helping others through functional and accessible design.
         </motion.p>
       </section>
+
+      <TickerStrip />
 
       <section className="py-24 px-6 md:px-12">
         <motion.div

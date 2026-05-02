@@ -163,6 +163,47 @@
   --ring: 190 90% 55%;
 }
 
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-strip {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid hsl(var(--accent) / 0.35);
+  border-bottom: 1px solid hsl(var(--accent) / 0.35);
+  padding: 0.6rem 0;
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.ticker-content {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ticker-item {
+  font-family: var(--app-font-sans);
+  font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  padding: 0 1rem;
+}
+
+.ticker-sep {
+  color: hsl(var(--accent) / 0.6);
+  font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+  flex-shrink: 0;
+}
+
 @layer base {
   * {
     @apply border-border;
