@@ -6,7 +6,7 @@ const RESOLVE_MS = 780;
 
 interface GlitchTextProps {
   text: string;
-  resolveDelay?: number;
+  startDelay?: number;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -15,43 +15,43 @@ function rand() {
   return CHARSET[Math.floor(Math.random() * CHARSET.length)];
 }
 
-export default function GlitchText({ text, resolveDelay = 0, className, style }: GlitchTextProps) {
-  const [display, setDisplay] = useState(() =>
-    Array.from({ length: text.length }, rand).join('')
-  );
+export default function GlitchText({ text, startDelay = 0, className, style }: GlitchTextProps) {
+  const [display, setDisplay] = useState('');
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const beginAt = performance.now() + resolveDelay;
+    timeoutRef.current = setTimeout(() => {
+      const startedAt = performance.now();
 
-    intervalRef.current = setInterval(() => {
-      const now = performance.now();
-      const elapsed = Math.max(0, now - beginAt);
-      const charsLocked = elapsed >= RESOLVE_MS
-        ? text.length
-        : Math.floor((elapsed / RESOLVE_MS) * text.length);
+      intervalRef.current = setInterval(() => {
+        const elapsed = performance.now() - startedAt;
+        const charsLocked = elapsed >= RESOLVE_MS
+          ? text.length
+          : Math.floor((elapsed / RESOLVE_MS) * text.length);
 
-      if (charsLocked >= text.length) {
-        setDisplay(text);
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        return;
-      }
+        if (charsLocked >= text.length) {
+          setDisplay(text);
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          return;
+        }
 
-      setDisplay(
-        text.slice(0, charsLocked) +
-        Array.from({ length: text.length - charsLocked }, rand).join('')
-      );
-    }, FRAME_MS);
+        setDisplay(
+          text.slice(0, charsLocked) +
+          Array.from({ length: text.length - charsLocked }, rand).join('')
+        );
+      }, FRAME_MS);
+    }, startDelay);
 
     return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [text, resolveDelay]);
+  }, [text, startDelay]);
 
   return (
     <span className={className} style={style}>
-      {display}
+      {display || '\u00A0'}
     </span>
   );
 }

@@ -71,9 +71,9 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
   const dissolving = phase === 'dissolving';
 
   const words = [
-    { text: 'Designer.', resolveDelay: 250 },
-    { text: 'Maker.',    resolveDelay: 500 },
-    { text: 'Engineer.', resolveDelay: 750 },
+    { text: 'Designer.', startDelay: 250 },
+    { text: 'Maker.',    startDelay: 500 },
+    { text: 'Engineer.', startDelay: 750 },
   ];
 
   return (
@@ -122,12 +122,12 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           Layal Barakat
         </motion.p>
 
-        <div>
-          {words.map(({ text, resolveDelay }) => (
-            <div key={text} className="block">
+        <div style={{ perspective: '800px' }}>
+          {words.map(({ text, startDelay }) => (
+            <div key={text} className="overflow-hidden block">
               <GlitchText
                 text={text}
-                resolveDelay={resolveDelay}
+                startDelay={startDelay}
                 className="block font-serif text-white leading-[1.0] tracking-tight"
                 style={{ fontSize: 'clamp(3.6rem, 10.5vw, 9rem)' }}
               />
@@ -140,14 +140,14 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           style={{ width: 'clamp(80px, 14vw, 180px)', backgroundColor: 'hsl(24, 67%, 53%)' }}
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 1.7, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 0.85, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         />
 
         <motion.div
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.1, duration: 0.6 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
         >
           <span className="font-sans text-[10px] uppercase tracking-[0.3em]"
             style={{ color: 'rgba(247,244,239,0.35)' }}>
@@ -166,7 +166,7 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           style={{ background: 'linear-gradient(to right, transparent, hsl(24,67%,53%), transparent)' }}
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 0.6, scaleX: 1 }}
-          transition={{ delay: 1.4, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 1.2, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
     </div>
