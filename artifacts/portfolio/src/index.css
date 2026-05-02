@@ -175,6 +175,8 @@
   border-bottom: 1.5px solid hsl(var(--accent) / 0.7);
   padding: 1.1rem 0;
   background: hsl(var(--accent) / 0.04);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .ticker-track {
@@ -195,12 +197,12 @@
   font-size: clamp(1rem, 1.6vw, 1.35rem);
   font-style: italic;
   letter-spacing: 0.01em;
-  color: hsl(var(--foreground));
+  color: hsl(var(--accent));
   padding: 0 1.6rem;
 }
 
 .ticker-sep {
-  color: hsl(var(--accent));
+  color: hsl(var(--accent) / 0.55);
   font-size: clamp(0.7rem, 1vw, 0.9rem);
   flex-shrink: 0;
 }
