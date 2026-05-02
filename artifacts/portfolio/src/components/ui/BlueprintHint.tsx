@@ -39,13 +39,14 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
   const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hoveredProjects = useRef<Set<string>>(new Set());
   const cursorPosRef = useRef(getFallbackPos());
+  const isBlueprintRef = useRef(isBlueprint);
 
   function dismissHint() {
     setVisible(false);
   }
 
   function showHint() {
-    if (shownRef.current) return;
+    if (shownRef.current || isBlueprintRef.current) return;
     shownRef.current = true;
     shownAtRef.current = Date.now();
     markShown();
@@ -55,12 +56,16 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
 
   function scheduleInactivity() {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
-    if (shownRef.current) return;
+    if (shownRef.current || isBlueprintRef.current) return;
     inactivityTimer.current = setTimeout(showHint, INACTIVITY_MS);
   }
 
   useEffect(() => {
-    if (isBlueprint && visible) dismissHint();
+    isBlueprintRef.current = isBlueprint;
+    if (isBlueprint) {
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+      if (visible) dismissHint();
+    }
   }, [isBlueprint, visible]);
 
   useEffect(() => {
@@ -79,8 +84,6 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
           return;
         }
       }
-
-      scheduleInactivity();
     };
 
     const onActivity = () => scheduleInactivity();
@@ -127,10 +130,10 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
     };
   }, [visible]);
 
-  const HINT_W = 170;
-  const HINT_H = 32;
-  const offsetX = 18;
-  const offsetY = -40;
+  const HINT_W = 200;
+  const HINT_H = 40;
+  const offsetX = 28;
+  const offsetY = -56;
   const clampedLeft = Math.min(Math.max(anchorPos.x + offsetX, 8), window.innerWidth - HINT_W - 8);
   const clampedTop = Math.min(Math.max(anchorPos.y + offsetY, 8), window.innerHeight - HINT_H - 8);
 
