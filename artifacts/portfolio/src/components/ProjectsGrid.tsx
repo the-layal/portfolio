@@ -75,7 +75,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           loading="lazy"
           className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-black/50 group-hover:bg-black/10 transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-90 transition-opacity duration-500" />
       </motion.div>
       
       <motion.div 
