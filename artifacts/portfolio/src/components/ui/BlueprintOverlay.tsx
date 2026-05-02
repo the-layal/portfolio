@@ -11,7 +11,6 @@ export default function BlueprintOverlay() {
       transition={{ duration: 0.4 }}
       aria-hidden
     >
-      {/* Graph-paper grid */}
       <div
         className="absolute inset-0"
         style={{
@@ -24,7 +23,6 @@ export default function BlueprintOverlay() {
         }}
       />
 
-      {/* Title-block stamp — bottom-right corner */}
       <div
         className="absolute bottom-6 right-6 font-mono text-[10px] tracking-[0.25em] uppercase"
         style={{

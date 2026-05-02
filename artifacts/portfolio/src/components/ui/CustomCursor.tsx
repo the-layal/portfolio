@@ -40,11 +40,6 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
 
   if (typeof window === 'undefined' || window.innerWidth < 768) return null;
 
-  const cyan = 'rgba(100,220,255,1)';
-  const cyanHover = 'rgba(100,220,255,0.45)';
-  const amber = 'rgba(217,119,54,1)';
-  const amberHover = 'rgba(217,119,54,0.5)';
-
   if (isBlueprint) {
     const size = isHovering ? 28 : 20;
     return (
@@ -61,29 +56,26 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
         }}
         transition={{ duration: 0.12, ease: 'easeOut' }}
       >
-        {/* Crosshair horizontal */}
         <div style={{
           position: 'absolute',
           top: '50%',
           left: 0,
           right: 0,
           height: 1,
-          backgroundColor: cyan,
+          backgroundColor: 'rgba(100,220,255,1)',
           transform: 'translateY(-50%)',
           opacity: isHovering ? 0.6 : 1,
         }} />
-        {/* Crosshair vertical */}
         <div style={{
           position: 'absolute',
           left: '50%',
           top: 0,
           bottom: 0,
           width: 1,
-          backgroundColor: cyan,
+          backgroundColor: 'rgba(100,220,255,1)',
           transform: 'translateX(-50%)',
           opacity: isHovering ? 0.6 : 1,
         }} />
-        {/* Center dot */}
         <div style={{
           position: 'absolute',
           top: '50%',
@@ -91,7 +83,7 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
           width: 3,
           height: 3,
           borderRadius: '50%',
-          backgroundColor: cyan,
+          backgroundColor: 'rgba(100,220,255,1)',
           transform: 'translate(-50%,-50%)',
         }} />
       </motion.div>
@@ -107,7 +99,7 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
         translateX: '-50%',
         translateY: '-50%',
         opacity: isVisible ? 1 : 0,
-        backgroundColor: isHovering ? amberHover : amber,
+        backgroundColor: isHovering ? 'rgba(217,119,54,0.5)' : 'rgba(217,119,54,1)',
       }}
       animate={{ width: isHovering ? 40 : 14, height: isHovering ? 40 : 14 }}
       transition={{ duration: 0.15, ease: 'easeOut' }}

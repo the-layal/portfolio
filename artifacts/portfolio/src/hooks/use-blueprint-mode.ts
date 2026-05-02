@@ -5,43 +5,56 @@ const BP_CLASS = 'blueprint';
 
 export function useBlueprintMode() {
   const [isBlueprint, setIsBlueprint] = useState(false);
+  const isBlueprintRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const exit = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = null;
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    isBlueprintRef.current = false;
     setIsBlueprint(false);
-    document.documentElement.classList.remove(BP_CLASS);
   }, []);
 
   const enter = useCallback(() => {
-    setIsBlueprint(true);
-    document.documentElement.classList.add(BP_CLASS);
     if (timerRef.current) clearTimeout(timerRef.current);
+    isBlueprintRef.current = true;
+    setIsBlueprint(true);
     timerRef.current = setTimeout(exit, AUTO_EXIT_MS);
   }, [exit]);
 
-  const toggle = useCallback(() => {
+  // Sync DOM class whenever blueprint state changes
+  useEffect(() => {
     if (isBlueprint) {
-      exit();
+      document.documentElement.classList.add(BP_CLASS);
     } else {
-      enter();
+      document.documentElement.classList.remove(BP_CLASS);
     }
-  }, [isBlueprint, enter, exit]);
+  }, [isBlueprint]);
 
+  // Stable keydown listener — registered once, reads state via ref
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || (e.target as HTMLElement)?.isContentEditable) return;
-      if (e.key === 'b' || e.key === 'B') toggle();
+      if (tag === 'input' || tag === 'textarea') return;
+      if ((e.target as HTMLElement)?.isContentEditable) return;
+      if (e.key !== 'b' && e.key !== 'B') return;
+
+      if (isBlueprintRef.current) {
+        exit();
+      } else {
+        enter();
+      }
     };
+
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
       if (timerRef.current) clearTimeout(timerRef.current);
       document.documentElement.classList.remove(BP_CLASS);
     };
-  }, [toggle]);
+  }, [enter, exit]);
 
   return { isBlueprint };
 }
