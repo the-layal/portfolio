@@ -25,10 +25,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / rect.width - 0.5);
-    y.set(mouseY / rect.height - 0.5);
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -37,53 +35,44 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   };
 
   return (
-    <div className="rounded-xl overflow-hidden w-full aspect-[4/5]">
-      <motion.a 
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: index * 0.05 }}
-        style={{ 
-          rotateX, 
-          rotateY, 
-          transformStyle: "preserve-3d",
-          perspective: "1000px"
-        }}
-        className="block relative w-full h-full bg-card group border border-transparent hover:border-border transition-colors duration-500"
-        data-testid={`project-card-${project.id}`}
+    <motion.a 
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
+      style={{ 
+        rotateX, 
+        rotateY, 
+        perspective: "1000px"
+      }}
+      className="block relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-card group border border-transparent hover:border-border transition-colors duration-500"
+      data-testid={`project-card-${project.id}`}
+    >
+      <motion.div 
+        style={{ filter: `brightness(${brightness})` }}
+        className="absolute inset-0 pointer-events-none scale-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.1]"
       >
-        <motion.div 
-          style={{ 
-            transform: "translateZ(-20px) scale(1.05)",
-            filter: `brightness(${brightness})`
-          }}
-          className="absolute inset-0 pointer-events-none transition-transform duration-700 ease-out group-hover:scale-[1.08]"
-        >
-          <img 
-            src={project.image} 
-            alt={project.title}
-            loading="lazy"
-            className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
-          />
-          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/10 transition-all duration-500" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-90 transition-opacity duration-500" />
-        </motion.div>
-        
-        <motion.div 
-          style={{ transform: "translateZ(40px)" }}
-          className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white pointer-events-none flex flex-col justify-end"
-        >
-          <p className="text-accent font-sans text-xs md:text-sm font-semibold tracking-wider uppercase mb-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">{project.subtitle}</p>
-          <h3 className="text-xl md:text-2xl font-serif leading-tight drop-shadow-md">{project.title}</h3>
-        </motion.div>
-      </motion.a>
-    </div>
+        <img 
+          src={project.image} 
+          alt={project.title}
+          loading="lazy"
+          className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
+        />
+        <div className="absolute inset-0 bg-black/50 group-hover:bg-black/10 transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-90 transition-opacity duration-500" />
+      </motion.div>
+      
+      <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white pointer-events-none flex flex-col justify-end">
+        <p className="text-accent font-sans text-xs md:text-sm font-semibold tracking-wider uppercase mb-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">{project.subtitle}</p>
+        <h3 className="text-xl md:text-2xl font-serif leading-tight drop-shadow-md">{project.title}</h3>
+      </div>
+    </motion.a>
   );
 }
 
