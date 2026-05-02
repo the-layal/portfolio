@@ -1,6 +1,5 @@
 import React from 'react';
-import { SiInstagram } from 'react-icons/si';
-import { Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin, Instagram } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -34,7 +33,7 @@ export default function Footer() {
             data-testid="link-social-instagram"
             aria-label="Layal's Instagram"
           >
-            <SiInstagram className="w-5 h-5" />
+            <Instagram className="w-5 h-5" />
           </a>
         </div>
       </div>
