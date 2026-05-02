@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import IntroScreen from '@/components/IntroScreen';
+import PaperScrap from '@/components/PaperScrap';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "https://layal.info/thesis/",                                          image: "https://layal.info/wp-content/uploads/2025/08/dfp.png",                                                                                              tags: ["Research"] },
@@ -61,7 +62,7 @@ export default function Home() {
   return (
     <div className="w-full">
       <AnimatePresence>{showIntro && <IntroScreen onExit={handleIntroExit} />}</AnimatePresence>
-      <section className="min-h-[85vh] flex flex-col justify-center items-start pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
+      <section className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.05 }}
           className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-6"
@@ -69,37 +70,42 @@ export default function Home() {
           Layal Barakat &mdash; Portfolio
         </motion.p>
 
-        <motion.h1
-          variants={container} initial="hidden" animate="show"
-          onAnimationComplete={() => setWordsAnimated(true)}
-          className="font-serif text-foreground leading-[1.05] tracking-tight mb-8"
-          style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
-        >
-          {words.map((word) => (
-            <span key={word} className="block overflow-hidden">
-              <motion.span
-                className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
-                variants={wordVariant}
-              >{word}</motion.span>
-            </span>
-          ))}
-        </motion.h1>
+        <div className="flex flex-row items-center gap-12 xl:gap-20">
+          <div className="flex-1 min-w-0">
+            <motion.h1
+              variants={container} initial="hidden" animate="show"
+              onAnimationComplete={() => setWordsAnimated(true)}
+              className="font-serif text-foreground leading-[1.05] tracking-tight mb-8"
+              style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
+            >
+              {words.map((word) => (
+                <span key={word} className="block overflow-hidden">
+                  <motion.span
+                    className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
+                    variants={wordVariant}
+                  >{word}</motion.span>
+                </span>
+              ))}
+            </motion.h1>
 
-        <motion.div
-          className="h-px bg-accent mb-8 origin-left"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ width: "clamp(80px, 12vw, 160px)" }}
-        />
+            <motion.div
+              className="h-px bg-accent mb-8 origin-left"
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: 1, opacity: 1 }}
+              transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: "clamp(80px, 12vw, 160px)" }}
+            />
 
-        <motion.p
-          variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.8 }}
-          className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
-        >
-          MIT BS '23, MS '25. Helping others through functional and accessible design.
-        </motion.p>
+            <motion.p
+              variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.8 }}
+              className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
+            >
+              MIT BS '23, MS '25. Helping others through functional and accessible design.
+            </motion.p>
+          </div>
 
+          <PaperScrap animate={wordsAnimated} />
+        </div>
       </section>
 
       <section className="py-24 px-6 md:px-12">
