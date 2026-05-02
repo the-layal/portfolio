@@ -102,17 +102,6 @@ export default function Home() {
           MIT BS '23, MS '25. Helping others through functional and accessible design.
         </motion.p>
 
-        <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.6 }}
-        >
-          <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Scroll</span>
-          <motion.div
-            className="w-px h-10 bg-accent origin-top"
-            animate={{ scaleY: [0, 1, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.4 }}
-          />
-        </motion.div>
       </section>
 
       <section className="py-24 px-6 md:px-12">
