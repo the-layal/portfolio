@@ -1,30 +1,21 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const AUTO_EXIT_MS = 6000;
 const BP_CLASS = 'blueprint';
 
 export function useBlueprintMode() {
   const [isBlueprint, setIsBlueprint] = useState(false);
   const isBlueprintRef = useRef(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const exit = useCallback(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
     isBlueprintRef.current = false;
     setIsBlueprint(false);
   }, []);
 
   const enter = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
     isBlueprintRef.current = true;
     setIsBlueprint(true);
-    timerRef.current = setTimeout(exit, AUTO_EXIT_MS);
-  }, [exit]);
+  }, []);
 
-  // Sync DOM class whenever blueprint state changes
   useEffect(() => {
     if (isBlueprint) {
       document.documentElement.classList.add(BP_CLASS);
@@ -33,7 +24,6 @@ export function useBlueprintMode() {
     }
   }, [isBlueprint]);
 
-  // Stable keydown listener — registered once, reads state via ref
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat) return;
@@ -52,7 +42,6 @@ export function useBlueprintMode() {
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
-      if (timerRef.current) clearTimeout(timerRef.current);
       document.documentElement.classList.remove(BP_CLASS);
     };
   }, [enter, exit]);
