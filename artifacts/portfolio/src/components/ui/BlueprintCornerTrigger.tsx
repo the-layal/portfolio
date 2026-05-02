@@ -9,17 +9,27 @@ interface Props {
   onActivate: () => void;
 }
 
+function isTouchOnly() {
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
 export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Props) {
   const [inactive, setInactive] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [touchPressed, setTouchPressed] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hoveredRef = useRef(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const touchOnlyRef = useRef(false);
 
   const setHoveredSync = useCallback((val: boolean) => {
     hoveredRef.current = val;
     setHovered(val);
+  }, []);
+
+  useEffect(() => {
+    touchOnlyRef.current = isTouchOnly();
   }, []);
 
   useEffect(() => {
@@ -35,6 +45,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
     };
 
     const onMouseMove = () => {
+      if (touchOnlyRef.current) return;
       if (hoveredRef.current) return;
       setInactive(false);
       schedule();
@@ -53,7 +64,8 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
       schedule();
     };
 
-    const onTouchStart = () => {
+    const onTouchStart = (e: TouchEvent) => {
+      if (buttonRef.current && buttonRef.current.contains(e.target as Node)) return;
       setInactive(false);
       schedule();
     };
@@ -77,6 +89,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
   if (isBlueprint) return null;
 
   const clipTriangle = `polygon(0 0, ${SIZE}px 0, 0 ${SIZE}px)`;
+  const isActive = hovered || touchPressed;
 
   return (
     <AnimatePresence>
@@ -85,7 +98,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
           ref={buttonRef}
           key="corner-trigger"
           initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: hovered ? 1.08 : 1 }}
+          animate={{ opacity: 1, scale: isActive ? 1.08 : 1 }}
           exit={{ opacity: 0, scale: 0 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
           onClick={onActivate}
@@ -93,6 +106,9 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
           onMouseLeave={() => setHoveredSync(false)}
           onFocus={() => setHoveredSync(true)}
           onBlur={() => setHoveredSync(false)}
+          onTouchStart={() => setTouchPressed(true)}
+          onTouchEnd={() => setTouchPressed(false)}
+          onTouchCancel={() => setTouchPressed(false)}
           aria-label="Activate blueprint mode"
           tabIndex={0}
           style={{
@@ -105,7 +121,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
             padding: 0,
             border: 'none',
             background: 'transparent',
-            cursor: 'none',
+            cursor: touchOnlyRef.current ? 'pointer' : 'none',
             outline: 'none',
             transformOrigin: '0% 0%',
             clipPath: clipTriangle,
@@ -127,7 +143,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
 
             <polygon
               points={`0,0 ${SIZE},0 0,${SIZE}`}
-              fill={hovered ? 'rgba(100,220,255,0.28)' : 'rgba(100,220,255,0.18)'}
+              fill={isActive ? 'rgba(100,220,255,0.28)' : 'rgba(100,220,255,0.18)'}
               filter="url(#bp-corner-shadow)"
               style={{ transition: 'fill 0.2s ease' }}
             />
@@ -137,7 +153,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
               y1={0}
               x2={0}
               y2={SIZE}
-              stroke={hovered ? 'rgba(100,220,255,0.7)' : 'rgba(100,220,255,0.45)'}
+              stroke={isActive ? 'rgba(100,220,255,0.7)' : 'rgba(100,220,255,0.45)'}
               strokeWidth="1.5"
               strokeDasharray="4 3"
               style={{ transition: 'stroke 0.2s ease' }}
@@ -145,14 +161,14 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
 
             <polygon
               points={`0,0 ${SIZE * 0.38},0 0,${SIZE * 0.38}`}
-              fill={hovered ? 'rgba(100,220,255,0.6)' : 'rgba(100,220,255,0.4)'}
+              fill={isActive ? 'rgba(100,220,255,0.6)' : 'rgba(100,220,255,0.4)'}
               style={{ transition: 'fill 0.2s ease' }}
             />
 
             <text
               x={SIZE * 0.13}
               y={SIZE * 0.23}
-              fill={hovered ? 'rgba(100,220,255,1)' : 'rgba(100,220,255,0.75)'}
+              fill={isActive ? 'rgba(100,220,255,1)' : 'rgba(100,220,255,0.75)'}
               fontSize="7"
               fontFamily="monospace"
               fontWeight="700"
