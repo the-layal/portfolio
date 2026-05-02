@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const TEXT = "& sometimes artist :)";
+const DEFAULT_TEXT = "& sometimes artist :)";
 const CHAR_INTERVAL_MS = 65;
 const CURSOR_BLINK_DURATION = 2200;
 
 interface PaperScrapProps {
   animate: boolean;
+  text?: string;
 }
 
-export default function PaperScrap({ animate }: PaperScrapProps) {
+export default function PaperScrap({ animate, text = DEFAULT_TEXT }: PaperScrapProps) {
   const [revealed, setRevealed] = useState('');
   const [showCursor, setShowCursor] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -27,8 +28,8 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
 
     intervalRef.current = setInterval(() => {
       index += 1;
-      setRevealed(TEXT.slice(0, index));
-      if (index >= TEXT.length) {
+      setRevealed(text.slice(0, index));
+      if (index >= text.length) {
         if (intervalRef.current) clearInterval(intervalRef.current);
         blinkRef.current = setInterval(() => {
           setCursorVisible(v => !v);
@@ -45,7 +46,7 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
       if (blinkRef.current) clearInterval(blinkRef.current);
       if (blinkTimeoutRef.current) clearTimeout(blinkTimeoutRef.current);
     };
-  }, [animate]);
+  }, [animate, text]);
 
   return (
     <motion.div
