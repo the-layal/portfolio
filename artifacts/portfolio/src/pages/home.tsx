@@ -70,7 +70,7 @@ export default function Home() {
           Layal Barakat &mdash; Portfolio
         </motion.p>
 
-        <div className="flex flex-row items-center gap-12 xl:gap-20">
+        <div className="flex flex-row items-start gap-12 xl:gap-20">
           <div className="flex-1 min-w-0">
             <motion.h1
               variants={container} initial="hidden" animate="show"
