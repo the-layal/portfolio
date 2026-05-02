@@ -171,15 +171,16 @@
 .ticker-strip {
   width: 100%;
   overflow: hidden;
-  border-top: 1px solid hsl(var(--accent) / 0.35);
-  border-bottom: 1px solid hsl(var(--accent) / 0.35);
-  padding: 0.6rem 0;
+  border-top: 1.5px solid hsl(var(--accent) / 0.7);
+  border-bottom: 1.5px solid hsl(var(--accent) / 0.7);
+  padding: 1.1rem 0;
+  background: hsl(var(--accent) / 0.04);
 }
 
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll 30s linear infinite;
+  animation: ticker-scroll 38s linear infinite;
   will-change: transform;
 }
 
@@ -190,17 +191,17 @@
 }
 
 .ticker-item {
-  font-family: var(--app-font-sans);
-  font-size: clamp(0.65rem, 1.1vw, 0.8rem);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: hsl(var(--muted-foreground));
-  padding: 0 1rem;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: hsl(var(--foreground));
+  padding: 0 1.6rem;
 }
 
 .ticker-sep {
-  color: hsl(var(--accent) / 0.6);
-  font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+  color: hsl(var(--accent));
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
   flex-shrink: 0;
 }
 
