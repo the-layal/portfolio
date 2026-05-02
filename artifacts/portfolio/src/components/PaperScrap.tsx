@@ -2,8 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const DEFAULT_TEXT = "& sometimes artist :)";
-const CHAR_INTERVAL_MS = 65;
-const CURSOR_BLINK_DURATION = 2200;
+const CHAR_INTERVAL_MS = 68;
+const CURSOR_BLINK_DURATION = 2400;
+
+const NOTES = [
+  { bg: '#BAD4D8', rotate: 7,  x: 14, y: 18 },
+  { bg: '#C8D8B0', rotate: -5, x: -8, y: 10 },
+  { bg: '#F5E89A', rotate: -2, x: 0,  y: 0  },
+];
 
 interface PaperScrapProps {
   animate: boolean;
@@ -48,41 +54,71 @@ export default function PaperScrap({ animate, text = DEFAULT_TEXT }: PaperScrapP
     };
   }, [animate, text]);
 
+  const size = 'clamp(150px, 17vw, 220px)';
+
   return (
     <motion.div
-      className="hidden md:block relative select-none"
-      initial={{ opacity: 0, y: 24, rotate: -2 }}
-      animate={animate ? { opacity: 1, y: 0, rotate: -3 } : { opacity: 0, y: 24, rotate: -2 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-      style={{ width: 'clamp(200px, 22vw, 300px)' }}
+      className="hidden md:block relative select-none flex-shrink-0"
+      initial={{ opacity: 0, y: 20 }}
+      animate={animate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+      style={{ width: size, height: size }}
+      aria-hidden
     >
-      <img
-        src="/paper-scrap.png"
-        alt=""
-        aria-hidden
-        className="w-full h-auto drop-shadow-xl"
-        draggable={false}
-      />
-
-      <div
-        className="absolute inset-0 flex items-center justify-center px-6"
-        style={{ paddingBottom: '8%' }}
-      >
-        <p
-          style={{
-            fontFamily: "'Caveat', cursive",
-            fontSize: 'clamp(1rem, 2.2vw, 1.4rem)',
-            lineHeight: 1.35,
-            color: '#4a3728',
-            textAlign: 'center',
-          }}
-        >
-          {revealed}
-          {showCursor && (
-            <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
-          )}
-        </p>
-      </div>
+      {NOTES.map((note, i) => {
+        const isTop = i === NOTES.length - 1;
+        return (
+          <motion.div
+            key={i}
+            initial={{ rotate: note.rotate - 4, opacity: 0, scale: 0.92 }}
+            animate={animate
+              ? { rotate: note.rotate, opacity: 1, scale: 1 }
+              : { rotate: note.rotate - 4, opacity: 0, scale: 0.92 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.16, 1, 0.3, 1],
+              delay: 0.15 + i * 0.08,
+            }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: note.bg,
+              translateX: note.x,
+              translateY: note.y,
+              boxShadow: '2px 4px 16px rgba(0,0,0,0.13)',
+            }}
+          >
+            {isTop && (
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '18%',
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "'Special Elite', monospace",
+                    fontSize: 'clamp(0.8rem, 1.6vw, 1.1rem)',
+                    lineHeight: 1.5,
+                    color: '#3a2e1e',
+                    textAlign: 'center',
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  {revealed}
+                  {showCursor && (
+                    <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
+                  )}
+                </p>
+              </div>
+            )}
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }
