@@ -7,6 +7,25 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
 import Resume from "@/pages/resume";
+import Contact from "@/pages/contact";
+import Blog from "@/pages/blog";
+import BuildingVirtualRobots from "@/pages/blog/building-virtual-robots";
+import Thesis from "@/pages/projects/thesis";
+import MedicalDevice from "@/pages/projects/2-750";
+import ReVise from "@/pages/projects/revise";
+import ZoomYoyo from "@/pages/projects/zoom-yoyo";
+import Macarons from "@/pages/projects/macarons";
+import DesignObjects from "@/pages/projects/4-031";
+import SoftRobotics from "@/pages/projects/soft-robotics";
+import SocialRobot from "@/pages/projects/social-robot";
+import ToyCushions from "@/pages/projects/toy-cushions";
+import Exhibition from "@/pages/projects/exhibition";
+import DesignIntensive from "@/pages/projects/design-intensive";
+import Videos from "@/pages/projects/videos";
+import BrushlessMotor from "@/pages/projects/brushless-motor";
+import Penguino from "@/pages/projects/penguino";
+import MakeMIT from "@/pages/projects/makemit";
+import WateringCans from "@/pages/projects/watering-cans";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
 import BlueprintHint from "@/components/ui/BlueprintHint";
@@ -24,6 +43,25 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/resume" component={Resume} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/building-virtual-robots" component={BuildingVirtualRobots} />
+      <Route path="/projects/thesis" component={Thesis} />
+      <Route path="/projects/2-750" component={MedicalDevice} />
+      <Route path="/projects/revise" component={ReVise} />
+      <Route path="/projects/zoom-yoyo" component={ZoomYoyo} />
+      <Route path="/projects/macarons" component={Macarons} />
+      <Route path="/projects/4-031" component={DesignObjects} />
+      <Route path="/projects/soft-robotics" component={SoftRobotics} />
+      <Route path="/projects/social-robot" component={SocialRobot} />
+      <Route path="/projects/toy-cushions" component={ToyCushions} />
+      <Route path="/projects/exhibition" component={Exhibition} />
+      <Route path="/projects/design-intensive" component={DesignIntensive} />
+      <Route path="/projects/videos" component={Videos} />
+      <Route path="/projects/brushless-motor" component={BrushlessMotor} />
+      <Route path="/projects/penguino" component={Penguino} />
+      <Route path="/projects/makemit" component={MakeMIT} />
+      <Route path="/projects/watering-cans" component={WateringCans} />
       <Route component={NotFound} />
     </Switch>
   );

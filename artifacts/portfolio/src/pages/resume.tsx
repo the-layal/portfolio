@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import resume, { ResumeEntry } from '@/data/resume';
+import { PdfEmbed } from '@/components/ProjectPage';
 
 const containerVariants: Variants = {
   hidden: {},
@@ -80,6 +81,10 @@ export default function Resume() {
           </svg>
           View PDF
         </a>
+      </motion.div>
+
+      <motion.div variants={itemVariants}>
+        <PdfEmbed src="/resume.pdf" label="Layal Barakat resume (PDF)" height={900} />
       </motion.div>
 
       <div className="space-y-16">

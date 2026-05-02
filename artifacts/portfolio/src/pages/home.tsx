@@ -6,22 +6,22 @@ import PaperScrap from '@/components/PaperScrap';
 import TickerStrip from '@/components/TickerStrip';
 
 const PROJECTS = [
-  { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "https://layal.info/thesis/",                                          image: "https://layal.info/wp-content/uploads/2025/08/dfp.png",                                                                                              tags: ["Research"] },
-  { id: 2,  title: "Infant Abdomen Benchtop Model",                                   subtitle: "2.750 Medical Device Design, 2022",      url: "https://layal.info/2-750/",                                           image: "https://layal.info/wp-content/uploads/2023/07/vessels-with-blood-4063750325-e1689157690888.jpeg",                                                    tags: ["Engineering"] },
-  { id: 3,  title: "ReVise: A Conformable Vise",                                       subtitle: "2.009 Product Design Process, 2021",     url: "https://layal.info/revise/",                                          image: "https://layal.info/wp-content/uploads/2022/08/mainimage.png",                                                                                        tags: ["Design", "Engineering"] },
-  { id: 4,  title: "Zoom Yoyo Manufacturing",                                          subtitle: "2.008 Design and Manufacturing II, 2021", url: "https://layal.info/zoom-yoyo/",                                       image: "https://layal.info/wp-content/uploads/2022/08/img_1754.jpg",                                                                                         tags: ["Engineering"] },
-  { id: 5,  title: "Macaron Properties Research Project",                              subtitle: "2.671 Measurement and Instrumentation, 2021", url: "https://layal.info/macarons/",                                   image: "https://layal.info/wp-content/uploads/2022/08/20210402_181211.jpg",                                                                                   tags: ["Research"] },
-  { id: 6,  title: "4.031 – Design Objects + Interaction",                             subtitle: "MIT, 2020",                              url: "https://layal.info/4-031/",                                           image: "https://layal.info/wp-content/uploads/2022/08/dsc_0760.jpg",                                                                                         tags: ["Design"] },
-  { id: 7,  title: "Soft Robotics Curriculum Research",                                subtitle: "MIT Media Lab, 2020",                    url: "https://layal.info/soft-robotics/",                                   image: "https://layal.info/wp-content/uploads/2022/08/herringbone.gif",                                                                                      tags: ["Research", "Engineering"] },
-  { id: 8,  title: "Social Robot Research Study",                                      subtitle: "MIT Media Lab, 2019",                    url: "https://layalsportfolio.wordpress.com/social-robot-research-study/",  image: "https://layal.info/wp-content/uploads/2019/11/20190708_115141-e1575160367910.jpg",                                                                    tags: ["Research"] },
-  { id: 9,  title: "Sewing Cart Cushions",                                             subtitle: "2.00b Toy Design, 2019",                 url: "https://layalsportfolio.wordpress.com/toy-cushions/",                 image: "https://layal.info/wp-content/uploads/2019/12/20190511_165618-e1575161467355.jpg",                                                                    tags: ["Design"] },
-  { id: 10, title: "Art Exhibition",                                                   subtitle: "IB Art, 2018",                           url: "https://layalsportfolio.wordpress.com/exhibition/",                   image: "https://layal.info/wp-content/uploads/2019/12/exhibition.png",                                                                                       tags: ["Art"] },
-  { id: 11, title: "How to Design Intensive",                                          subtitle: "MIT, 2020",                              url: "https://layalsportfolio.wordpress.com/4.02A/",                        image: "https://layal.info/wp-content/uploads/2020/03/spin-loop.gif",                                                                                        tags: ["Design"] },
-  { id: 12, title: "Video Projects",                                                   subtitle: "Assorted Creations, 2016–2019",          url: "https://layalsportfolio.wordpress.com/videos/",                       image: "https://layal.info/wp-content/uploads/2019/12/video-edit-icon-on-white-background-for-graphic-vector-23077349-e1575178845868.jpg",                    tags: ["Art"] },
-  { id: 13, title: "Brushless Motor",                                                  subtitle: "6.a01 Mens et Manus, 2018",              url: "https://layalsportfolio.wordpress.com/brushless-motor/",              image: "https://layal.info/wp-content/uploads/2019/12/20181022_144009.jpg",                                                                                   tags: ["Engineering"] },
-  { id: 14, title: "Penguino the Fishbot",                                             subtitle: "6.a01 Mens et Manus, 2018",              url: "https://layalsportfolio.wordpress.com/penguino/",                     image: "https://layal.info/wp-content/uploads/2019/12/20181207_181612-e1575174438905.jpg",                                                                    tags: ["Engineering"] },
-  { id: 15, title: "MakeMIT Marketing",                                                subtitle: "MakeMIT, 2018",                          url: "https://layalsportfolio.wordpress.com/makemit/",                      image: "https://layal.info/wp-content/uploads/2019/12/logo-final-1.png",                                                                                     tags: ["Design", "Art"] },
-  { id: 16, title: "'The Watering Cans' Graphic Design",                               subtitle: "MIST, 2018",                             url: "https://layalsportfolio.wordpress.com/the-watering-can/",             image: "https://layal.info/wp-content/uploads/2020/03/aye.gif",                                                                                              tags: ["Art", "Design"] },
+  { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "/projects/thesis",            image: "/images/thesis/dfp.png",                                                     tags: ["Research"] },
+  { id: 2,  title: "Infant Abdomen Benchtop Model",                                   subtitle: "2.750 Medical Device Design, 2022",      url: "/projects/2-750",             image: "/images/2-750/vessels-with-blood-4063750325-e1689157690888.jpeg",            tags: ["Engineering"] },
+  { id: 3,  title: "ReVise: A Conformable Vise",                                       subtitle: "2.009 Product Design Process, 2021",     url: "/projects/revise",            image: "/images/revise/mainimage.png",                                               tags: ["Design", "Engineering"] },
+  { id: 4,  title: "Zoom Yoyo Manufacturing",                                          subtitle: "2.008 Design and Manufacturing II, 2021", url: "/projects/zoom-yoyo",         image: "/images/zoom-yoyo/img_1754.jpg",                                             tags: ["Engineering"] },
+  { id: 5,  title: "Macaron Properties Research Project",                              subtitle: "2.671 Measurement and Instrumentation, 2021", url: "/projects/macarons",     image: "/images/macarons/tues_e3_barakat_layal-1.png",                               tags: ["Research"] },
+  { id: 6,  title: "4.031 – Design Objects + Interaction",                             subtitle: "MIT, 2020",                              url: "/projects/4-031",             image: "/images/4-031/dsc_0752.jpg",                                                  tags: ["Design"] },
+  { id: 7,  title: "Soft Robotics Curriculum Research",                                subtitle: "MIT Media Lab, 2020",                    url: "/projects/soft-robotics",     image: "/images/soft-robotics/img_0205.png",                                         tags: ["Research", "Engineering"] },
+  { id: 8,  title: "Social Robot Research Study",                                      subtitle: "MIT Media Lab, 2019",                    url: "/projects/social-robot",      image: "/images/social-robot/20190708_115141-e1577849387891.jpg",                    tags: ["Research"] },
+  { id: 9,  title: "Sewing Cart Cushions",                                             subtitle: "2.00b Toy Design, 2019",                 url: "/projects/toy-cushions",      image: "/images/toy-cushions/layal_scan_page-1.jpg",                                 tags: ["Design"] },
+  { id: 10, title: "Art Exhibition",                                                   subtitle: "IB Art, 2018",                           url: "/projects/exhibition",        image: "/images/exhibition/process-portfolio-page-001-e1577422719379.jpg",           tags: ["Art"] },
+  { id: 11, title: "How to Design Intensive",                                          subtitle: "MIT, 2020",                              url: "/projects/design-intensive",  image: "/images/design-intensive/barakat_layal_how-to-design_assignment-01-1.png",   tags: ["Design"] },
+  { id: 12, title: "Video Projects",                                                   subtitle: "Assorted Creations, 2016–2019",          url: "/projects/videos",            image: "/images/videos/video-edit-icon.jpg",                                          tags: ["Art"] },
+  { id: 13, title: "Brushless Motor",                                                  subtitle: "6.a01 Mens et Manus, 2018",              url: "/projects/brushless-motor",   image: "/images/brushless-motor/20181022_144009.jpg",                                tags: ["Engineering"] },
+  { id: 14, title: "Penguino the Fishbot",                                             subtitle: "6.a01 Mens et Manus, 2018",              url: "/projects/penguino",          image: "/images/penguino/20181207_181612.jpg",                                       tags: ["Engineering"] },
+  { id: 15, title: "MakeMIT Marketing",                                                subtitle: "MakeMIT, 2018",                          url: "/projects/makemit",           image: "/images/makemit/maker.jpg",                                                   tags: ["Design", "Art"] },
+  { id: 16, title: "'The Watering Cans' Graphic Design",                               subtitle: "MIST, 2018",                             url: "/projects/watering-cans",     image: "/images/watering-cans/main-pic.png",                                          tags: ["Art", "Design"] },
 ];
 
 const FILTERS = ["All", "Design", "Engineering", "Research", "Art"] as const;
@@ -29,17 +29,19 @@ type Filter = typeof FILTERS[number];
 
 const words = ["Designer.", "Maker.", "Engineer."];
 
-const container = {
+import type { Variants } from 'framer-motion';
+
+const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
 
-const wordVariant = {
+const wordVariant: Variants = {
   hidden: { y: "110%", opacity: 0 },
   show: { y: "0%", opacity: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };

@@ -34,14 +34,19 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
     y.set(0);
   };
 
+  const isInternal = project.url.startsWith('/');
+  const commonProps = {
+    ref,
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
+  } as const;
+
   return (
-    <motion.a 
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <motion.a
+      {...(isInternal ? { href: project.url } : { href: project.url, target: '_blank', rel: 'noopener noreferrer' })}
+      ref={commonProps.ref}
+      onMouseMove={commonProps.onMouseMove}
+      onMouseLeave={commonProps.onMouseLeave}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
