@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const INACTIVITY_MS = 7000;
-const SIZE = 80;
+const SIZE = 48;
 
 interface Props {
   isBlueprint: boolean;
