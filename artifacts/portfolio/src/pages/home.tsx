@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
+import IntroScreen from '@/components/IntroScreen';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "https://layal.info/thesis/",                                          image: "https://layal.info/wp-content/uploads/2025/08/dfp.png",                                                                                              tags: ["Research"] },
@@ -43,6 +44,14 @@ const fadeUp = {
 
 export default function Home() {
   const [active, setActive] = useState<Filter>("All");
+  const [showIntro, setShowIntro] = useState(() => {
+    try { return !sessionStorage.getItem('intro_seen'); } catch { return true; }
+  });
+
+  const handleIntroExit = () => {
+    try { sessionStorage.setItem('intro_seen', '1'); } catch {}
+    setShowIntro(false);
+  };
 
   const filtered = active === "All"
     ? PROJECTS
@@ -50,6 +59,7 @@ export default function Home() {
 
   return (
     <div className="w-full">
+      <AnimatePresence>{showIntro && <IntroScreen onExit={handleIntroExit} />}</AnimatePresence>
       <section className="min-h-[85vh] flex flex-col justify-center items-start pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
         <motion.div
           className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full pointer-events-none"
