@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-const COLS = 12;
-const ROWS = 8;
+const COLS = 28;
+const ROWS = 16;
 const DARK = '#1A1714';
 
 interface Tile {
