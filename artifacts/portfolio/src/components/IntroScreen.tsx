@@ -124,11 +124,11 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
 
         <div style={{ perspective: '800px' }}>
           {words.map(({ text, startDelay }) => (
-            <div key={text} className="overflow-hidden block">
+            <div key={text} className="block">
               <GlitchText
                 text={text}
                 startDelay={startDelay}
-                className="block font-serif text-white leading-[1.0] tracking-tight"
+                className="block font-serif text-white leading-[1.1] tracking-tight"
                 style={{ fontSize: 'clamp(3.6rem, 10.5vw, 9rem)' }}
               />
             </div>
