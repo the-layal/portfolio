@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const INACTIVITY_MS = 7000;
 const SIZE = 48;
@@ -12,6 +12,8 @@ interface Props {
 function isTouchOnly() {
   return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 }
+
+const PULSE_RINGS = [0, 1, 2];
 
 export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Props) {
   const [inactive, setInactive] = useState(false);
@@ -88,99 +90,90 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
 
   if (isBlueprint) return null;
 
-  const clipTriangle = `polygon(0 0, ${SIZE}px 0, 0 ${SIZE}px)`;
   const isActive = hovered || touchPressed;
 
+  const ringColor = isActive ? 'rgba(100,220,255,0.95)' : 'rgba(100,220,255,0.75)';
+  const arcFill = isActive ? 'rgba(100,220,255,0.32)' : 'rgba(100,220,255,0.18)';
+  const pulseDuration = isActive ? 1.1 : 1.7;
+  const ringDelay = isActive ? 0.37 : 0.57;
+
+  const arcPath = `M ${SIZE} 0 A ${SIZE} ${SIZE} 0 0 0 0 ${SIZE} L 0 0 Z`;
+
   return (
-    <AnimatePresence>
-      {inactive && (
-        <motion.button
-          ref={buttonRef}
-          key="corner-trigger"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: isActive ? 1.08 : 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          transition={{ duration: 0.35, ease: 'easeOut' }}
-          onClick={onActivate}
-          onMouseEnter={() => setHoveredSync(true)}
-          onMouseLeave={() => setHoveredSync(false)}
-          onFocus={() => setHoveredSync(true)}
-          onBlur={() => setHoveredSync(false)}
-          onTouchStart={() => setTouchPressed(true)}
-          onTouchEnd={() => setTouchPressed(false)}
-          onTouchCancel={() => setTouchPressed(false)}
-          aria-label="Activate blueprint mode"
-          tabIndex={0}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: SIZE,
-            height: SIZE,
-            zIndex: 9998,
-            padding: 0,
-            border: 'none',
-            background: 'transparent',
-            cursor: touchOnlyRef.current ? 'pointer' : 'none',
-            outline: 'none',
-            transformOrigin: '0% 0%',
-            clipPath: clipTriangle,
-            WebkitClipPath: clipTriangle,
-          }}
-        >
-          <svg
-            width={SIZE}
-            height={SIZE}
-            viewBox={`0 0 ${SIZE} ${SIZE}`}
-            style={{ display: 'block' }}
-            aria-hidden
-          >
-            <defs>
-              <filter id="bp-corner-shadow" x="-20%" y="-20%" width="150%" height="150%">
-                <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.4)" />
-              </filter>
-            </defs>
+    <button
+      ref={buttonRef}
+      onClick={onActivate}
+      onMouseEnter={() => setHoveredSync(true)}
+      onMouseLeave={() => setHoveredSync(false)}
+      onFocus={() => setHoveredSync(true)}
+      onBlur={() => setHoveredSync(false)}
+      onTouchStart={() => setTouchPressed(true)}
+      onTouchEnd={() => setTouchPressed(false)}
+      onTouchCancel={() => setTouchPressed(false)}
+      aria-label="Activate blueprint mode"
+      tabIndex={0}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: SIZE,
+        height: SIZE,
+        zIndex: 9998,
+        padding: 0,
+        border: 'none',
+        background: 'transparent',
+        cursor: 'pointer',
+        outline: 'none',
+        transformOrigin: '0% 0%',
+        overflow: 'hidden',
+      }}
+    >
+      <svg
+        width={SIZE}
+        height={SIZE}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        style={{
+          display: 'block',
+          opacity: inactive ? 1 : 0,
+          transition: 'opacity 0.35s ease',
+        }}
+        aria-hidden
+      >
+        <defs>
+          <clipPath id="bp-corner-clip">
+            <rect x="0" y="0" width={SIZE} height={SIZE} />
+          </clipPath>
+        </defs>
 
-            <polygon
-              points={`0,0 ${SIZE},0 0,${SIZE}`}
-              fill={isActive ? 'rgba(100,220,255,0.28)' : 'rgba(100,220,255,0.18)'}
-              filter="url(#bp-corner-shadow)"
-              style={{ transition: 'fill 0.2s ease' }}
+        <g clipPath="url(#bp-corner-clip)">
+          <path
+            d={arcPath}
+            fill={arcFill}
+            style={{ transition: 'fill 0.2s ease' }}
+          />
+
+          {PULSE_RINGS.map((i) => (
+            <motion.circle
+              key={i}
+              cx={0}
+              cy={0}
+              fill="none"
+              stroke={ringColor}
+              strokeWidth={isActive ? 1.5 : 1}
+              initial={{ r: 4, opacity: 0.8 }}
+              animate={{ r: SIZE * 1.05, opacity: 0 }}
+              transition={{
+                duration: pulseDuration,
+                delay: i * ringDelay,
+                repeat: Infinity,
+                ease: 'easeOut',
+                repeatDelay: 0,
+              }}
+              style={{ transition: 'stroke 0.2s ease, stroke-width 0.2s ease' }}
             />
-
-            <line
-              x1={SIZE}
-              y1={0}
-              x2={0}
-              y2={SIZE}
-              stroke={isActive ? 'rgba(100,220,255,0.7)' : 'rgba(100,220,255,0.45)'}
-              strokeWidth="1.5"
-              strokeDasharray="4 3"
-              style={{ transition: 'stroke 0.2s ease' }}
-            />
-
-            <polygon
-              points={`0,0 ${SIZE * 0.38},0 0,${SIZE * 0.38}`}
-              fill={isActive ? 'rgba(100,220,255,0.6)' : 'rgba(100,220,255,0.4)'}
-              style={{ transition: 'fill 0.2s ease' }}
-            />
-
-            <text
-              x={SIZE * 0.13}
-              y={SIZE * 0.23}
-              fill={isActive ? 'rgba(100,220,255,1)' : 'rgba(100,220,255,0.75)'}
-              fontSize="7"
-              fontFamily="monospace"
-              fontWeight="700"
-              letterSpacing="0.05em"
-              transform={`rotate(-45, ${SIZE * 0.13}, ${SIZE * 0.23})`}
-              style={{ transition: 'fill 0.2s ease', userSelect: 'none' }}
-            >
-              B
-            </text>
-          </svg>
-        </motion.button>
-      )}
-    </AnimatePresence>
+          ))}
+        </g>
+      </svg>
+    </button>
   );
 }
