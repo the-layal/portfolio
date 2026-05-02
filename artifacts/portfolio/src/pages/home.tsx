@@ -44,6 +44,7 @@ const fadeUp = {
 
 export default function Home() {
   const [active, setActive] = useState<Filter>("All");
+  const [wordsAnimated, setWordsAnimated] = useState(false);
   const [showIntro, setShowIntro] = useState(() => {
     try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
   });
@@ -77,12 +78,16 @@ export default function Home() {
 
         <motion.h1
           variants={container} initial="hidden" animate="show"
+          onAnimationComplete={() => setWordsAnimated(true)}
           className="font-serif text-foreground leading-[1.05] tracking-tight mb-8"
           style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
         >
           {words.map((word) => (
             <span key={word} className="block overflow-hidden">
-              <motion.span className="block" variants={wordVariant}>{word}</motion.span>
+              <motion.span
+                className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
+                variants={wordVariant}
+              >{word}</motion.span>
             </span>
           ))}
         </motion.h1>
