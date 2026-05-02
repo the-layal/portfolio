@@ -16,10 +16,9 @@ export default function StickyNote() {
   }, []);
 
   useEffect(() => {
-    if (open && taRef.current) {
-      const id = window.setTimeout(() => taRef.current?.focus(), 220);
-      return () => window.clearTimeout(id);
-    }
+    if (!open) return undefined;
+    const id = window.setTimeout(() => taRef.current?.focus(), 220);
+    return () => window.clearTimeout(id);
   }, [open]);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,7 +31,6 @@ export default function StickyNote() {
       className="fixed z-[120] pointer-events-none"
       style={{ right: '1.25rem', bottom: '1.25rem' }}
     >
-      {/* Toggle button */}
       <motion.button
         type="button"
         onClick={() => setOpen(o => !o)}
@@ -60,7 +58,6 @@ export default function StickyNote() {
         </svg>
       </motion.button>
 
-      {/* Sticky note panel */}
       <AnimatePresence>
         {open && (
           <motion.div
