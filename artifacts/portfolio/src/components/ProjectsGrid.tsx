@@ -59,7 +59,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         transformStyle: "preserve-3d",
         perspective: "1000px"
       }}
-      className="block relative w-full aspect-[4/5] rounded-none bg-card overflow-hidden group border border-transparent hover:border-border transition-colors duration-500"
+      className="block relative w-full aspect-[4/5] rounded-lg bg-card overflow-hidden group border border-transparent hover:border-border transition-colors duration-500"
       data-testid={`project-card-${project.id}`}
     >
       <motion.div 
