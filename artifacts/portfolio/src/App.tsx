@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
+import BlueprintHint from "@/components/ui/BlueprintHint";
 import Layout from "@/components/layout/Layout";
 import { useBlueprintMode } from "@/hooks/use-blueprint-mode";
 
@@ -31,6 +32,7 @@ function App() {
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <CustomCursor isBlueprint={isBlueprint} />
+          <BlueprintHint isBlueprint={isBlueprint} />
           <AnimatePresence>
             {isBlueprint && <BlueprintOverlay key="blueprint" />}
           </AnimatePresence>
