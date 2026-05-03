@@ -168,7 +168,7 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           style={{ fontSize: '0.65rem', color: 'rgba(247,244,239,0.38)', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 0.6 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
           whileHover={{ color: 'rgba(247,244,239,0.75)' }}
           aria-label="Skip intro"
         >
