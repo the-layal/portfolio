@@ -3,8 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import IntroScreen from '@/components/IntroScreen';
 import PaperScrap from '@/components/PaperScrap';
+import StickerLayer, { type PlacedSticker } from '@/components/StickerLayer';
 import TickerStrip from '@/components/TickerStrip';
 import { setIntroVisible } from '@/hooks/use-intro-state';
+import type { StickerId } from '@/components/stickers';
+
+const STICKERS_STORAGE_KEY = 'hero_stickers_v1';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "/projects/thesis",            image: "/images/thesis/dfp.png",                                                     tags: ["Research"] },
@@ -51,6 +55,45 @@ export default function Home() {
   const [active, setActive] = useState<Filter>("All");
   const [wordsAnimated, setWordsAnimated] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const [stickers, setStickers] = useState<PlacedSticker[]>(() => {
+    try {
+      const raw = sessionStorage.getItem(STICKERS_STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch { return []; }
+  });
+
+  useEffect(() => {
+    try { sessionStorage.setItem(STICKERS_STORAGE_KEY, JSON.stringify(stickers)); } catch {}
+  }, [stickers]);
+
+  const addSticker = (id: StickerId) => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    // Pleasing default position: lower-left quadrant of the hero, with
+    // a small random jitter and slight rotation.
+    const baseX = rect.width * (0.18 + Math.random() * 0.18);
+    const baseY = rect.height * (0.55 + Math.random() * 0.18);
+    const rotate = (Math.random() - 0.5) * 24;
+    setStickers((prev) => [
+      ...prev,
+      {
+        uid: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        id,
+        x: Math.round(baseX),
+        y: Math.round(baseY),
+        rotate: Math.round(rotate * 10) / 10,
+      },
+    ]);
+  };
+
+  const removeSticker = (uid: string) =>
+    setStickers((prev) => prev.filter((s) => s.uid !== uid));
+
+  const updateSticker = (uid: string, patch: Partial<PlacedSticker>) =>
+    setStickers((prev) => prev.map((s) => (s.uid === uid ? { ...s, ...patch } : s)));
   const [showIntro, setShowIntro] = useState(() => {
     const visible = (() => {
       try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
@@ -120,7 +163,7 @@ export default function Home() {
             className="hidden sm:block justify-self-start md:justify-self-auto mb-6 md:mb-0"
             style={{ gridArea: 'scrap' }}
           >
-            <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} />
+            <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} onAddSticker={addSticker} />
           </div>
 
           <motion.p
@@ -131,6 +174,12 @@ export default function Home() {
             MIT BS '23, MS '25. Helping others through functional and accessible design.
           </motion.p>
         </div>
+        <StickerLayer
+          stickers={stickers}
+          onRemove={removeSticker}
+          onUpdate={updateSticker}
+          dragConstraintsRef={heroRef}
+        />
       </section>
 
       <TickerStrip />
