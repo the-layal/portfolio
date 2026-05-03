@@ -6,7 +6,7 @@ export default function ZoomYoyo() {
   return (
     <ProjectPage title="Zoom Yoyo Manufacturing" subtitle="2.008 Design and Manufacturing II, 2021">
 
-      <figure className="my-8 flex gap-2" style={{ height: 'clamp(200px, 26vw, 360px)' }}>
+      <figure className="my-8 flex gap-2" style={{ height: 'clamp(320px, 45vw, 560px)' }}>
         <img src="/images/zoom-yoyo/img_1745-e1661713959390.png" alt="" className="flex-1 min-w-0 h-full object-cover" />
         <img src="/images/zoom-yoyo/yo.gif" alt="" className="h-full w-auto" />
       </figure>
