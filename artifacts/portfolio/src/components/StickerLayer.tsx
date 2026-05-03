@@ -29,7 +29,7 @@ export default function StickerLayer({
   return (
     <div
       className="absolute inset-0 pointer-events-none"
-      style={{ zIndex: 30 }}
+      style={{ zIndex: 70 }}
     >
       {stickers.map((sticker) => {
         const def = STICKER_BY_ID[sticker.id];

@@ -55,6 +55,7 @@ export default function Home() {
   const [active, setActive] = useState<Filter>("All");
   const [wordsAnimated, setWordsAnimated] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const scrapRef = useRef<HTMLDivElement>(null);
   const [stickers, setStickers] = useState<PlacedSticker[]>(() => {
     try {
       const raw = sessionStorage.getItem(STICKERS_STORAGE_KEY);
@@ -71,11 +72,21 @@ export default function Home() {
   const addSticker = (id: StickerId) => {
     const hero = heroRef.current;
     if (!hero) return;
-    const rect = hero.getBoundingClientRect();
-    // Pleasing default position: lower-left quadrant of the hero, with
-    // a small random jitter and slight rotation.
-    const baseX = rect.width * (0.18 + Math.random() * 0.18);
-    const baseY = rect.height * (0.55 + Math.random() * 0.18);
+    const heroRect = hero.getBoundingClientRect();
+    const scrap = scrapRef.current;
+    // Drop near the scrap notes, with a small random jitter around them.
+    const jitter = () => (Math.random() - 0.5) * 60;
+    let baseX: number;
+    let baseY: number;
+    if (scrap) {
+      const sr = scrap.getBoundingClientRect();
+      // Position relative to hero's top-left
+      baseX = sr.left - heroRect.left + sr.width / 2 - 55 + jitter();
+      baseY = sr.top  - heroRect.top  + sr.height / 2 - 55 + jitter();
+    } else {
+      baseX = heroRect.width * 0.55 + jitter();
+      baseY = heroRect.height * 0.35 + jitter();
+    }
     const rotate = (Math.random() - 0.5) * 24;
     setStickers((prev) => [
       ...prev,
@@ -157,6 +168,7 @@ export default function Home() {
           />
 
           <div
+            ref={scrapRef}
             className="justify-self-start md:justify-self-auto mb-6 md:mb-0"
             style={{ gridArea: 'scrap' }}
           >
