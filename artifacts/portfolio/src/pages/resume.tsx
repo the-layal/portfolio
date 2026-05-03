@@ -1,36 +1,54 @@
 import React from 'react';
-import { motion, type Variants } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import resume, { ResumeEntry } from '@/data/resume';
 import { PdfEmbed } from '@/components/ProjectPage';
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
+function useBlockVariants(): Variants {
+  const prefersReducedMotion = useReducedMotion();
+  if (prefersReducedMotion) {
+    return {
+      hidden: { opacity: 1, y: 0 },
+      visible: { opacity: 1, y: 0 },
+    };
+  }
+  return {
+    hidden: { opacity: 0, y: 32 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+}
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
+function Block({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const variants = useBlockVariants();
+  return (
+    <motion.div
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px 0px -80px 0px' }}
+      className={`bg-card border border-border rounded-sm shadow-sm p-6 md:p-8 ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <motion.h2
-      variants={itemVariants}
-      className="text-xs font-sans uppercase tracking-[0.2em] text-muted-foreground mb-6 pb-3 border-b border-border"
-    >
+    <h2 className="text-xs font-sans uppercase tracking-[0.2em] text-muted-foreground mb-6">
       {children}
-    </motion.h2>
+    </h2>
   );
 }
 
 function EntryCard({ entry }: { entry: ResumeEntry }) {
   return (
-    <motion.div variants={itemVariants} className="mb-8 last:mb-0">
+    <Block>
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
         <div>
           <h3 className="font-serif text-lg text-foreground leading-snug">{entry.title}</h3>
@@ -46,20 +64,18 @@ function EntryCard({ entry }: { entry: ResumeEntry }) {
           </li>
         ))}
       </ul>
-    </motion.div>
+    </Block>
   );
 }
 
 export default function Resume() {
+  const variants = useBlockVariants();
   return (
-    <motion.div
-      className="w-full py-12 md:py-20 max-w-4xl mx-auto"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="w-full py-12 md:py-20 max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
       <motion.div
-        variants={itemVariants}
+        variants={variants}
+        initial="hidden"
+        animate="visible"
         className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-16"
       >
         <div>
@@ -86,21 +102,25 @@ export default function Resume() {
       <div className="space-y-16">
         <section>
           <SectionHeading>Professional Experience</SectionHeading>
-          {resume.professional.map((entry, i) => (
-            <EntryCard key={i} entry={entry} />
-          ))}
+          <div className="space-y-6">
+            {resume.professional.map((entry, i) => (
+              <EntryCard key={i} entry={entry} />
+            ))}
+          </div>
         </section>
 
         <section>
           <SectionHeading>Leadership Experience</SectionHeading>
-          {resume.leadership.map((entry, i) => (
-            <EntryCard key={i} entry={entry} />
-          ))}
+          <div className="space-y-6">
+            {resume.leadership.map((entry, i) => (
+              <EntryCard key={i} entry={entry} />
+            ))}
+          </div>
         </section>
 
         <section>
           <SectionHeading>Education</SectionHeading>
-          <motion.div variants={itemVariants} className="mb-6">
+          <Block>
             <div className="flex flex-col sm:flex-row sm:justify-between gap-1 mb-4">
               <h3 className="font-serif text-lg text-foreground">{resume.education.institution}</h3>
               <span className="font-sans text-xs text-muted-foreground shrink-0 pt-0.5">{resume.education.location}</span>
@@ -123,35 +143,44 @@ export default function Resume() {
                 <span className="text-foreground font-medium">Honors:</span> {resume.education.honors}
               </p>
             </div>
-          </motion.div>
+          </Block>
         </section>
 
         <section>
           <SectionHeading>Languages</SectionHeading>
-          <motion.p variants={itemVariants} className="font-serif text-lg text-foreground">
-            {resume.languages}
-          </motion.p>
+          <Block>
+            <p className="font-serif text-lg text-foreground">{resume.languages}</p>
+          </Block>
         </section>
 
         <section>
           <SectionHeading>Interests</SectionHeading>
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
-            {resume.interests.map((interest) => (
-              <span
-                key={interest}
-                className="font-sans text-xs uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
-              >
-                {interest}
-              </span>
-            ))}
-          </motion.div>
+          <Block>
+            <div className="flex flex-wrap gap-2">
+              {resume.interests.map((interest) => (
+                <span
+                  key={interest}
+                  className="font-sans text-xs uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
+                >
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </Block>
         </section>
 
-        <motion.section variants={itemVariants}>
+        <section>
           <SectionHeading>Full Resume (PDF)</SectionHeading>
-          <PdfEmbed src="/resume.pdf" label="Layal Barakat resume (PDF)" height={900} />
-        </motion.section>
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px 0px -80px 0px' }}
+          >
+            <PdfEmbed src="/resume.pdf" label="Layal Barakat resume (PDF)" height={900} />
+          </motion.div>
+        </section>
       </div>
-    </motion.div>
+    </div>
   );
 }
