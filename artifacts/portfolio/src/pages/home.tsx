@@ -90,7 +90,7 @@ export default function Home() {
         </motion.p>
 
         <div
-          className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-x-12 xl:gap-x-20 [grid-template-areas:'h1'_'divider'_'scrap'_'tagline'] md:[grid-template-areas:'h1_scrap'_'divider_divider'_'tagline_tagline']"
+          className="grid grid-cols-1 md:grid-cols-[auto_auto] md:justify-start items-center gap-x-12 xl:gap-x-20 [grid-template-areas:'h1'_'divider'_'scrap'_'tagline'] md:[grid-template-areas:'h1_scrap'_'divider_divider'_'tagline_tagline']"
         >
           <motion.h1
             variants={container} initial="hidden" animate={showIntro ? "hidden" : "show"}
