@@ -52,7 +52,11 @@ export default function Home() {
   const [wordsAnimated, setWordsAnimated] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const [showIntro, setShowIntro] = useState(() => {
-    try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
+    const visible = (() => {
+      try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
+    })();
+    setIntroVisible(visible);
+    return visible;
   });
 
   useEffect(() => {
