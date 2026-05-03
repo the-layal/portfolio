@@ -88,9 +88,8 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
     };
   }, [isBlueprint]);
 
-  if (isBlueprint) return null;
-
   const isActive = hovered || touchPressed;
+  const decorationsVisible = !isBlueprint;
 
   const ringColor = isActive ? 'rgba(100,220,255,0.95)' : 'rgba(100,220,255,0.75)';
   const arcFill = isActive ? 'rgba(100,220,255,0.32)' : 'rgba(100,220,255,0.18)';
@@ -110,7 +109,8 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
       onTouchStart={() => setTouchPressed(true)}
       onTouchEnd={() => setTouchPressed(false)}
       onTouchCancel={() => setTouchPressed(false)}
-      aria-label="Activate blueprint mode"
+      aria-label={isBlueprint ? 'Exit blueprint mode' : 'Activate blueprint mode'}
+      aria-pressed={isBlueprint}
       tabIndex={0}
       style={{
         position: 'fixed',
@@ -134,7 +134,7 @@ export default function BlueprintCornerTrigger({ isBlueprint, onActivate }: Prop
         viewBox={`0 0 ${SIZE} ${SIZE}`}
         style={{
           display: 'block',
-          opacity: inactive ? 1 : 0,
+          opacity: decorationsVisible && inactive ? 1 : 0,
           transition: 'opacity 0.35s ease',
         }}
         aria-hidden
