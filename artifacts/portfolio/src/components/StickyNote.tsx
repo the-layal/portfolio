@@ -2,16 +2,81 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const STORAGE_KEY = 'sticky_note_v1';
+const COLOR_STORAGE_KEY = 'sticky_note_color_v1';
+
+type Swatch = {
+  id: string;
+  label: string;
+  bg: string;
+  bgGradientTop: string;
+  bgGradientBottom: string;
+  ink: string;
+  inkSoft: string;
+  innerShadow: string;
+};
+
+const SWATCHES: Swatch[] = [
+  {
+    id: 'yellow',
+    label: 'Yellow',
+    bg: '#F5E89A',
+    bgGradientTop: '#F8EFB0',
+    bgGradientBottom: '#F0DF85',
+    ink: '#3a2e10',
+    inkSoft: '#5a4416',
+    innerShadow: 'rgba(180,140,40,0.10)',
+  },
+  {
+    id: 'pink',
+    label: 'Pink',
+    bg: '#F5C2C7',
+    bgGradientTop: '#F8D2D6',
+    bgGradientBottom: '#EFB0B6',
+    ink: '#3a1418',
+    inkSoft: '#6b2a30',
+    innerShadow: 'rgba(170,60,75,0.10)',
+  },
+  {
+    id: 'blue',
+    label: 'Blue',
+    bg: '#BAD4D8',
+    bgGradientTop: '#CCE0E3',
+    bgGradientBottom: '#A8C7CC',
+    ink: '#102528',
+    inkSoft: '#2c4549',
+    innerShadow: 'rgba(40,90,100,0.10)',
+  },
+  {
+    id: 'green',
+    label: 'Green',
+    bg: '#C8D8B0',
+    bgGradientTop: '#D6E2C0',
+    bgGradientBottom: '#B6CB9E',
+    ink: '#1c2811',
+    inkSoft: '#3b4a28',
+    innerShadow: 'rgba(80,110,50,0.10)',
+  },
+];
+
+const DEFAULT_SWATCH_ID = SWATCHES[0].id;
+
+const getSwatch = (id: string): Swatch =>
+  SWATCHES.find(s => s.id === id) ?? SWATCHES[0];
 
 export default function StickyNote() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [colorId, setColorId] = useState<string>(DEFAULT_SWATCH_ID);
   const taRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem(STORAGE_KEY);
       if (saved !== null) setValue(saved);
+      const savedColor = sessionStorage.getItem(COLOR_STORAGE_KEY);
+      if (savedColor && SWATCHES.some(s => s.id === savedColor)) {
+        setColorId(savedColor);
+      }
     } catch {}
   }, []);
 
@@ -25,6 +90,13 @@ export default function StickyNote() {
     setValue(e.target.value);
     try { sessionStorage.setItem(STORAGE_KEY, e.target.value); } catch {}
   };
+
+  const pickColor = (id: string) => {
+    setColorId(id);
+    try { sessionStorage.setItem(COLOR_STORAGE_KEY, id); } catch {}
+  };
+
+  const swatch = getSwatch(colorId);
 
   return (
     <div
@@ -45,11 +117,12 @@ export default function StickyNote() {
         style={{
           width: 52,
           height: 52,
-          background: '#FFD96B',
-          color: '#3a2e10',
+          background: swatch.bg,
+          color: swatch.ink,
           boxShadow: '0 6px 18px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.1)',
           transform: 'rotate(-6deg)',
           border: 'none',
+          transition: 'background-color 0.25s ease, color 0.25s ease',
         }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -79,25 +152,27 @@ export default function StickyNote() {
               bottom: 64,
               width: 'min(280px, 78vw)',
               height: 260,
-              background: 'linear-gradient(180deg, #FFE89A 0%, #FFD96B 100%)',
+              background: `linear-gradient(180deg, ${swatch.bgGradientTop} 0%, ${swatch.bgGradientBottom} 100%)`,
               boxShadow:
-                '0 18px 40px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12), inset 0 0 30px rgba(180,140,40,0.08)',
+                `0 18px 40px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12), inset 0 0 30px ${swatch.innerShadow}`,
               transformOrigin: '90% 95%',
               padding: '14px 16px 16px',
               display: 'flex',
               flexDirection: 'column',
+              transition: 'background 0.25s ease, box-shadow 0.25s ease',
             }}
           >
             <div
               className="flex items-center justify-between mb-2"
-              style={{ color: '#5a4416' }}
+              style={{ color: swatch.inkSoft }}
             >
               <span
                 style={{
-                  fontFamily: "'Caveat', 'Special Elite', cursive",
-                  fontSize: '1.15rem',
-                  fontWeight: 600,
+                  fontFamily: "'Special Elite', monospace",
+                  fontSize: '0.95rem',
+                  fontWeight: 400,
                   lineHeight: 1,
+                  letterSpacing: '0.02em',
                 }}
               >
                 note to self
@@ -110,7 +185,7 @@ export default function StickyNote() {
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: '#5a4416',
+                  color: swatch.inkSoft,
                   fontSize: '1.1rem',
                   lineHeight: 1,
                   padding: '2px 6px',
@@ -120,18 +195,52 @@ export default function StickyNote() {
               </button>
             </div>
 
+            <div
+              role="radiogroup"
+              aria-label="Sticky note color"
+              className="flex items-center gap-1.5 mb-2"
+            >
+              {SWATCHES.map(s => {
+                const active = s.id === colorId;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    aria-label={s.label}
+                    onClick={() => pickColor(s.id)}
+                    className="pointer-events-auto"
+                    style={{
+                      width: 14,
+                      height: 14,
+                      borderRadius: '50%',
+                      background: s.bg,
+                      border: active
+                        ? `1.5px solid ${swatch.ink}`
+                        : '1px solid rgba(0,0,0,0.18)',
+                      padding: 0,
+                      transform: active ? 'scale(1.15)' : 'scale(1)',
+                      transition: 'transform 0.15s ease, border-color 0.15s ease',
+                      boxShadow: active ? '0 1px 3px rgba(0,0,0,0.18)' : 'none',
+                    }}
+                  />
+                );
+              })}
+            </div>
+
             <textarea
               ref={taRef}
               value={value}
               onChange={onChange}
               placeholder="jot something down…"
               spellCheck={false}
-              className="pointer-events-auto flex-1 w-full resize-none bg-transparent outline-none border-0 placeholder:text-[#7a5e1e]/55"
+              className="pointer-events-auto flex-1 w-full resize-none bg-transparent outline-none border-0 placeholder:text-black/35"
               style={{
-                fontFamily: "'Caveat', 'Special Elite', cursive",
-                fontSize: '1.25rem',
-                lineHeight: 1.35,
-                color: '#3a2e10',
+                fontFamily: "'Special Elite', monospace",
+                fontSize: '0.95rem',
+                lineHeight: 1.5,
+                color: swatch.ink,
                 cursor: 'text',
               }}
             />
