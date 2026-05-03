@@ -26,12 +26,47 @@ interface PaperScrapProps {
 
 type Phase = 'idle' | 'typing' | 'pausing' | 'erasing' | 'waiting';
 
+type DragBounds = { top: number; left: number; right: number; bottom: number };
+
 export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapProps) {
   const [revealed, setRevealed] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
   const [phase, setPhase] = useState<Phase>('idle');
   const [topIdx, setTopIdx] = useState<number>(NOTES.length - 1);
   const [draggingIdx, setDraggingIdx] = useState<number | null>(null);
+  const scrapRef = useRef<HTMLDivElement | null>(null);
+  const [dragBounds, setDragBounds] = useState<DragBounds | null>(null);
+
+  useEffect(() => {
+    const container = dragConstraintsRef?.current;
+    const scrap = scrapRef.current;
+    if (!container || !scrap) return;
+
+    const measure = () => {
+      const c = container.getBoundingClientRect();
+      const s = scrap.getBoundingClientRect();
+      if (c.width <= 0 || c.height <= 0 || s.width <= 0 || s.height <= 0) {
+        setDragBounds(null);
+        return;
+      }
+      setDragBounds({
+        top: c.top - s.top,
+        left: c.left - s.left,
+        right: c.right - s.right,
+        bottom: c.bottom - s.bottom,
+      });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(container);
+    ro.observe(scrap);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [dragConstraintsRef, animate]);
   const phraseIndexRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blinkRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -108,10 +143,11 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
   useEffect(() => () => clear(), []);
 
   const size = 'clamp(150px, 17vw, 220px)';
-  const dragEnabled = animate;
+  const dragEnabled = animate && dragBounds !== null;
 
   return (
     <motion.div
+      ref={scrapRef}
       className="hidden md:block relative select-none flex-shrink-0"
       initial={{ opacity: 0, y: 20 }}
       animate={animate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -139,7 +175,7 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
               : { rotate: note.rotate - 4, opacity: 0, scale: 0.92, x: note.x, y: note.y }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.08 }}
             drag={dragEnabled}
-            dragConstraints={dragConstraintsRef}
+            dragConstraints={dragBounds ?? { top: 0, left: 0, right: 0, bottom: 0 }}
             dragElastic={0}
             dragMomentum={false}
             onDragStart={() => {
