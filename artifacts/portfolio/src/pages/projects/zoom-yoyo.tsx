@@ -18,7 +18,7 @@ function CapThermoMoldFigure() {
 
   return (
     <figure className="my-8 flex gap-2 items-start">
-      <div ref={leftColRef} className="flex flex-col flex-1 min-w-0">
+      <div ref={leftColRef} className="flex flex-col gap-4 flex-1 min-w-0">
         <img src="/images/zoom-yoyo/cap.png" alt="" className="w-full my-0" />
         <img src="/images/zoom-yoyo/thermo.png" alt="" className="w-full my-0" />
       </div>
