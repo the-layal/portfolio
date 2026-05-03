@@ -229,7 +229,6 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white cursor-none;
-    /* Smaller default for raw inherited text (no explicit text-* utility). */
     font-size: 0.9375rem;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
@@ -243,19 +242,6 @@
     @apply cursor-none;
   }
 }
-
-/* ---------------------------------------------------------------------
-   Body text size reduction (~93.75% of Tailwind defaults)
-   ---------------------------------------------------------------------
-   Strategy: override the body-tier text-* utilities (text-xs..text-xl
-   plus their sm:/md:/lg: responsive variants) ONLY when applied to
-   non-heading elements. Headings (h1-h6) and any prose-h* modifier
-   (which targets h-elements inside .prose) keep their original sizes
-   because the negation excludes them. Display utilities (text-2xl and
-   up), Tailwind type tokens, and rem-based spacing/layout are not
-   touched. `:where()` keeps specificity equal to a single utility class
-   (0,1,0), and these rules sit after `@import "tailwindcss"` so the
-   cascade picks them over Tailwind's defaults. */
 
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
