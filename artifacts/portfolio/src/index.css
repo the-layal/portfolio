@@ -48,15 +48,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  /* Slightly smaller body-copy type ramp (~93.75% of Tailwind defaults).
-     Display sizes (text-2xl and up) are intentionally left at default so
-     headings render at their original visual size. */
-  --text-xs: 0.703rem;
-  --text-sm: 0.82rem;
-  --text-base: 0.9375rem;
-  --text-lg: 1.055rem;
-  --text-xl: 1.172rem;
 }
 
 :root {
@@ -253,12 +244,45 @@
   }
 }
 
-/* Pin the few headings that use body-tier sizes (text-lg, text-xl) back
-   to their original sizes so the body-ramp shrink only affects body
-   copy. Compound selectors (element + class) beat utility specificity. */
-:is(h1, h2, h3, h4, h5, h6).text-lg { font-size: 1.125rem; }
-:is(h1, h2, h3, h4, h5, h6).text-xl { font-size: 1.25rem; }
+/* ---------------------------------------------------------------------
+   Body text size reduction (~93.75% of Tailwind defaults)
+   ---------------------------------------------------------------------
+   Strategy: override the body-tier text-* utilities (text-xs..text-xl
+   plus their sm:/md:/lg: responsive variants) ONLY when applied to
+   non-heading elements. Headings (h1-h6) and any prose-h* modifier
+   (which targets h-elements inside .prose) keep their original sizes
+   because the negation excludes them. Display utilities (text-2xl and
+   up), Tailwind type tokens, and rem-based spacing/layout are not
+   touched. `:where()` keeps specificity equal to a single utility class
+   (0,1,0), and these rules sit after `@import "tailwindcss"` so the
+   cascade picks them over Tailwind's defaults. */
 
-/* Shrink prose body copy proportionally to match the rest of the site. */
-.prose { font-size: 0.9375rem; }
-.prose-lg { font-size: 1.055rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-lg   { font-size: 1.055rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-xl   { font-size: 1.172rem; }
+
+@media (min-width: 640px) {
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xs   { font-size: 0.703rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-sm   { font-size: 0.82rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-base { font-size: 0.9375rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-lg   { font-size: 1.055rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xl   { font-size: 1.172rem; }
+}
+
+@media (min-width: 768px) {
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xs   { font-size: 0.703rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-sm   { font-size: 0.82rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-base { font-size: 0.9375rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-lg   { font-size: 1.055rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xl   { font-size: 1.172rem; }
+}
+
+@media (min-width: 1024px) {
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xs   { font-size: 0.703rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-sm   { font-size: 0.82rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-base { font-size: 0.9375rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-lg   { font-size: 1.055rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xl   { font-size: 1.172rem; }
+}
