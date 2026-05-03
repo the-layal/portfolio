@@ -148,7 +148,7 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
   return (
     <motion.div
       ref={scrapRef}
-      className="hidden md:block relative select-none flex-shrink-0"
+      className="relative select-none flex-shrink-0"
       initial={{ opacity: 0, y: 20 }}
       animate={animate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}

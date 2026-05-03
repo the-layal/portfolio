@@ -89,12 +89,14 @@ export default function Home() {
           </span>
         </motion.p>
 
-        <div className="flex flex-row items-center gap-12 xl:gap-20">
+        <div
+          className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-x-12 xl:gap-x-20 [grid-template-areas:'h1'_'divider'_'scrap'_'tagline'] md:[grid-template-areas:'h1_scrap'_'divider_divider'_'tagline_tagline']"
+        >
           <motion.h1
             variants={container} initial="hidden" animate={showIntro ? "hidden" : "show"}
             onAnimationComplete={() => { if (!showIntro) setWordsAnimated(true); }}
             className="font-serif text-foreground leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
+            style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)", gridArea: 'h1' }}
           >
             {words.map((word) => (
               <span key={word} className="block overflow-hidden">
@@ -106,23 +108,29 @@ export default function Home() {
             ))}
           </motion.h1>
 
-          <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} />
+          <motion.div
+            className="h-px bg-accent mt-8 mb-8 origin-left"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={showIntro ? { scaleX: 0, opacity: 0 } : { scaleX: 1, opacity: 1 }}
+            transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{ width: "clamp(80px, 12vw, 160px)", gridArea: 'divider' }}
+          />
+
+          <div
+            className="hidden sm:block justify-self-start md:justify-self-auto mb-6 md:mb-0"
+            style={{ gridArea: 'scrap' }}
+          >
+            <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} />
+          </div>
+
+          <motion.p
+            variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.8 }}
+            className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
+            style={{ gridArea: 'tagline' }}
+          >
+            MIT BS '23, MS '25. Helping others through functional and accessible design.
+          </motion.p>
         </div>
-
-        <motion.div
-          className="h-px bg-accent mt-8 mb-8 origin-left"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={showIntro ? { scaleX: 0, opacity: 0 } : { scaleX: 1, opacity: 1 }}
-          transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ width: "clamp(80px, 12vw, 160px)" }}
-        />
-
-        <motion.p
-          variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.8 }}
-          className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
-        >
-          MIT BS '23, MS '25. Helping others through functional and accessible design.
-        </motion.p>
       </section>
 
       <TickerStrip />
