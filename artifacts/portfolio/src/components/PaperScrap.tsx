@@ -232,7 +232,7 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
                 style={{
                   position: 'absolute',
                   top: 6,
-                  right: 6,
+                  left: 6,
                   width: 22,
                   height: 22,
                   borderRadius: '50%',
