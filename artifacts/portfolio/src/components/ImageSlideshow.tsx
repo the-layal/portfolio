@@ -16,7 +16,7 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
 
   return (
     <div className="select-none">
-      <div className="relative border border-border overflow-hidden">
+      <div className="relative overflow-hidden">
         <img
           src={s.src}
           alt={s.alt || ''}
