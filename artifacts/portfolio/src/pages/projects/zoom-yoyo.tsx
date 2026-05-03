@@ -7,14 +7,13 @@ function CapThermoMoldFigure() {
   const [moldMaxH, setMoldMaxH] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    const update = () => {
-      if (leftColRef.current) {
-        setMoldMaxH(leftColRef.current.offsetHeight);
-      }
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    const el = leftColRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      setMoldMaxH(el.offsetHeight);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
