@@ -5,8 +5,17 @@ import ImageSlideshow from '@/components/ImageSlideshow';
   export default function DesignIntensive() {
     return (
       <ProjectPage title="How to Design Intensive" subtitle="MIT, 2020">
-        <img src="/images/design-intensive/barakat_layal_how-to-design_assignment-01-1.png" alt="Assignment 1 final piece" />
-        <img src="/images/design-intensive/spin-loop.gif" alt="Spin-loop animation from Assignment 2 process" />
+        <div className="not-prose sm:hidden flex flex-col gap-[9px]">
+          <img src="/images/design-intensive/barakat_layal_how-to-design_assignment-01-1.png" alt="Assignment 1 final piece" className="w-full h-auto" />
+          <img src="/images/design-intensive/spin-loop.gif" alt="Spin-loop animation from Assignment 2 process" className="w-full h-auto" />
+        </div>
+        <figure className="not-prose hidden sm:block relative overflow-hidden">
+          <div style={{ paddingTop: `calc(100% / ${2000/1125 + 298/480} - ${9 / (2000/1125 + 298/480)}px)` }} />
+          <div className="absolute inset-0 flex gap-[9px]">
+            <img src="/images/design-intensive/barakat_layal_how-to-design_assignment-01-1.png" alt="Assignment 1 final piece" className="h-full w-full object-cover min-w-0" style={{ flex: 2000/1125 }} />
+            <img src="/images/design-intensive/spin-loop.gif" alt="Spin-loop animation from Assignment 2 process" className="h-full w-full object-cover min-w-0" style={{ flex: 298/480 }} />
+          </div>
+        </figure>
       <p>{`In January 2020, I took 4.02A-Intro to Design: Studio Intensive. In it, I was introduced to the fundamentals of design through the completion of three projects, each lasting a week. Through careful thought, study, and iteration, I was able to produce compelling art in a way I didn’t expect.`}</p>
       <h4>{`Assignment 1-Drift`}</h4>
       <p>{`The goal of the first assignment was to create a tool and/or process that would result in many pieces that vary slightly from each other. After brainstorming many ideas, I decided to somehow incorporate the idea of utilizing multiple marking utensils to create chains of shapes.`}</p>
