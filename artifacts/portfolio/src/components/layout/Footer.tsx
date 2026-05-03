@@ -6,7 +6,12 @@ export default function Footer() {
     <footer className="border-t border-border mt-24 py-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex flex-col items-center md:items-start">
-          <h2 className="font-serif text-lg font-semibold text-foreground mb-1">Layal Barakat</h2>
+          <h2
+            className="font-serif font-semibold text-foreground mb-1"
+            style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.1rem)' }}
+          >
+            Layal Barakat
+          </h2>
           <p className="text-muted-foreground text-sm font-sans">Built with love at MIT.</p>
         </div>
         

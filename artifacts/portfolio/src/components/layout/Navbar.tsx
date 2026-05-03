@@ -21,7 +21,12 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 py-6 px-6 md:px-12 mix-blend-difference text-white"
     >
       <nav className="flex justify-between items-center max-w-7xl mx-auto">
-        <Link href="/" className="text-xl font-serif font-normal tracking-tight hover:opacity-70 transition-opacity" data-testid="link-home">
+        <Link
+          href="/"
+          className="font-serif font-normal tracking-tight hover:opacity-70 transition-opacity"
+          style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.1rem)' }}
+          data-testid="link-home"
+        >
           Layal Barakat
         </Link>
         <ul className="flex items-center space-x-6 md:space-x-8 text-sm font-sans tracking-wide">
