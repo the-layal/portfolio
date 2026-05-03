@@ -160,7 +160,7 @@ export default function Home() {
           />
 
           <div
-            className="hidden sm:block justify-self-start md:justify-self-auto mb-6 md:mb-0"
+            className="justify-self-start md:justify-self-auto mb-6 md:mb-0"
             style={{ gridArea: 'scrap' }}
           >
             <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} onAddSticker={addSticker} />

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue } from 'framer-motion';
 import { STICKER_BY_ID } from './stickers';
 
 export type PlacedSticker = {
@@ -53,9 +53,9 @@ export default function StickerLayer({
               setDraggingUid(sticker.uid);
               setTopUid(sticker.uid);
             }}
-            onDragEnd={(dx, dy) => {
+            onCommit={(nx, ny) => {
               setDraggingUid(null);
-              onUpdate(sticker.uid, { x: sticker.x + dx, y: sticker.y + dy });
+              onUpdate(sticker.uid, { x: nx, y: ny });
             }}
             onHover={(h) => setHoverUid(h ? sticker.uid : null)}
             onRemove={() => onRemove(sticker.uid)}
@@ -75,45 +75,48 @@ interface StickerItemProps {
   isHover: boolean;
   dragConstraintsRef: React.RefObject<HTMLElement | null>;
   onDragStart: () => void;
-  onDragEnd: (dx: number, dy: number) => void;
+  onCommit: (x: number, y: number) => void;
   onHover: (h: boolean) => void;
   onRemove: () => void;
 }
 
 function StickerItem({
   sticker, src, label, size, isTop, isHover,
-  dragConstraintsRef, onDragStart, onDragEnd, onHover, onRemove,
+  dragConstraintsRef, onDragStart, onCommit, onHover, onRemove,
 }: StickerItemProps) {
-  const startRef = useRef<{ x: number; y: number } | null>(null);
+  // Controlled position: a single source of truth lives in `sticker.x/y`
+  // (state in <Home>). Framer's drag mutates these motion values directly
+  // via `style={{ x, y }}`; on drag end we read the final values and push
+  // them back into state. When state changes (e.g. hydration or undo),
+  // the effect below syncs the motion values back so the rendered
+  // transform always matches the persisted coordinates.
+  const x = useMotionValue(sticker.x);
+  const y = useMotionValue(sticker.y);
+
+  useEffect(() => { x.set(sticker.x); }, [sticker.x, x]);
+  useEffect(() => { y.set(sticker.y); }, [sticker.y, y]);
+
   return (
     <motion.div
-      className="absolute pointer-events-auto select-none"
+      className="absolute pointer-events-auto select-none top-0 left-0"
       style={{
-        left: sticker.x,
-        top: sticker.y,
+        x,
+        y,
         width: size,
         height: size,
+        rotate: sticker.rotate,
         zIndex: isTop ? 60 : 31,
         touchAction: 'none',
       }}
-      initial={{ opacity: 0, scale: 0.4, rotate: sticker.rotate }}
-      animate={{ opacity: 1, scale: 1, rotate: sticker.rotate }}
+      initial={{ opacity: 0, scale: 0.4 }}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 320, damping: 22, mass: 0.5 }}
       drag
       dragConstraints={dragConstraintsRef as React.RefObject<HTMLElement>}
       dragElastic={0}
       dragMomentum={false}
-      onDragStart={(_, info) => {
-        startRef.current = { x: info.point.x, y: info.point.y };
-        onDragStart();
-      }}
-      onDragEnd={(_, info) => {
-        const start = startRef.current;
-        const dx = start ? info.point.x - start.x : 0;
-        const dy = start ? info.point.y - start.y : 0;
-        startRef.current = null;
-        onDragEnd(dx, dy);
-      }}
+      onDragStart={onDragStart}
+      onDragEnd={() => onCommit(x.get(), y.get())}
       whileDrag={{ scale: 1.06 }}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
