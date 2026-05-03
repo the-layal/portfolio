@@ -51,7 +51,9 @@ function removePaletteVars() {
 export function useAccentPalette() {
   const [idx, setIdx] = useState<number>(() => {
     try {
-      const raw = Number(localStorage.getItem(STORAGE_KEY));
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === null) return 2;
+      const raw = Number(stored);
       return Number.isInteger(raw) && raw >= 0 && raw < PALETTES.length ? raw : 2;
     } catch {
       return 2;
