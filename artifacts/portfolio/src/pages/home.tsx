@@ -80,7 +80,7 @@ export default function Home() {
             variants={container} initial="hidden" animate={showIntro ? "hidden" : "show"}
             onAnimationComplete={() => { if (!showIntro) setWordsAnimated(true); }}
             className="font-serif text-foreground leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(calc(3.2rem / 0.9375), 9vw, calc(7.5rem / 0.9375))" }}
+            style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
           >
             {words.map((word) => (
               <span key={word} className="block overflow-hidden">

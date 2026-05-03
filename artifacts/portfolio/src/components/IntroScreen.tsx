@@ -129,7 +129,7 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
                 text={text}
                 startDelay={startDelay}
                 className="block font-serif text-white leading-[1.1] tracking-tight"
-                style={{ fontSize: 'clamp(calc(3.6rem / 0.9375), 10.5vw, calc(9rem / 0.9375))' }}
+                style={{ fontSize: 'clamp(3.6rem, 10.5vw, 9rem)' }}
               />
             </div>
           ))}
