@@ -18,7 +18,7 @@ export default function ZoomYoyo() {
       <p>{`I was responsible for CADing the Zoom cap and Zoom thermoformed piece. I had to take into account the tolerances between the three parts: the cap, thermoformed piece, and the base. The models I created were used to create the Zoom cap mold and the thermoformed logo die by my teammates. I used the HAAS milling machine to make the mold with another teammate and with the supervision of our instructor. We learned how to read G-code and understand some of the more common G-code commands while the mill was running.`}</p>
 
       <figure className="my-8 flex gap-2 items-stretch">
-        <div className="flex flex-col gap-1 flex-1 min-w-0">
+        <div className="flex flex-col flex-1 min-w-0">
           <img src="/images/zoom-yoyo/cap.png" alt="" className="w-full" />
           <img src="/images/zoom-yoyo/thermo.png" alt="" className="w-full" />
         </div>
