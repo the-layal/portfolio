@@ -48,6 +48,15 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Slightly smaller body-copy type ramp (~93.75% of Tailwind defaults).
+     Display sizes (text-2xl and up) are intentionally left at default so
+     headings render at their original visual size. */
+  --text-xs: 0.703rem;
+  --text-sm: 0.82rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.055rem;
+  --text-xl: 1.172rem;
 }
 
 :root {
@@ -229,11 +238,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white cursor-none;
-    /* Slightly smaller default body copy (~15px) for a more refined feel.
-       Scoped to body (not html) so all rem-based sizing — headings, Tailwind
-       text-* utilities, prose, spacing — stays exactly as designed. Only
-       elements that inherit font-size from body (raw <p>, <li>, <span>,
-       form controls, etc., without an explicit text-* class) are affected. */
+    /* Smaller default for raw inherited text (no explicit text-* utility). */
     font-size: 0.9375rem;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
@@ -247,3 +252,13 @@
     @apply cursor-none;
   }
 }
+
+/* Pin the few headings that use body-tier sizes (text-lg, text-xl) back
+   to their original sizes so the body-ramp shrink only affects body
+   copy. Compound selectors (element + class) beat utility specificity. */
+:is(h1, h2, h3, h4, h5, h6).text-lg { font-size: 1.125rem; }
+:is(h1, h2, h3, h4, h5, h6).text-xl { font-size: 1.25rem; }
+
+/* Shrink prose body copy proportionally to match the rest of the site. */
+.prose { font-size: 0.9375rem; }
+.prose-lg { font-size: 1.055rem; }
