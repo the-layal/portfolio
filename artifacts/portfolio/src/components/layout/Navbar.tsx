@@ -37,7 +37,7 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={[
-        'fixed top-0 left-0 right-0 z-50 px-6 md:px-12',
+        'fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12',
         'transition-[padding,background-color,backdrop-filter,border-color] duration-500 ease-out',
         scrolled
           ? 'py-1.5 bg-background/70 backdrop-blur-md border-b border-border text-foreground'
