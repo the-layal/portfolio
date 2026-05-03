@@ -36,12 +36,12 @@ export default function Thesis() {
       <PdfEmbed src="/pdfs/isam-paper.pdf" label="ISAM 2025 Paper (PDF)" />
 
       <h4>ISAM Presentation</h4>
-      <div className="my-8 border border-border bg-card">
+      <div className="my-8 border border-border bg-card relative left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),900px)]">
         <iframe
           src={ISAM_PRESENTATION_EMBED_URL}
           title="ISAM 2025 Presentation"
           width="100%"
-          height={720}
+          style={{ height: 'calc(min(calc(100vw - 2rem), 900px) * 9 / 16 + 90px)' }}
           allowFullScreen
           className="block"
         />
