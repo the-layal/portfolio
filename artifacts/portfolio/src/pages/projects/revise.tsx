@@ -34,7 +34,7 @@ import ImageGrid from '@/components/ImageGrid';
           { src: "/images/revise/img_0430.jpg" },
           { src: "/images/revise/img_0431.jpg" },
           { src: "/images/revise/20211020_172307-e1661737783881.jpg" }
-        ]} cols={3} />
+        ]} rowHeight={420} />
       <p>{`This is what my final CAD model of one side looked like, with slotted holes to secure the two sides together with nuts and bolts:`}</p>
       <ImageGrid images={[
           { src: "/images/revise/img_0435-e1661734366272.jpg" },
