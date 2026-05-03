@@ -173,7 +173,7 @@
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   overflow: hidden;
-  padding: 1.1rem 0;
+  padding: 0.7rem 0;
   background: hsl(24 67% 53%);
 }
 
@@ -196,16 +196,17 @@
 }
 
 .ticker-item {
-  font-family: var(--app-font-serif);
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
-  font-style: italic;
-  letter-spacing: 0.01em;
-  color: #000;
+  font-family: var(--app-font-sans);
+  font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
   padding: 0 1.6rem;
 }
 
 .ticker-sep {
-  color: #000;
+  color: #fff;
   font-size: clamp(0.7rem, 1vw, 0.9rem);
   flex-shrink: 0;
 }
