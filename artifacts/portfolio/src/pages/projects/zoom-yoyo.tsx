@@ -6,11 +6,9 @@ export default function ZoomYoyo() {
   return (
     <ProjectPage title="Zoom Yoyo Manufacturing" subtitle="2.008 Design and Manufacturing II, 2021">
 
-      <figure className="my-8 flex gap-2">
-        <div className="flex-1 min-w-0 overflow-hidden">
-          <img src="/images/zoom-yoyo/img_1745-e1661713959390.png" alt="" className="w-full h-full object-cover" />
-        </div>
-        <img src="/images/zoom-yoyo/yo.gif" alt="" className="w-[42%] flex-shrink-0 self-start" />
+      <figure className="my-8 flex gap-2" style={{ height: 'clamp(200px, 26vw, 360px)' }}>
+        <img src="/images/zoom-yoyo/img_1745-e1661713959390.png" alt="" className="flex-1 min-w-0 h-full object-cover" />
+        <img src="/images/zoom-yoyo/yo.gif" alt="" className="h-full w-auto" />
       </figure>
 
       <p>{`In Spring 2021, I took 2.008-Design and Manufactring II. Though it was during the pandemic, I was able to work on a team of seven people to design and manufacture 50 Zoom-themed yoyos. I was able to get experience using a HAAS milling machine, an injection molding machine, and a vacuum thermoformer. I especially spent a lot of time around the injection molding machine, and got very used to setting it up with our molds and ejector pins every time we got to lab.`}</p>
