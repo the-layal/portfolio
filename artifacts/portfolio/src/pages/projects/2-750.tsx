@@ -15,10 +15,10 @@ import ImageGrid from '@/components/ImageGrid';
       <h6>{`Abdominal Anatomy`}</h6>
       <p>{`We 3D printed a real life model of the superior mesenteric artery in a flexible silicone material, and overlaid a second print to mimic the way the superior mesenteric artery and vein overlap in the abdomen. We placed these two inside a black laser cut box so that we could later fill the box with silicone to mimic surrounding tissue.`}</p>
       <ImageGrid images={[
-          { src: "/images/2-750/vasculargif.gif" },
-          { src: "/images/2-750/superior_mesenteric_a.gif" },
-          { src: "/images/2-750/img_2361.jpeg" }
-        ]} cols={3} objectFit="contain" />
+          { src: "/images/2-750/vasculargif.gif", aspectRatio: 800/634 },
+          { src: "/images/2-750/superior_mesenteric_a.gif", aspectRatio: 500/609 },
+          { src: "/images/2-750/img_2361.jpeg", aspectRatio: 4032/3024 }
+        ]} />
       <h6>{`Blood Flow System`}</h6>
       <img src="/images/2-750/final-presentation-2.75-babies-1-3215712255-e1689160894491.png" alt="" />
       <p>{`I was responsible for designing the flow system. Based on the size of the vascular 3D print, I created a list of compatible pneumatic parts available on McMaster. For ease of prototyping, I chose push-to-connect fittings.`}</p>

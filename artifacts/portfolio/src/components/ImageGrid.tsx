@@ -3,6 +3,7 @@ import React from 'react';
 export interface GridImage {
   src: string;
   alt?: string;
+  aspectRatio?: number;
 }
 
 interface ImageGridProps {
@@ -12,23 +13,29 @@ interface ImageGridProps {
   caption?: string;
 }
 
-export default function ImageGrid({ images, cols = 2, objectFit = 'cover', caption }: ImageGridProps) {
+export default function ImageGrid({ images, objectFit = 'cover', caption }: ImageGridProps) {
   if (!images || images.length === 0) return null;
-  const colClass = cols === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
-  const fitClass = objectFit === 'contain' ? 'object-contain bg-[hsl(38,20%,92%)]' : 'object-cover';
+  const fitClass = objectFit === 'contain' ? 'object-contain' : 'object-cover';
+  const hasTiledRatios = images.some((img) => img.aspectRatio != null);
   return (
     <figure className="my-8">
-      <div className={`grid grid-cols-1 ${colClass} gap-2`}>
-        {images.map((img, i) => (
-          <div key={i} className="aspect-[4/3] overflow-hidden">
-            <img
-              src={img.src}
-              alt={img.alt || ''}
-              className={`w-full h-full ${fitClass}`}
-              loading="lazy"
-            />
-          </div>
-        ))}
+      <div className="flex flex-col sm:flex-row sm:overflow-hidden">
+        {images.map((img, i) => {
+          const ratio = img.aspectRatio;
+          const style: React.CSSProperties = hasTiledRatios && ratio != null
+            ? { flexGrow: ratio, flexShrink: 1, flexBasis: 0 }
+            : undefined as unknown as React.CSSProperties;
+          return (
+            <div key={i} className="overflow-hidden sm:h-52 sm:flex-none" style={style}>
+              <img
+                src={img.src}
+                alt={img.alt || ''}
+                className={`w-full sm:h-full sm:w-auto ${fitClass}`}
+                loading="lazy"
+              />
+            </div>
+          );
+        })}
       </div>
       {caption && (
         <figcaption className="mt-2 text-center text-sm italic text-muted-foreground">
