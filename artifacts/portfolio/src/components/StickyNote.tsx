@@ -100,6 +100,19 @@ export default function StickyNote() {
 
   const swatch = getSwatch(colorId);
 
+  const handleDownload = () => {
+    const blob = new Blob([value], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'note.txt';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div
       className="sticky-note-anchor z-[9990] pointer-events-none"
@@ -177,22 +190,49 @@ export default function StickyNote() {
               >
                 note to self
               </span>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close"
-                className="pointer-events-auto"
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: swatch.inkSoft,
-                  fontSize: '1.1rem',
-                  lineHeight: 1,
-                  padding: '2px 6px',
-                }}
-              >
-                ×
-              </button>
+              <div className="flex items-center gap-0.5">
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  disabled={!value.trim()}
+                  aria-label="Download note as text file"
+                  className="pointer-events-auto"
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: swatch.inkSoft,
+                    lineHeight: 1,
+                    padding: '2px 4px',
+                    opacity: value.trim() ? 1 : 0.35,
+                    cursor: value.trim() ? 'pointer' : 'default',
+                    display: 'flex',
+                    alignItems: 'center',
+                    transition: 'opacity 0.15s ease',
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 3v13" />
+                    <path d="M7 13l5 5 5-5" />
+                    <path d="M5 21h14" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close"
+                  className="pointer-events-auto"
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: swatch.inkSoft,
+                    fontSize: '1.1rem',
+                    lineHeight: 1,
+                    padding: '2px 6px',
+                  }}
+                >
+                  ×
+                </button>
+              </div>
             </div>
 
             <div
