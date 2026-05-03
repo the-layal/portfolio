@@ -16,7 +16,7 @@ interface BlobConfig {
 const BLOBS: BlobConfig[] = [
   {
     id: 1,
-    color: 'radial-gradient(circle, rgba(251,113,133,0.13) 0%, transparent 70%)',
+    color: 'radial-gradient(circle, rgba(251,113,133,0.26) 0%, transparent 70%)',
     size: 640,
     initialX: '10%',
     initialY: '5%',
@@ -27,7 +27,7 @@ const BLOBS: BlobConfig[] = [
   },
   {
     id: 2,
-    color: 'radial-gradient(circle, rgba(251,191,36,0.10) 0%, transparent 70%)',
+    color: 'radial-gradient(circle, rgba(251,191,36,0.22) 0%, transparent 70%)',
     size: 560,
     initialX: '60%',
     initialY: '15%',
@@ -38,7 +38,7 @@ const BLOBS: BlobConfig[] = [
   },
   {
     id: 3,
-    color: 'radial-gradient(circle, rgba(45,212,191,0.09) 0%, transparent 70%)',
+    color: 'radial-gradient(circle, rgba(45,212,191,0.20) 0%, transparent 70%)',
     size: 500,
     initialX: '80%',
     initialY: '55%',
@@ -49,7 +49,7 @@ const BLOBS: BlobConfig[] = [
   },
   {
     id: 4,
-    color: 'radial-gradient(circle, rgba(167,139,250,0.11) 0%, transparent 70%)',
+    color: 'radial-gradient(circle, rgba(167,139,250,0.24) 0%, transparent 70%)',
     size: 580,
     initialX: '25%',
     initialY: '65%',
@@ -60,7 +60,7 @@ const BLOBS: BlobConfig[] = [
   },
   {
     id: 5,
-    color: 'radial-gradient(circle, rgba(251,146,60,0.08) 0%, transparent 70%)',
+    color: 'radial-gradient(circle, rgba(251,146,60,0.19) 0%, transparent 70%)',
     size: 420,
     initialX: '50%',
     initialY: '40%',
@@ -100,7 +100,7 @@ export default function BlobBackground({ isBlueprint }: BlobBackgroundProps) {
             height: blob.size,
             borderRadius: '50%',
             background: blob.color,
-            filter: 'blur(80px)',
+            filter: 'blur(55px)',
             willChange: 'transform',
             translateX: '-50%',
             translateY: '-50%',
