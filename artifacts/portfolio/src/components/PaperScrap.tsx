@@ -39,9 +39,23 @@ type Phase = 'idle' | 'typing' | 'pausing' | 'erasing' | 'waiting';
 
 type DragBounds = { top: number; left: number; right: number; bottom: number };
 
+function DragHintIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M7 1L4.5 4h5L7 1z" />
+      <path d="M7 13L4.5 10h5L7 13z" />
+      <path d="M1 7L4 4.5v5L1 7z" />
+      <path d="M13 7L10 4.5v5L13 7z" />
+      <rect x="5.5" y="5.5" width="3" height="3" rx="0.5" />
+    </svg>
+  );
+}
+
 export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }: PaperScrapProps) {
   const [addBtnHover, setAddBtnHover] = useState(false);
   const [nextStickerIdx, setNextStickerIdx] = useState(0);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [touchHintOpacity, setTouchHintOpacity] = useState(0);
 
   const [revealed, setRevealed] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -165,6 +179,14 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
   const size = 'clamp(150px, 17vw, 220px)';
   const dragEnabled = animate && dragBounds !== null;
 
+  useEffect(() => {
+    if (!dragEnabled) return;
+    if (!window.matchMedia('(pointer: coarse)').matches) return;
+    setTouchHintOpacity(0.55);
+    const timer = setTimeout(() => setTouchHintOpacity(0), 2200);
+    return () => clearTimeout(timer);
+  }, [dragEnabled]);
+
   return (
     <motion.div
       ref={scrapRef}
@@ -183,8 +205,14 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
         return (
           <motion.div
             key={i}
-            onHoverStart={isBlue ? () => setAddBtnHover(true) : undefined}
-            onHoverEnd={isBlue ? () => setAddBtnHover(false) : undefined}
+            onHoverStart={() => {
+              if (isBlue) setAddBtnHover(true);
+              setHoveredIdx(i);
+            }}
+            onHoverEnd={() => {
+              if (isBlue) setAddBtnHover(false);
+              setHoveredIdx(null);
+            }}
             initial={{
               rotate: note.rotate - 4,
               opacity: 0,
@@ -292,6 +320,25 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
                     note.text
                   )}
                 </p>
+              </div>
+            )}
+            {dragEnabled && (
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 6,
+                  right: 6,
+                  color: 'rgba(0,0,0,0.38)',
+                  pointerEvents: 'none',
+                  opacity: isDragging
+                    ? 0
+                    : hoveredIdx === i
+                    ? 0.7
+                    : touchHintOpacity,
+                  transition: 'opacity 0.22s ease',
+                }}
+              >
+                <DragHintIcon />
               </div>
             )}
           </motion.div>
