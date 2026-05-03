@@ -198,7 +198,7 @@
 
 .ticker-item {
   font-family: var(--app-font-sans);
-  font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+  font-size: clamp(calc(0.85rem / 0.9375), 1.3vw, calc(1.1rem / 0.9375));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -209,7 +209,7 @@
 
 .ticker-sep {
   color: #fff;
-  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  font-size: clamp(calc(0.7rem / 0.9375), 1vw, calc(0.9rem / 0.9375));
   flex-shrink: 0;
   transition: color 0.3s ease;
 }
@@ -227,6 +227,10 @@
     @apply border-border;
   }
 
+  html {
+    font-size: 93.75%;
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white cursor-none;
     transition: background-color 0.5s ease, color 0.5s ease;
@@ -240,4 +244,49 @@
   a, button, [role="button"] {
     @apply cursor-none;
   }
+}
+
+/* Pin heading sizes back to their original rem values so the html
+   shrink only affects body copy. Compound selectors (element + class)
+   beat plain Tailwind utility class specificity. */
+:is(h1, h2, h3, h4, h5, h6).text-lg { font-size: calc(1.125rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-xl { font-size: calc(1.25rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-2xl { font-size: calc(1.5rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-3xl { font-size: calc(1.875rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-4xl { font-size: calc(2.25rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-5xl { font-size: calc(3rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-6xl { font-size: calc(3.75rem / 0.9375); }
+:is(h1, h2, h3, h4, h5, h6).text-7xl { font-size: calc(4.5rem / 0.9375); }
+
+@media (min-width: 640px) {
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-lg { font-size: calc(1.125rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-xl { font-size: calc(1.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-2xl { font-size: calc(1.5rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-3xl { font-size: calc(1.875rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-4xl { font-size: calc(2.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-5xl { font-size: calc(3rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-6xl { font-size: calc(3.75rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).sm\:text-7xl { font-size: calc(4.5rem / 0.9375); }
+}
+
+@media (min-width: 768px) {
+  :is(h1, h2, h3, h4, h5, h6).md\:text-lg { font-size: calc(1.125rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-xl { font-size: calc(1.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-2xl { font-size: calc(1.5rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-3xl { font-size: calc(1.875rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-4xl { font-size: calc(2.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-5xl { font-size: calc(3rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-6xl { font-size: calc(3.75rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).md\:text-7xl { font-size: calc(4.5rem / 0.9375); }
+}
+
+@media (min-width: 1024px) {
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-lg { font-size: calc(1.125rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-xl { font-size: calc(1.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-2xl { font-size: calc(1.5rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-3xl { font-size: calc(1.875rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-4xl { font-size: calc(2.25rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-5xl { font-size: calc(3rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-6xl { font-size: calc(3.75rem / 0.9375); }
+  :is(h1, h2, h3, h4, h5, h6).lg\:text-7xl { font-size: calc(4.5rem / 0.9375); }
 }

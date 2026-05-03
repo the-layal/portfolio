@@ -148,7 +148,7 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
                 <p
                   style={{
                     fontFamily: "'Special Elite', monospace",
-                    fontSize: 'clamp(0.8rem, 1.6vw, 1.1rem)',
+                    fontSize: 'clamp(calc(0.8rem / 0.9375), 1.6vw, calc(1.1rem / 0.9375))',
                     lineHeight: 1.5,
                     color: '#3a2e1e',
                     textAlign: 'center',
