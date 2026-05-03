@@ -30,15 +30,37 @@ export default function Thesis() {
           https://dspace.mit.edu/handle/1721.1/158817
         </a>
       </p>
-      {/* TODO: Layal — upload thesis.pdf to artifacts/portfolio/public/pdfs/ */}
       <PdfEmbed src="/pdfs/thesis.pdf" label="MIT Master's Thesis (PDF)" />
 
       <h4>ISAM Paper 2025 – Best Student Paper</h4>
-      {/* TODO: Layal — upload isam-paper.pdf to artifacts/portfolio/public/pdfs/ */}
       <PdfEmbed src="/pdfs/isam-paper.pdf" label="ISAM 2025 Paper (PDF)" />
 
       <h4>ISAM Presentation</h4>
-      <p>ISAM Presentation 2025.pptx</p>
+      <div className="my-8 border border-border bg-card">
+        <iframe
+          src={ISAM_PRESENTATION_EMBED_URL}
+          title="ISAM 2025 Presentation"
+          width="100%"
+          height={720}
+          allowFullScreen
+          className="block"
+        />
+      </div>
+      <p>
+        <a
+          href={ISAM_PRESENTATION_SHARE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open ISAM Presentation 2025 in a new tab
+        </a>
+      </p>
     </ProjectPage>
   );
 }
+
+const ISAM_PRESENTATION_SHARE_URL =
+  'https://1drv.ms/p/c/dc3e1f3406ddb9e6/IQTiiE6xVgDMRbQLMDvktFxFATAeReQTriBW03KzlQnt_EM';
+
+const ISAM_PRESENTATION_EMBED_URL =
+  'https://onedrive.live.com/embed?cid=dc3e1f3406ddb9e6&resid=DC3E1F3406DDB9E6%21sb14e88e2005645ccb40b303be4b45c45&ithint=file%2Cpptx&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy9kYzNlMWYzNDA2ZGRiOWU2L0lRVGlpRTZ4VmdETVJiUUxNRHZrdEZ4RkFUQWVSZVFUcmlCVzAzS3psUW50X0VN&em=2';
