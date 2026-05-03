@@ -265,6 +265,7 @@
   color: rgba(255, 255, 255, 0.72);
   padding: 0.2rem 1.1rem;
   position: relative;
+  z-index: 0;
   background: none;
   border: none;
   transition: color 0.2s ease;

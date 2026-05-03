@@ -201,12 +201,12 @@ export default function Home() {
                     {active === f && (
                       <motion.span
                         layoutId="filter-pill"
-                        className="absolute inset-0 -z-10"
-                        style={{ backgroundColor: "var(--filter-active-bg)" }}
+                        className="absolute inset-0"
+                        style={{ backgroundColor: "var(--filter-active-bg)", zIndex: -1 }}
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
-                    {f}
+                    <span className="relative">{f}</span>
                   </button>
                 </React.Fragment>
               ))}
