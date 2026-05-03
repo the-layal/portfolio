@@ -102,7 +102,7 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
     const size = isHovering ? 28 : 20;
     return (
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[10000]"
         style={{
           x: cursorX,
           y: cursorY,
@@ -150,7 +150,7 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
 
   return (
     <motion.div
-      className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+      className="fixed top-0 left-0 rounded-full pointer-events-none z-[10000] mix-blend-difference"
       style={{
         x: cursorX,
         y: cursorY,
