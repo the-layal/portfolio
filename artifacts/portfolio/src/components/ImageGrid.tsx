@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 
 export interface GridImage {
   src: string;
@@ -7,17 +7,29 @@ export interface GridImage {
 
 interface ImageGridProps {
   images: GridImage[];
-  rowHeight?: number;
   caption?: string;
 }
 
-export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGridProps) {
+const GAP = 8; // gap-2
+
+export default function ImageGrid({ images, caption }: ImageGridProps) {
   if (!images || images.length === 0) return null;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
   const [ratios, setRatios] = useState<(number | null)[]>(() => images.map(() => null));
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new ResizeObserver(() => setContainerWidth(el.offsetWidth));
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   const handleLoad = useCallback((i: number, e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
+    if (!img.naturalWidth) return;
     const r = img.naturalWidth / img.naturalHeight;
     setRatios(prev => {
       const next = [...prev];
@@ -28,11 +40,21 @@ export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGri
 
   const allLoaded = ratios.every(r => r !== null);
 
+  const optimalHeight = useMemo(() => {
+    if (!allLoaded || containerWidth === null) return null;
+    const totalRatio = (ratios as number[]).reduce((s, r) => s + r, 0);
+    const available = containerWidth - GAP * (images.length - 1);
+    return Math.round(available / totalRatio);
+  }, [allLoaded, ratios, containerWidth, images.length]);
+
   return (
-    <figure className="mb-8 mt-0">
+    <div className="mb-8 not-prose" ref={containerRef}>
       <div
-        className="flex gap-2 overflow-hidden"
-        style={allLoaded ? { height: rowHeight } : undefined}
+        className="flex overflow-hidden"
+        style={{
+          gap: GAP,
+          height: optimalHeight ?? undefined,
+        }}
       >
         {images.map((img, i) => (
           <div
@@ -47,7 +69,7 @@ export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGri
             <img
               src={img.src}
               alt={img.alt || ''}
-              className={allLoaded ? 'w-full h-full object-contain' : 'w-full h-auto'}
+              className={allLoaded && optimalHeight ? 'w-full h-full object-cover' : 'w-full h-auto'}
               onLoad={e => handleLoad(i, e)}
               loading="lazy"
             />
@@ -55,10 +77,8 @@ export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGri
         ))}
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-base italic text-muted-foreground">
-          {caption}
-        </figcaption>
+        <p className="mt-2 text-center text-base italic text-muted-foreground">{caption}</p>
       )}
-    </figure>
+    </div>
   );
 }
