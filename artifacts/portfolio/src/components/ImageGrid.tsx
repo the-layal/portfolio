@@ -29,7 +29,7 @@ export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGri
   const allLoaded = ratios.every(r => r !== null);
 
   return (
-    <figure className="my-8">
+    <figure className="mb-8 mt-3">
       <div
         className="flex gap-2 overflow-hidden"
         style={allLoaded ? { height: rowHeight } : undefined}
