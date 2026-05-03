@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -13,7 +13,7 @@ export default function Contact() {
     const body = encodeURIComponent(
       `From: ${name} <${email}>\n\n${message}`
     );
-    window.location.href = `mailto:layal@mit.edu?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:layalbarakat9@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -33,26 +33,10 @@ export default function Contact() {
         <section>
           <h2 className="font-serif text-2xl text-foreground mb-6">Get in Touch</h2>
           <ul className="space-y-5 font-sans text-muted-foreground">
-            <li className="flex items-start gap-4" data-testid="contact-address">
-              <MapPin className="w-5 h-5 text-accent mt-1 shrink-0" />
-              <span>
-                320 Memorial Drive
-                <br />
-                Cambridge, MA 02139
-                <br />
-                USA
-              </span>
-            </li>
             <li className="flex items-start gap-4" data-testid="contact-email">
               <Mail className="w-5 h-5 text-accent mt-1 shrink-0" />
-              <a href="mailto:layal@mit.edu" className="hover:text-accent transition-colors">
-                layal@mit.edu
-              </a>
-            </li>
-            <li className="flex items-start gap-4" data-testid="contact-phone">
-              <Phone className="w-5 h-5 text-accent mt-1 shrink-0" />
-              <a href="tel:+18136066000" className="hover:text-accent transition-colors">
-                (813) 606-6000
+              <a href="mailto:layalbarakat9@gmail.com" className="hover:text-accent transition-colors">
+                layalbarakat9@gmail.com
               </a>
             </li>
           </ul>

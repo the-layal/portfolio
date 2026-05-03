@@ -17,7 +17,7 @@ export default function Footer() {
         
         <div className="flex items-center space-x-6">
           <a 
-            href="mailto:layalb@mit.edu" 
+            href="mailto:layalbarakat9@gmail.com" 
             className="text-muted-foreground hover:text-accent transition-colors"
             data-testid="link-social-email"
             aria-label="Email Layal"

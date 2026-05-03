@@ -73,7 +73,7 @@ export default function About() {
           <div className="mt-16 pt-16 border-t border-border">
             <h2 className="text-3xl font-serif mb-6 text-foreground">Let&rsquo;s build something together!</h2>
             <a
-              href="mailto:layal@mit.edu"
+              href="mailto:layalbarakat9@gmail.com"
               className="inline-flex items-center justify-center px-8 py-4 bg-foreground text-background font-sans text-sm tracking-widest uppercase hover:bg-accent hover:text-white transition-colors duration-300"
               data-testid="link-contact-cta"
             >
