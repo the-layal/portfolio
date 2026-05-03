@@ -332,6 +332,19 @@
   }
 }
 
+/* Blueprint info box: positioned left of the sticky note panel so it is
+   never obscured by the button (52px) or the open note panel (~280px desktop,
+   ~240px mobile). right = panel-width + edge-offset + breathing room. */
+.blueprint-info-box {
+  right: calc(280px + 1rem + 1.5rem); /* 280px panel + 1rem edge + 1.5rem gap */
+}
+
+@media (max-width: 640px) {
+  .blueprint-info-box {
+    right: calc(240px + 0.5rem + 1rem); /* 240px mobile panel + 0.5rem edge + 1rem gap */
+  }
+}
+
 .sticky-note-textarea::placeholder {
   color: var(--sticky-placeholder, rgba(0, 0, 0, 0.35));
 }

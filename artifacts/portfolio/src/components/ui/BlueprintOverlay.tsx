@@ -24,7 +24,7 @@ export default function BlueprintOverlay() {
       />
 
       <div
-        className="absolute bottom-6 right-6 font-mono text-[10px] tracking-[0.25em] uppercase"
+        className="absolute bottom-6 font-mono text-[10px] tracking-[0.25em] uppercase blueprint-info-box"
         style={{
           color: 'rgba(100,220,255,0.55)',
           border: '1px solid rgba(100,220,255,0.25)',
