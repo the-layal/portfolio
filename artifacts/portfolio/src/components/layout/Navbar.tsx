@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import { useAccentPalette } from '@/hooks/use-accent-palette';
 import AccentBurst from '@/components/AccentBurst';
+import { useIntroVisible } from '@/hooks/use-intro-state';
 
 interface Burst { id: number; x: number; y: number; color: string; }
 
@@ -11,6 +12,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { cycleAccent } = useAccentPalette();
   const [bursts, setBursts] = useState<Burst[]>([]);
+  const introVisible = useIntroVisible();
 
   useEffect(() => {
     let ticking = false;
@@ -56,10 +58,11 @@ export default function Navbar() {
       <motion.header
         id="site-navbar"
         initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={{ y: 0, opacity: introVisible ? 0 : 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={[
           'fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 pointer-events-none',
+          introVisible ? 'pointer-events-none' : '',
           'transition-[padding,background-color,backdrop-filter,border-color] duration-500 ease-out',
           scrolled
             ? 'py-1.5 bg-background/70 backdrop-blur-md border-b border-border text-foreground'
