@@ -12,8 +12,8 @@ export default function SoftRobotics() {
       <p>{`I was inspired by research done at MIT and Harvard to create DIY soft robotic actuators using origami. The idea is simple: fold cardstock paper in a specific pattern, then seal a plastic ziplock bag over it with space left for a straw. From left to right below I used tape, the ziplock itself with a bit of hot glue around the straw, and hot glue.`}</p>
       <ImageGrid images={[
           { src: "/images/soft-robotics/tape.gif", alt: "tape seal" },
-          { src: "/images/soft-robotics/glue.gif", alt: "ziplock with hot glue" },
-          { src: "/images/soft-robotics/herringbone.gif", alt: "herringbone fold" }
+          { src: "/images/soft-robotics/herringbone.gif", alt: "herringbone fold" },
+          { src: "/images/soft-robotics/glue.gif", alt: "ziplock with hot glue" }
         ]} />
       <h6>{`The Process`}</h6>
       <ImageSlideshow slides={[
