@@ -294,17 +294,20 @@
   }
 }
 
-/* On the home route, narrow viewports park the anchor below the hero
-   words instead of overlapping them. The hero is min-h-[85vh] flex
-   centered, so anchoring at top: ~85vh + offset places the button just
-   under the headline area while keeping it visually bottom-aligned to
-   the hero. */
+.sticky-note-slot {
+  display: none;
+}
+
 @media (max-width: 640px) {
-  .sticky-note-anchor[data-on-hero="true"] {
-    position: absolute;
-    top: calc(85vh + 0.5rem);
+  .sticky-note-slot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.25rem;
+  }
+  .sticky-note-slot .sticky-note-anchor {
+    position: relative;
+    right: auto;
     bottom: auto;
-    right: var(--sticky-edge-x);
   }
 }
 

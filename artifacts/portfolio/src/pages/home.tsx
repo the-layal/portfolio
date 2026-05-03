@@ -5,6 +5,7 @@ import IntroScreen from '@/components/IntroScreen';
 import PaperScrap from '@/components/PaperScrap';
 import TickerStrip from '@/components/TickerStrip';
 import { setIntroVisible } from '@/hooks/use-intro-state';
+import { STICKY_NOTE_SLOT_ID } from '@/components/StickyNote';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "/projects/thesis",            image: "/images/thesis/dfp.png",                                                     tags: ["Research"] },
@@ -123,6 +124,8 @@ export default function Home() {
         >
           MIT BS '23, MS '25. Helping others through functional and accessible design.
         </motion.p>
+
+        <div id={STICKY_NOTE_SLOT_ID} className="sticky-note-slot" aria-hidden />
       </section>
 
       <TickerStrip />
