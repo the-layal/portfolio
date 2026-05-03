@@ -125,7 +125,7 @@ export default function Home() {
           MIT BS '23, MS '25. Helping others through functional and accessible design.
         </motion.p>
 
-        <div id={STICKY_NOTE_SLOT_ID} className="sticky-note-slot" aria-hidden />
+        <div id={STICKY_NOTE_SLOT_ID} className="sticky-note-slot" />
       </section>
 
       <TickerStrip />

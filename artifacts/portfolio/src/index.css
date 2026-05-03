@@ -295,7 +295,7 @@
 }
 
 .sticky-note-slot {
-  display: none;
+  display: contents;
 }
 
 @media (max-width: 640px) {
