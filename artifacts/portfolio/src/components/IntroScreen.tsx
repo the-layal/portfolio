@@ -163,7 +163,7 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
 
         <motion.button
           type="button"
-          onClick={triggerExit}
+          onClick={() => { setPhase('done'); onExit(); }}
           className="absolute bottom-12 right-6 md:right-16 font-sans uppercase tracking-[0.25em] pointer-events-auto"
           style={{ fontSize: '0.65rem', color: 'rgba(247,244,239,0.38)', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0' }}
           whileHover={{ color: 'rgba(247,244,239,0.75)' }}
