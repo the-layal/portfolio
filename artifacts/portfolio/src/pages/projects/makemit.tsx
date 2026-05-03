@@ -36,13 +36,13 @@ export default function MakeMIT() {
         caption="Facebook banner."
       />
 
-      <CaptionedImage
-        src="/images/makemit/maker.jpg"
-        alt="MakeMIT name tags"
-        caption="These name tags were put together by me, the hammers were designed by a team member. The white gap in the middle would hold a printed name sticker."
-      />
-
-      <img src="/images/makemit/sponsor.jpg" alt="MakeMIT sponsor materials" />
+      <figure className="my-8 not-prose relative overflow-hidden">
+        <div style={{ paddingTop: `calc(100% / ${1200/751 + 1200/750} - ${9 / (1200/751 + 1200/750)}px)` }} />
+        <div className="absolute inset-0 flex gap-[9px]">
+          <img src="/images/makemit/maker.jpg" alt="MakeMIT name tags" className="h-full object-cover min-w-0" style={{ flex: 1200/751 }} />
+          <img src="/images/makemit/sponsor.jpg" alt="MakeMIT sponsor materials" className="h-full object-cover min-w-0" style={{ flex: 1200/750 }} />
+        </div>
+      </figure>
     </ProjectPage>
   );
 }
