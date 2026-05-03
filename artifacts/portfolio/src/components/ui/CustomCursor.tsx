@@ -30,7 +30,7 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      setIsVisible(true);
+      if (!overIframe) setIsVisible(true);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -44,11 +44,15 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
       setIsHovering(isClickable);
     };
 
-    const handleIframeEnter = () => setIsVisible(false);
+    let overIframe = false;
+    const handleIframeEnter = () => {
+      overIframe = true;
+      setIsVisible(false);
+    };
     const handleIframeLeave = () => {
-      // Re-show on next mousemove on the parent window. Set true now so
-      // the cursor reappears immediately as the pointer crosses back out.
-      setIsVisible(true);
+      // Defer re-showing until the next parent mousemove updates the
+      // cursor position, so it never flashes at a stale coordinate.
+      overIframe = false;
     };
 
     const trackedIframes = new WeakSet<HTMLIFrameElement>();
