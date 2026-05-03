@@ -23,7 +23,7 @@ const PROJECTS = [
   { id: 12, title: "Video Projects",                                                   subtitle: "Assorted Creations, 2016–2019",          url: "/projects/videos",            image: "/images/videos/video-edit-icon.jpg",                                          tags: ["Art"] },
   { id: 13, title: "Brushless Motor",                                                  subtitle: "6.a01 Mens et Manus, 2018",              url: "/projects/brushless-motor",   image: "/images/brushless-motor/20181022_144009.jpg",                                tags: ["Engineering"] },
   { id: 14, title: "Penguino the Fishbot",                                             subtitle: "6.a01 Mens et Manus, 2018",              url: "/projects/penguino",          image: "/images/penguino/20181207_181612.jpg",                                       tags: ["Engineering"] },
-  { id: 15, title: "MakeMIT Marketing",                                                subtitle: "MakeMIT, 2018",                          url: "/projects/makemit",           image: "/images/makemit/maker.jpg",                                                   tags: ["Design", "Art"] },
+  { id: 15, title: "MakeMIT Marketing",                                                subtitle: "MakeMIT, 2018",                          url: "/projects/makemit",           image: "/images/makemit/logo-final.png",                                                   tags: ["Design", "Art"] },
   { id: 16, title: "'The Watering Cans' Graphic Design",                               subtitle: "MIST, 2018",                             url: "/projects/watering-cans",     image: "/images/watering-cans/main-pic.png",                                          tags: ["Art", "Design"] },
 ];
 
