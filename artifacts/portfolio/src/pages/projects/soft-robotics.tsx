@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
 import ImageSlideshow from '@/components/ImageSlideshow';
+import ImageGrid from '@/components/ImageGrid';
 
   export default function SoftRobotics() {
     return (
@@ -40,10 +41,10 @@ import ImageSlideshow from '@/components/ImageSlideshow';
         ]} />
       <h4>{`DIY Gelatin Robot`}</h4>
       <p>{`I explored different silicone alternatives throughout the summer, and gelatin was one I explored in this project. It should require a few more iterations before it becomes a project that students can do!`}</p>
-      <ImageSlideshow slides={[
-          { src: "/images/soft-robotics/pump-and-gelatin.gif", alt: "" },
-          { src: "/images/soft-robotics/final-inflate.gif", alt: "" }
-        ]} />
+      <ImageGrid images={[
+          { src: "/images/soft-robotics/pump-and-gelatin.gif" },
+          { src: "/images/soft-robotics/final-inflate.gif" }
+        ]} cols={2} />
       <h6>Making the Mold (following <a href="https://youtu.be/uPx8xwRpfFk" target="_blank" rel="noopener noreferrer">this</a> tutorial)</h6>
       <VideoEmbed src="https://www.youtube.com/embed/uPx8xwRpfFk" title="Soft robotics mold-making tutorial" />
       <ImageSlideshow slides={[

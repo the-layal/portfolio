@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
 import ImageSlideshow from '@/components/ImageSlideshow';
+import ImageGrid from '@/components/ImageGrid';
 
   export default function ReVise() {
     return (
@@ -29,16 +30,16 @@ import ImageSlideshow from '@/components/ImageSlideshow';
       <p>{`The pouches, filled with coffee grounds (a common granular jamming granule), were secured onto the fabric side of the PVC pipe with rubber bands. Now that we had two of these pouch parts, we needed a way to secure it to the existing clamp.`}</p>
       <img src="/images/revise/52la96_as01.png" alt="" />
       <p>{`I was responsible for the moving jaw attachment mechanism (where the quick grip is). I took measurements and planned on CADing an adapter so the PVC tube could sit comfortably on the clamp. I thought of a sliding attachment but decided a press fit adapter would be best, i.e it would sit in the little recess on the clamp.`}</p>
-      <ImageSlideshow slides={[
-          { src: "/images/revise/img_0430.jpg", alt: "" },
-          { src: "/images/revise/img_0431.jpg", alt: "" },
-          { src: "/images/revise/20211020_172307-e1661737783881.jpg", alt: "" }
-        ]} />
+      <ImageGrid images={[
+          { src: "/images/revise/img_0430.jpg" },
+          { src: "/images/revise/img_0431.jpg" },
+          { src: "/images/revise/20211020_172307-e1661737783881.jpg" }
+        ]} cols={3} />
       <p>{`This is what my final CAD model of one side looked like, with slotted holes to secure the two sides together with nuts and bolts:`}</p>
-      <ImageSlideshow slides={[
-          { src: "/images/revise/img_0435-e1661734366272.jpg", alt: "" },
-          { src: "/images/revise/img_0435-1-e1661734422207.jpg", alt: "" }
-        ]} />
+      <ImageGrid images={[
+          { src: "/images/revise/img_0435-e1661734366272.jpg" },
+          { src: "/images/revise/img_0435-1-e1661734422207.jpg" }
+        ]} cols={2} />
       <p>{`This was 3D printed (shown in the assembly in white) and press fitted into the clamp.`}</p>
       <img src="/images/revise/20211021_112055.jpg" alt="" />
       <p>{`The prototype, which we named Conform, finally took shape as shown below:`}</p>
