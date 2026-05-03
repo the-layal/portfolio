@@ -9,7 +9,7 @@ function Figure({ src, alt, caption, width }: { src: string; alt?: string; capti
         src={src}
         alt={alt || ''}
         loading="lazy"
-        className="border border-border rounded"
+        className="rounded"
         style={{ maxWidth: width || '100%', width: '100%', height: 'auto' }}
       />
       {caption && (
