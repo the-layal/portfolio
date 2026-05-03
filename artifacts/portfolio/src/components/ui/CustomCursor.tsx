@@ -44,11 +44,51 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
       setIsHovering(isClickable);
     };
 
+    const handleIframeEnter = () => setIsVisible(false);
+    const handleIframeLeave = () => {
+      // Re-show on next mousemove on the parent window. Set true now so
+      // the cursor reappears immediately as the pointer crosses back out.
+      setIsVisible(true);
+    };
+
+    const trackedIframes = new WeakSet<HTMLIFrameElement>();
+    const attachToIframe = (iframe: HTMLIFrameElement) => {
+      if (trackedIframes.has(iframe)) return;
+      trackedIframes.add(iframe);
+      iframe.addEventListener('mouseenter', handleIframeEnter);
+      iframe.addEventListener('mouseleave', handleIframeLeave);
+    };
+    document.querySelectorAll('iframe').forEach(attachToIframe);
+
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((node) => {
+          if (node instanceof HTMLIFrameElement) attachToIframe(node);
+          else if (node instanceof HTMLElement) {
+            node.querySelectorAll('iframe').forEach(attachToIframe);
+          }
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // When an iframe takes focus (e.g. click inside it), the parent
+    // window blurs and stops receiving mousemove. Hide the cursor so it
+    // doesn't sit frozen at the entry point.
+    const handleBlur = () => setIsVisible(false);
+
     window.addEventListener('mousemove', moveCursor);
     window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('blur', handleBlur);
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('blur', handleBlur);
+      observer.disconnect();
+      document.querySelectorAll('iframe').forEach((iframe) => {
+        iframe.removeEventListener('mouseenter', handleIframeEnter);
+        iframe.removeEventListener('mouseleave', handleIframeLeave);
+      });
     };
   }, [cursorX, cursorY, isWide]);
 
