@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 export interface Slide {
   src: string;
@@ -8,6 +8,15 @@ export interface Slide {
 
 export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
   const [i, setI] = useState(0);
+  const [maxRatio, setMaxRatio] = useState<number | undefined>(undefined);
+
+  const handleLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (!img.naturalWidth) return;
+    const ratio = img.naturalHeight / img.naturalWidth;
+    setMaxRatio(prev => prev === undefined ? ratio : Math.max(prev, ratio));
+  }, []);
+
   if (!slides || slides.length === 0) return null;
   const total = slides.length;
   const prev = () => setI((p) => (p - 1 + total) % total);
@@ -16,11 +25,20 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
 
   return (
     <div className="select-none">
-      <div className="relative overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        style={maxRatio ? { paddingTop: `${maxRatio * 100}%` } : undefined}
+      >
         <img
+          key={s.src}
           src={s.src}
           alt={s.alt || ''}
-          className="w-full h-auto block"
+          onLoad={handleLoad}
+          className={
+            maxRatio
+              ? 'absolute inset-0 w-full h-full object-contain block'
+              : 'w-full h-auto block'
+          }
           loading="lazy"
         />
         {total > 1 && (
