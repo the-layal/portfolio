@@ -70,16 +70,12 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={handleNameClick}
-            aria-hidden={scrolled}
-            tabIndex={scrolled ? -1 : 0}
             className="hidden md:block font-serif font-normal tracking-tight hover:opacity-70 transition-opacity duration-500 ease-out select-none"
             style={{
               fontSize: scrolled
                 ? 'clamp(0.95rem, 1.35vw, 1.15rem)'
                 : 'clamp(1.05rem, 1.6vw, 1.35rem)',
-              opacity: scrolled ? 0 : 1,
-              pointerEvents: scrolled ? 'none' : 'auto',
-              transitionProperty: 'opacity, font-size',
+              transitionProperty: 'font-size',
             }}
             data-testid="link-home"
           >
