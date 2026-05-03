@@ -16,13 +16,14 @@ export default function ImageGrid({ images, cols = 2 }: ImageGridProps) {
   return (
     <div className={`my-8 grid grid-cols-1 ${colClass} gap-2`}>
       {images.map((img, i) => (
-        <img
-          key={i}
-          src={img.src}
-          alt={img.alt || ''}
-          className="w-full object-cover"
-          loading="lazy"
-        />
+        <div key={i} className="aspect-[4/3] overflow-hidden">
+          <img
+            src={img.src}
+            alt={img.alt || ''}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
       ))}
     </div>
   );
