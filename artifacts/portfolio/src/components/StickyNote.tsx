@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'wouter';
 import { useIntroVisible } from '@/hooks/use-intro-state';
-
-export const STICKY_NOTE_SLOT_ID = 'sticky-note-slot';
 
 const STORAGE_KEY = 'sticky_note_v1';
 const COLOR_STORAGE_KEY = 'sticky_note_color_v1';
@@ -74,12 +70,6 @@ export default function StickyNote() {
   const [colorId, setColorId] = useState<string>(DEFAULT_SWATCH_ID);
   const taRef = useRef<HTMLTextAreaElement | null>(null);
   const introVisible = useIntroVisible();
-  const [location] = useLocation();
-  const [slot, setSlot] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setSlot(document.getElementById(STICKY_NOTE_SLOT_ID));
-  }, [location]);
 
   useEffect(() => {
     try {
@@ -110,7 +100,7 @@ export default function StickyNote() {
 
   const swatch = getSwatch(colorId);
 
-  const anchor = (
+  return (
     <div
       className="sticky-note-anchor z-[9990] pointer-events-none"
       aria-hidden={introVisible}
@@ -260,6 +250,4 @@ export default function StickyNote() {
       </AnimatePresence>
     </div>
   );
-
-  return slot ? createPortal(anchor, slot) : anchor;
 }

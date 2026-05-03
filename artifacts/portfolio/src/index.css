@@ -294,23 +294,6 @@
   }
 }
 
-.sticky-note-slot {
-  display: contents;
-}
-
-@media (max-width: 640px) {
-  .sticky-note-slot {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1.25rem;
-  }
-  .sticky-note-slot .sticky-note-anchor {
-    position: relative;
-    right: auto;
-    bottom: auto;
-  }
-}
-
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
