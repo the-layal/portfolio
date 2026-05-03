@@ -32,9 +32,11 @@ export default function Thesis() {
       </p>
       <PdfEmbed src="/pdfs/thesis.pdf" label="MIT Master's Thesis (PDF)" />
 
+      <div className="mt-16" />
       <h4>ISAM Paper 2025 – Best Student Paper</h4>
       <PdfEmbed src="/pdfs/isam-paper.pdf" label="ISAM 2025 Paper (PDF)" />
 
+      <div className="mt-16" />
       <h4>ISAM Presentation</h4>
       <div className="my-8 border border-border bg-card relative left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),900px)]">
         <iframe
