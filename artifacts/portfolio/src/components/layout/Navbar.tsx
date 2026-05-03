@@ -62,14 +62,13 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={[
           'fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 pointer-events-none',
-          introVisible ? 'pointer-events-none' : '',
           'transition-[padding,background-color,backdrop-filter,border-color] duration-500 ease-out',
           scrolled
             ? 'py-1.5 bg-background/70 backdrop-blur-md border-b border-border text-foreground'
             : 'py-6 mix-blend-difference text-white',
         ].join(' ')}
       >
-        <nav className="flex justify-between items-center max-w-7xl mx-auto pointer-events-auto">
+        <nav className={`flex justify-between items-center max-w-7xl mx-auto ${introVisible ? 'pointer-events-none' : 'pointer-events-auto'}`}>
           <Link
             href="/"
             onClick={handleNameClick}
