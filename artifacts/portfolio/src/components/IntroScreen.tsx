@@ -118,15 +118,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           pointerEvents: dissolving ? 'none' : 'auto',
         }}
       >
-        <motion.p
-          className="font-sans text-xs uppercase tracking-[0.3em] mb-8"
-          style={{ color: 'hsl(24, 67%, 53%)' }}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-        >
-          Layal Barakat
-        </motion.p>
 
         <div style={{ perspective: '800px' }}>
           {words.map(({ text, startDelay }) => (
