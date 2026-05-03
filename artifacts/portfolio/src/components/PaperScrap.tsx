@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { STICKERS, type StickerId } from './stickers';
 
 const PHRASES = [
@@ -40,37 +40,8 @@ type Phase = 'idle' | 'typing' | 'pausing' | 'erasing' | 'waiting';
 type DragBounds = { top: number; left: number; right: number; bottom: number };
 
 export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }: PaperScrapProps) {
-  const [pickerOpen, setPickerOpen] = useState(false);
   const [addBtnHover, setAddBtnHover] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const pickerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setPrefersReducedMotion(mql.matches);
-    update();
-    mql.addEventListener('change', update);
-    return () => mql.removeEventListener('change', update);
-  }, []);
-
-  useEffect(() => {
-    if (!pickerOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
-        setPickerOpen(false);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setPickerOpen(false);
-    };
-    document.addEventListener('mousedown', onDown);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('mousedown', onDown);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, [pickerOpen]);
+  const [nextStickerIdx, setNextStickerIdx] = useState(0);
 
   const [revealed, setRevealed] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -246,103 +217,43 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
             }}
           >
             {isBlue && onAddSticker && (
-              <>
-                <button
-                  type="button"
-                  aria-label="Add a sticker"
-                  aria-expanded={pickerOpen}
-                  aria-haspopup="menu"
-                  onPointerDown={(e) => e.stopPropagation()}
-                  onFocus={() => setAddBtnHover(true)}
-                  onBlur={() => setAddBtnHover(false)}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setPickerOpen((o) => !o);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    top: 6,
-                    right: 6,
-                    width: 22,
-                    height: 22,
-                    borderRadius: '50%',
-                    background: 'rgba(255,255,255,0.85)',
-                    color: '#1f3b3f',
-                    border: '1px solid rgba(31,59,63,0.35)',
-                    fontSize: 14,
-                    lineHeight: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    opacity: (addBtnHover || pickerOpen) ? 1 : 0,
-                    transition: 'opacity 0.18s ease',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
-                    padding: 0,
-                    zIndex: 5,
-                  }}
-                >
-                  +
-                </button>
-                <AnimatePresence>
-                  {pickerOpen && (
-                    <motion.div
-                      ref={pickerRef}
-                      role="menu"
-                      aria-label="Pick a sticker"
-                      initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: -6 }}
-                      animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-                      exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: -6 }}
-                      transition={{ duration: prefersReducedMotion ? 0.12 : 0.18, ease: 'easeOut' }}
-                      onPointerDown={(e) => e.stopPropagation()}
-                      style={{
-                        position: 'absolute',
-                        top: 32,
-                        right: -4,
-                        background: '#fff',
-                        border: '1px solid rgba(0,0,0,0.12)',
-                        boxShadow: '0 8px 22px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.10)',
-                        padding: 8,
-                        display: 'flex',
-                        gap: 6,
-                        zIndex: 60,
-                        borderRadius: 6,
-                      }}
-                    >
-                      {STICKERS.map((s) => (
-                        <button
-                          key={s.id}
-                          type="button"
-                          role="menuitem"
-                          aria-label={`Add ${s.label} sticker`}
-                          onPointerDown={(e) => e.stopPropagation()}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAddSticker(s.id);
-                            setPickerOpen(false);
-                          }}
-                          style={{
-                            width: 44,
-                            height: 44,
-                            padding: 4,
-                            border: '1px solid transparent',
-                            background: 'transparent',
-                            cursor: 'pointer',
-                            borderRadius: 4,
-                          }}
-                        >
-                          <img
-                            src={s.src}
-                            alt=""
-                            draggable={false}
-                            style={{ width: '100%', height: '100%', objectFit: 'contain', pointerEvents: 'none' }}
-                          />
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </>
+              <button
+                type="button"
+                aria-label="Add a sticker"
+                onPointerDown={(e) => e.stopPropagation()}
+                onFocus={() => setAddBtnHover(true)}
+                onBlur={() => setAddBtnHover(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const sticker = STICKERS[nextStickerIdx % STICKERS.length];
+                  onAddSticker(sticker.id);
+                  setNextStickerIdx((n) => n + 1);
+                }}
+                style={{
+                  position: 'absolute',
+                  top: 6,
+                  right: 6,
+                  width: 22,
+                  height: 22,
+                  borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.85)',
+                  color: '#1f3b3f',
+                  border: '1px solid rgba(31,59,63,0.35)',
+                  fontSize: 14,
+                  lineHeight: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  opacity: addBtnHover ? 1 : 0,
+                  transition: 'opacity 0.18s ease',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.18)',
+                  padding: 0,
+                  zIndex: 5,
+                }}
+              >
+                +
+              </button>
             )}
             {(isYellow || note.text) && (
               <div

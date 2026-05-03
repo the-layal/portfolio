@@ -89,9 +89,6 @@ export default function Home() {
     ]);
   };
 
-  const removeSticker = (uid: string) =>
-    setStickers((prev) => prev.filter((s) => s.uid !== uid));
-
   const updateSticker = (uid: string, patch: Partial<PlacedSticker>) =>
     setStickers((prev) => prev.map((s) => (s.uid === uid ? { ...s, ...patch } : s)));
   const [showIntro, setShowIntro] = useState(() => {
@@ -176,7 +173,6 @@ export default function Home() {
         </div>
         <StickerLayer
           stickers={stickers}
-          onRemove={removeSticker}
           onUpdate={updateSticker}
           dragConstraintsRef={heroRef}
         />
