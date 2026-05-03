@@ -51,14 +51,14 @@ function EntryCard({ entry }: { entry: ResumeEntry }) {
     <Block>
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
         <div>
-          <h3 className="font-serif text-lg text-foreground leading-snug">{entry.title}</h3>
-          <p className="font-sans text-sm text-muted-foreground">{entry.organization} · {entry.location}</p>
+          <h3 className="font-serif text-xl text-foreground leading-snug">{entry.title}</h3>
+          <p className="font-sans text-base text-muted-foreground">{entry.organization} · {entry.location}</p>
         </div>
-        <span className="font-sans text-xs text-muted-foreground whitespace-nowrap pt-0.5 shrink-0">{entry.period}</span>
+        <span className="font-sans text-sm text-muted-foreground whitespace-nowrap pt-0.5 shrink-0">{entry.period}</span>
       </div>
       <ul className="space-y-2">
         {entry.bullets.map((bullet, i) => (
-          <li key={i} className="flex gap-3 font-sans text-sm text-muted-foreground leading-relaxed">
+          <li key={i} className="flex gap-3 font-sans text-base text-muted-foreground leading-relaxed">
             <span className="mt-1.5 w-1 h-1 rounded-full bg-accent shrink-0" />
             <span>{bullet}</span>
           </li>
@@ -122,24 +122,24 @@ export default function Resume() {
           <SectionHeading>Education</SectionHeading>
           <Block>
             <div className="flex flex-col sm:flex-row sm:justify-between gap-1 mb-4">
-              <h3 className="font-serif text-lg text-foreground">{resume.education.institution}</h3>
-              <span className="font-sans text-xs text-muted-foreground shrink-0 pt-0.5">{resume.education.location}</span>
+              <h3 className="font-serif text-xl text-foreground">{resume.education.institution}</h3>
+              <span className="font-sans text-sm text-muted-foreground shrink-0 pt-0.5">{resume.education.location}</span>
             </div>
             <div className="space-y-2 mb-4">
               {resume.education.degrees.map((deg, i) => (
                 <div key={i} className="flex flex-col sm:flex-row sm:justify-between gap-0.5">
-                  <p className="font-sans text-sm text-muted-foreground">
+                  <p className="font-sans text-base text-muted-foreground">
                     <span className="text-foreground">{deg.level}</span> · {deg.detail}
                   </p>
-                  <span className="font-sans text-xs text-muted-foreground shrink-0">Graduated {deg.graduated}</span>
+                  <span className="font-sans text-sm text-muted-foreground shrink-0">Graduated {deg.graduated}</span>
                 </div>
               ))}
             </div>
             <div className="space-y-2 border-t border-border pt-4">
-              <p className="font-sans text-sm text-muted-foreground">
+              <p className="font-sans text-base text-muted-foreground">
                 <span className="text-foreground font-medium">Relevant Coursework:</span> {resume.education.coursework}
               </p>
-              <p className="font-sans text-sm text-muted-foreground">
+              <p className="font-sans text-base text-muted-foreground">
                 <span className="text-foreground font-medium">Honors:</span> {resume.education.honors}
               </p>
             </div>
@@ -160,7 +160,7 @@ export default function Resume() {
               {resume.interests.map((interest) => (
                 <span
                   key={interest}
-                  className="font-sans text-xs uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
+                  className="font-sans text-sm uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
                 >
                   {interest}
                 </span>
