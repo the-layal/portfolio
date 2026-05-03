@@ -8,8 +8,6 @@ import TickerStrip from '@/components/TickerStrip';
 import { setIntroVisible } from '@/hooks/use-intro-state';
 import type { StickerId } from '@/components/stickers';
 
-const STICKERS_STORAGE_KEY = 'hero_stickers_v1';
-
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "/projects/thesis",            image: "/images/thesis/dfp.png",                                                     tags: ["Research"] },
   { id: 2,  title: "Infant Abdomen Benchtop Model",                                   subtitle: "2.750 Medical Device Design, 2022",      url: "/projects/2-750",             image: "/images/2-750/vessels-with-blood-4063750325-e1689157690888.jpeg",            tags: ["Engineering"] },
@@ -56,18 +54,7 @@ export default function Home() {
   const [wordsAnimated, setWordsAnimated] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const scrapRef = useRef<HTMLDivElement>(null);
-  const [stickers, setStickers] = useState<PlacedSticker[]>(() => {
-    try {
-      const raw = sessionStorage.getItem(STICKERS_STORAGE_KEY);
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch { return []; }
-  });
-
-  useEffect(() => {
-    try { sessionStorage.setItem(STICKERS_STORAGE_KEY, JSON.stringify(stickers)); } catch {}
-  }, [stickers]);
+  const [stickers, setStickers] = useState<PlacedSticker[]>([]);
 
   const addSticker = (id: StickerId) => {
     const hero = heroRef.current;
