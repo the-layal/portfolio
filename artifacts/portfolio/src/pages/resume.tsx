@@ -167,7 +167,7 @@ export default function Resume() {
                   key={label}
                   onMouseEnter={() => setActiveEmoji(emoji)}
                   onMouseLeave={() => setActiveEmoji(null)}
-                  className="font-sans text-sm uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground cursor-none"
+                  className="font-sans text-sm uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
                 >
                   {label}
                 </span>

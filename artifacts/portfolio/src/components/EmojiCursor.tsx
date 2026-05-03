@@ -1,34 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface EmojiCursorProps {
   emoji: string | null;
 }
 
 export default function EmojiCursor({ emoji }: EmojiCursorProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    if (!emoji) return;
-    const el = ref.current;
-    if (!el) return;
-
-    const onMove = (e: PointerEvent) => {
-      el.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 4}px)`;
-    };
+    const onMove = (e: PointerEvent) => setPos({ x: e.clientX + 14, y: e.clientY + 4 });
     window.addEventListener('pointermove', onMove);
     return () => window.removeEventListener('pointermove', onMove);
-  }, [emoji]);
+  }, []);
 
-  if (!emoji) return null;
+  if (!emoji || !pos) return null;
 
   return (
     <div
-      ref={ref}
       aria-hidden
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
+        transform: `translate(${pos.x}px, ${pos.y}px)`,
         pointerEvents: 'none',
         zIndex: 9999,
         fontSize: '1.4rem',
