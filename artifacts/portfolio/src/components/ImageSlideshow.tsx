@@ -24,9 +24,9 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
   const s = slides[i];
 
   return (
-    <div className="select-none">
+    <div className="select-none overflow-hidden mb-8">
       <div
-        className="relative w-full"
+        className="relative w-full min-h-[200px]"
         style={maxRatio ? { aspectRatio: `1 / ${maxRatio}` } : undefined}
       >
         <img
