@@ -2,9 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const ITEMS = [
-  "Design", "Engineering", "Research", "Art", "MIT",
-  "Fabrication", "Prototyping", "Making", "Medical Devices",
-  "Product Design", "Soft Robotics", "Thesis",
+  "Design is not just what it looks like and feels like. Design is how it works.",
+  "Steve Jobs",
 ];
 
 const SEP = "\u2726"; // ✦
@@ -30,7 +29,7 @@ export default function TickerStrip() {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="ticker-strip"
-      aria-label="Disciplines and keywords"
+      aria-label="Steve Jobs design quote"
     >
       <div className="ticker-track">
         <TickerContent />
