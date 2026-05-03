@@ -52,9 +52,9 @@ export function useAccentPalette() {
   const [idx, setIdx] = useState<number>(() => {
     try {
       const raw = Number(localStorage.getItem(STORAGE_KEY));
-      return Number.isInteger(raw) && raw >= 0 && raw < PALETTES.length ? raw : 0;
+      return Number.isInteger(raw) && raw >= 0 && raw < PALETTES.length ? raw : 2;
     } catch {
-      return 0;
+      return 2;
     }
   });
 
