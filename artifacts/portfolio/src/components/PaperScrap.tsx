@@ -140,7 +140,7 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.08 }}
             drag={dragEnabled}
             dragConstraints={dragConstraintsRef}
-            dragElastic={0.08}
+            dragElastic={0}
             dragMomentum={false}
             onDragStart={() => {
               setDraggingIdx(i);
