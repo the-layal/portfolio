@@ -70,12 +70,12 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={handleNameClick}
-            className="hidden md:block font-serif font-normal tracking-tight hover:opacity-70 transition-opacity duration-500 ease-out select-none"
+            className="hidden min-[751px]:block font-serif font-normal tracking-tight hover:opacity-70 duration-500 ease-out select-none"
             style={{
               fontSize: scrolled
                 ? 'clamp(0.95rem, 1.35vw, 1.15rem)'
                 : 'clamp(1.05rem, 1.6vw, 1.35rem)',
-              transitionProperty: 'font-size',
+              transitionProperty: 'opacity, font-size',
             }}
             data-testid="link-home"
           >
