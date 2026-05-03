@@ -15,7 +15,7 @@ export default function ImageSlideshow({ slides, aspect = 'aspect-[4/3]' }: { sl
   const s = slides[i];
 
   return (
-    <div className="my-8 select-none">
+    <div className="select-none">
       <div className={`relative ${aspect} bg-card border border-border overflow-hidden`}>
         <img
           src={s.src}
