@@ -36,6 +36,7 @@ import BlobBackground from "@/components/ui/BlobBackground";
 import StickyNote from "@/components/StickyNote";
 import Layout from "@/components/layout/Layout";
 import { useBlueprintMode } from "@/hooks/use-blueprint-mode";
+import { useIntroVisible } from "@/hooks/use-intro-state";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,7 @@ function Router() {
 
 function App() {
   const { isBlueprint, toggle } = useBlueprintMode();
+  const introVisible = useIntroVisible();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -80,7 +82,7 @@ function App() {
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <BlobBackground isBlueprint={isBlueprint} />
           <CustomCursor isBlueprint={isBlueprint} />
-          <BlueprintHint isBlueprint={isBlueprint} />
+          <BlueprintHint isBlueprint={isBlueprint} introVisible={introVisible} />
           <BlueprintCornerTrigger isBlueprint={isBlueprint} onActivate={toggle} />
           <AnimatePresence>
             {isBlueprint && <BlueprintOverlay key="blueprint" />}

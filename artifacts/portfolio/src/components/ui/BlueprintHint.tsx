@@ -30,7 +30,7 @@ function isTouchOnly() {
 
 const MOUSEMOVE_DISMISS_GRACE_MS = 400;
 
-export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean }) {
+export default function BlueprintHint({ isBlueprint, introVisible }: { isBlueprint: boolean; introVisible: boolean }) {
   const [visible, setVisible] = useState(false);
   const [anchorPos, setAnchorPos] = useState(getFallbackPos);
 
@@ -40,13 +40,14 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
   const hoveredProjects = useRef<Set<string>>(new Set());
   const cursorPosRef = useRef(getFallbackPos());
   const isBlueprintRef = useRef(isBlueprint);
+  const introVisibleRef = useRef(introVisible);
 
   function dismissHint() {
     setVisible(false);
   }
 
   function showHint() {
-    if (shownRef.current || isBlueprintRef.current) return;
+    if (shownRef.current || isBlueprintRef.current || introVisibleRef.current) return;
     shownRef.current = true;
     shownAtRef.current = Date.now();
     markShown();
@@ -56,7 +57,7 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
 
   function scheduleInactivity() {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
-    if (shownRef.current || isBlueprintRef.current) return;
+    if (shownRef.current || isBlueprintRef.current || introVisibleRef.current) return;
     inactivityTimer.current = setTimeout(showHint, INACTIVITY_MS);
   }
 
@@ -69,12 +70,24 @@ export default function BlueprintHint({ isBlueprint }: { isBlueprint: boolean })
   }, [isBlueprint, visible]);
 
   useEffect(() => {
+    const wasVisible = introVisibleRef.current;
+    introVisibleRef.current = introVisible;
+    if (introVisible) {
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+      hoveredProjects.current.clear();
+      if (visible) dismissHint();
+    } else if (wasVisible) {
+      scheduleInactivity();
+    }
+  }, [introVisible, visible]);
+
+  useEffect(() => {
     if (isTouchOnly()) return;
     shownRef.current = wasAlreadyShown();
 
     const onMouseMove = (e: MouseEvent) => {
       cursorPosRef.current = { x: e.clientX, y: e.clientY };
-      if (shownRef.current) return;
+      if (shownRef.current || introVisibleRef.current) return;
 
       const card = (e.target as HTMLElement).closest('[data-testid^="project-card-"]') as HTMLElement | null;
       if (card?.dataset.testid) {
