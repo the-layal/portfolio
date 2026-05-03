@@ -6,7 +6,7 @@ export interface Slide {
   caption?: string;
 }
 
-export default function ImageSlideshow({ slides, aspect = 'aspect-[4/3]' }: { slides: Slide[]; aspect?: string }) {
+export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
   const [i, setI] = useState(0);
   if (!slides || slides.length === 0) return null;
   const total = slides.length;
@@ -16,11 +16,11 @@ export default function ImageSlideshow({ slides, aspect = 'aspect-[4/3]' }: { sl
 
   return (
     <div className="select-none">
-      <div className={`relative ${aspect} bg-card border border-border overflow-hidden`}>
+      <div className="relative border border-border overflow-hidden">
         <img
           src={s.src}
           alt={s.alt || ''}
-          className="w-full h-full object-contain bg-black/5"
+          className="w-full h-auto block"
           loading="lazy"
         />
         {total > 1 && (

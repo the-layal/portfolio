@@ -17,7 +17,7 @@ import ImageSlideshow from '@/components/ImageSlideshow';
       <p>{`I was inspired by double pendulums and metronomes to make this piece. It is a new way to experience time. Just set the tempo and let the controlled chaos ensue.`}</p>
       <VideoEmbed src="https://www.youtube.com/embed/a-Qg-Ov4XMc?version=3&rel=1&showsearch=0&showinfo=1&iv_load_policy=1&fs=1&hl=en&autohide=2&wmode=transparent" />
       <h6>{`Final Presentation`}</h6>
-      <ImageSlideshow aspect="aspect-video" slides={[
+      <ImageSlideshow slides={[
           { src: "/images/4-031/pendronome-clock-03-1.png", alt: "" },
           { src: "/images/4-031/pendronome-clock-05-1.png", alt: "" },
           { src: "/images/4-031/pendronome-clock-06-1.png", alt: "" },
@@ -40,7 +40,7 @@ import ImageSlideshow from '@/components/ImageSlideshow';
       <h4>{`Lamp – Reflections`}</h4>
       <p>{`I was primarily inspired by Sol LeWitt’s Incomplete Cubes for this project. The final result was not my favorite project, but I really want to highlight my weekly progress!`}</p>
       <h6>{`Final Presentation`}</h6>
-      <ImageSlideshow aspect="aspect-video" slides={[
+      <ImageSlideshow slides={[
           { src: "/images/4-031/reflections-lamp-presentation-02.png", alt: "" },
           { src: "/images/4-031/reflections-lamp-presentation-03.png", alt: "" },
           { src: "/images/4-031/reflections-lamp-presentation-04.png", alt: "" },
