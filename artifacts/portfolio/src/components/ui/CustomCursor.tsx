@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, AnimatePresence } from 'framer-motion';
 
 interface CustomCursorProps {
   isBlueprint?: boolean;
@@ -8,6 +8,7 @@ interface CustomCursorProps {
 export default function CustomCursor({ isBlueprint = false }: CustomCursorProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isOverImage, setIsOverImage] = useState(false);
   const [isWide, setIsWide] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches,
   );
@@ -35,12 +36,20 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+
+      const computedCursor = window.getComputedStyle(target).cursor;
+      const overImage = computedCursor === 'zoom-in';
+
       const isClickable =
-        target.tagName.toLowerCase() === 'a' ||
-        target.tagName.toLowerCase() === 'button' ||
-        target.closest('a') !== null ||
-        target.closest('button') !== null ||
-        target.getAttribute('role') === 'button';
+        !overImage && (
+          target.tagName.toLowerCase() === 'a' ||
+          target.tagName.toLowerCase() === 'button' ||
+          target.closest('a') !== null ||
+          target.closest('button') !== null ||
+          target.getAttribute('role') === 'button'
+        );
+
+      setIsOverImage(overImage);
       setIsHovering(isClickable);
     };
 
@@ -50,8 +59,6 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
       setIsVisible(false);
     };
     const handleIframeLeave = () => {
-      // Defer re-showing until the next parent mousemove updates the
-      // cursor position, so it never flashes at a stale coordinate.
       overIframe = false;
     };
 
@@ -76,9 +83,6 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // When an iframe takes focus (e.g. click inside it), the parent
-    // window blurs and stops receiving mousemove. Hide the cursor so it
-    // doesn't sit frozen at the entry point.
     const handleBlur = () => setIsVisible(false);
 
     window.addEventListener('mousemove', moveCursor);
@@ -148,19 +152,48 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
     );
   }
 
+  const dotSize = isOverImage ? 48 : isHovering ? 40 : 14;
+  const dotOpacity = isOverImage ? 0.25 : isHovering ? 0.5 : 1;
+
   return (
     <motion.div
-      className="fixed top-0 left-0 rounded-full pointer-events-none z-[10000] mix-blend-difference"
-      style={{
-        x: cursorX,
-        y: cursorY,
-        translateX: '-50%',
-        translateY: '-50%',
-        opacity: isVisible ? 1 : 0,
-        backgroundColor: isHovering ? 'rgba(217,119,54,0.5)' : 'rgba(217,119,54,1)',
-      }}
-      animate={{ width: isHovering ? 40 : 14, height: isHovering ? 40 : 14 }}
-      transition={{ duration: 0.15, ease: 'easeOut' }}
-    />
+      className="fixed top-0 left-0 pointer-events-none z-[10000]"
+      style={{ x: cursorX, y: cursorY, opacity: isVisible ? 1 : 0 }}
+    >
+      <AnimatePresence>
+        {isOverImage && (
+          <motion.div
+            key="pulse-ring"
+            className="absolute rounded-full"
+            style={{
+              width: 48,
+              height: 48,
+              translateX: '-50%',
+              translateY: '-50%',
+              border: '1.5px solid rgba(217,119,54,0.75)',
+              top: 0,
+              left: 0,
+            }}
+            initial={{ scale: 1, opacity: 0.75 }}
+            animate={{ scale: 2, opacity: 0 }}
+            exit={{ scale: 1, opacity: 0 }}
+            transition={{ duration: 1.1, repeat: Infinity, ease: 'easeOut', repeatDelay: 0.1 }}
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        className="absolute rounded-full mix-blend-difference"
+        style={{
+          top: 0,
+          left: 0,
+          translateX: '-50%',
+          translateY: '-50%',
+          backgroundColor: `rgba(217,119,54,${dotOpacity})`,
+        }}
+        animate={{ width: dotSize, height: dotSize }}
+        transition={{ duration: 0.15, ease: 'easeOut' }}
+      />
+    </motion.div>
   );
 }
