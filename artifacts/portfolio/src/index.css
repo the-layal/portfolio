@@ -228,18 +228,23 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white cursor-none;
+    @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white;
     font-size: 0.9375rem;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
-  
-  /* Make sure links default to being clickable with custom cursor */
-  a, button, [role="button"] {
-    @apply cursor-none;
+}
+
+/* Only hide the native cursor on viewports wide enough for the custom
+   cursor (matches the breakpoint in CustomCursor.tsx). On narrower
+   viewports — including the Replit preview iframe — the OS cursor
+   stays visible. */
+@media (min-width: 768px) {
+  body, a, button, [role="button"] {
+    cursor: none;
   }
 }
 

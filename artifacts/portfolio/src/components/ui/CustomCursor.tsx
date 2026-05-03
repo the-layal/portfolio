@@ -8,11 +8,25 @@ interface CustomCursorProps {
 export default function CustomCursor({ isBlueprint = false }: CustomCursorProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isWide, setIsWide] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches,
+  );
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const mql = window.matchMedia('(min-width: 768px)');
+    const update = () => setIsWide(mql.matches);
+    update();
+    mql.addEventListener('change', update);
+    return () => mql.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (!isWide) return undefined;
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -36,9 +50,9 @@ export default function CustomCursor({ isBlueprint = false }: CustomCursorProps)
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isWide]);
 
-  if (typeof window === 'undefined' || window.innerWidth < 768) return null;
+  if (!isWide) return null;
 
   if (isBlueprint) {
     const size = isHovering ? 28 : 20;

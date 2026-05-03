@@ -28,8 +28,11 @@ export default function StickyNote() {
 
   return (
     <div
-      className="fixed z-[120] pointer-events-none"
-      style={{ right: '1.25rem', bottom: '1.25rem' }}
+      className="fixed z-[9990] pointer-events-none"
+      style={{
+        right: 'max(1rem, env(safe-area-inset-right))',
+        bottom: 'max(1rem, env(safe-area-inset-bottom))',
+      }}
     >
       <motion.button
         type="button"
