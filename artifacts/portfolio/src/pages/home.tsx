@@ -68,9 +68,11 @@ export default function Home() {
       <section className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
         <motion.p
           variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.05 }}
-          className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-6"
+          className="mb-6"
         >
-          Layal Barakat &mdash; Portfolio
+          <span className="inline-block bg-accent text-white font-sans text-xs uppercase tracking-[0.25em] px-3 py-1.5">
+            Layal Barakat &mdash; Portfolio
+          </span>
         </motion.p>
 
         <div className="flex flex-row items-center gap-12 xl:gap-20">
