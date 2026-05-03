@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import IntroScreen from '@/components/IntroScreen';
 import PaperScrap from '@/components/PaperScrap';
 import TickerStrip from '@/components/TickerStrip';
+import { setIntroVisible } from '@/hooks/use-intro-state';
 
 const PROJECTS = [
   { id: 1,  title: "Impact of Introducing Technical Elements in Makerspace Trainings", subtitle: "MIT Master's Thesis, 2025",              url: "/projects/thesis",            image: "/images/thesis/dfp.png",                                                     tags: ["Research"] },
@@ -53,6 +54,11 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(() => {
     try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
   });
+
+  useEffect(() => {
+    setIntroVisible(showIntro);
+    return () => setIntroVisible(false);
+  }, [showIntro]);
 
   const handleIntroExit = () => {
     try { sessionStorage.setItem('intro_v3', '1'); } catch {}

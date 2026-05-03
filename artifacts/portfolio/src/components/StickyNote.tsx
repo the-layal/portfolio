@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIntroVisible } from '@/hooks/use-intro-state';
 
 const STORAGE_KEY = 'sticky_note_v1';
 const COLOR_STORAGE_KEY = 'sticky_note_color_v1';
@@ -68,6 +69,7 @@ export default function StickyNote() {
   const [value, setValue] = useState('');
   const [colorId, setColorId] = useState<string>(DEFAULT_SWATCH_ID);
   const taRef = useRef<HTMLTextAreaElement | null>(null);
+  const introVisible = useIntroVisible();
 
   useEffect(() => {
     try {
@@ -101,9 +103,14 @@ export default function StickyNote() {
   return (
     <div
       className="fixed z-[9990] pointer-events-none"
+      aria-hidden={introVisible}
       style={{
         right: 'max(1rem, env(safe-area-inset-right))',
         bottom: 'max(1rem, env(safe-area-inset-bottom))',
+        opacity: introVisible ? 0 : 1,
+        visibility: introVisible ? 'hidden' : 'visible',
+        transition: 'opacity 0.45s ease-out 0.15s, visibility 0s linear ' +
+          (introVisible ? '0s' : '0.15s'),
       }}
     >
       <motion.button
