@@ -20,7 +20,7 @@ export default function ZoomYoyo() {
       <figure className="my-8 flex gap-2 items-start">
         <div className="flex flex-col flex-1 min-w-0">
           <img src="/images/zoom-yoyo/cap.png" alt="" className="w-full my-0" />
-          <img src="/images/zoom-yoyo/thermo.png" alt="" className="w-full my-0 -mt-12" />
+          <img src="/images/zoom-yoyo/thermo.png" alt="" className="w-full my-0 -mt-6" />
         </div>
         <div className="flex-1 min-w-0">
           <img src="/images/zoom-yoyo/20210407_122919.jpg" alt="" className="w-full my-0" />
