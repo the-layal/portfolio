@@ -186,34 +186,30 @@ export default function Home() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          {/* Filter bar — ticker-style strip */}
-          <div className="filter-strip mb-10" data-testid="filter-bar">
-            <div className="filter-strip-inner">
-              {FILTERS.map((f, i) => (
-                <React.Fragment key={f}>
-                  {i > 0 && <span className="filter-sep" aria-hidden>✦</span>}
-                  <button
-                    onClick={() => setActive(f)}
-                    data-testid={`filter-${f.toLowerCase()}`}
-                    className="filter-tag focus:outline-none"
-                    aria-pressed={active === f}
-                  >
-                    {active === f && (
-                      <motion.span
-                        layoutId="filter-pill"
-                        className="absolute inset-0"
-                        style={{ backgroundColor: "var(--filter-active-bg)", zIndex: -1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative">{f}</span>
-                  </button>
-                </React.Fragment>
-              ))}
-              <span className="filter-count" aria-live="polite">
-                {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-              </span>
-            </div>
+          {/* Filter bar */}
+          <div className="flex items-center gap-x-1 gap-y-2 flex-wrap mb-10" data-testid="filter-bar">
+            {FILTERS.map((f) => (
+              <button
+                key={f}
+                onClick={() => setActive(f)}
+                data-testid={`filter-${f.toLowerCase()}`}
+                className="filter-tag relative focus:outline-none"
+                aria-pressed={active === f}
+              >
+                {active === f && (
+                  <motion.span
+                    layoutId="filter-pill"
+                    className="absolute inset-0"
+                    style={{ backgroundColor: "hsl(var(--accent))", zIndex: -1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative">{f}</span>
+              </button>
+            ))}
+            <span className="ml-auto text-xs font-sans text-muted-foreground uppercase tracking-widest self-center">
+              {filtered.length} {filtered.length === 1 ? "project" : "projects"}
+            </span>
           </div>
 
           {/* Grid */}
