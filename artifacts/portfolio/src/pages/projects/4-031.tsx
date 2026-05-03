@@ -1,15 +1,17 @@
 import React from 'react';
 import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
 import ImageSlideshow from '@/components/ImageSlideshow';
-import ImageGrid from '@/components/ImageGrid';
 
   export default function DesignObjects() {
     return (
       <ProjectPage title="4.031 — Design Objects + Interaction" subtitle="MIT, 2020">
-        <ImageGrid images={[
-          { src: "/images/4-031/dsc_0752.jpg" },
-          { src: "/images/4-031/reflections-lamp-presentation-28.png" }
-        ]} cols={2} />
+      <figure className="my-8 not-prose relative overflow-hidden">
+        <div style={{ paddingTop: `calc(100% / ${3240/4000 + 2000/1125} - ${9 / (3240/4000 + 2000/1125)}px)` }} />
+        <div className="absolute inset-0 flex gap-[9px]">
+          <img src="/images/4-031/dsc_0752.jpg" alt="" className="h-full object-cover min-w-0" style={{ flex: 3240/4000 }} />
+          <img src="/images/4-031/reflections-lamp-presentation-28.png" alt="" className="h-full object-cover min-w-0" style={{ flex: 2000/1125 }} />
+        </div>
+      </figure>
       <p>{`In Fall 2020 (height of the COVID-19 pandemic), I took 4.031 – Design Objects + Interaction. In it, I worked on two projects from home, a lamp, and a clock.`}</p>
       <h4>{`Clock – Pendronome`}</h4>
       <p>{`I was inspired by double pendulums and metronomes to make this piece. It is a new way to experience time. Just set the tempo and let the controlled chaos ensue.`}</p>
