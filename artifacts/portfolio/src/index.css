@@ -385,7 +385,7 @@
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xl   { font-size: 1.125rem; }
 
 .prose :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 0.875rem; }
-.prose-lg :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 0.9375rem; }
+.prose-lg :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 1.1rem; }
 
 @media (min-width: 640px) {
   :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xs   { font-size: 0.703rem; }
