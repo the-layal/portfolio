@@ -164,7 +164,6 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
     >
       {NOTES.map((note, i) => {
         const isYellow = i === NOTES.length - 1;
-        const isTop = topIdx === i;
         const isDragging = draggingIdx === i;
         const zBase = i + 1;
         const zIndex = isDragging ? 50 : (topIdx === i ? 40 : zBase);
@@ -208,7 +207,7 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
               zIndex,
             }}
           >
-            {isTop && (isYellow || note.text) && (
+            {(isYellow || note.text) && (
               <div
                 style={{
                   position: 'absolute',
