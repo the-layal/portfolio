@@ -67,7 +67,7 @@ export default function Home() {
       <AnimatePresence>{showIntro && <IntroScreen onExit={handleIntroExit} />}</AnimatePresence>
       <section className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
         <motion.p
-          variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.05 }}
+          variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.05 }}
           className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-6"
         >
           Layal Barakat &mdash; Portfolio
@@ -75,8 +75,8 @@ export default function Home() {
 
         <div className="flex flex-row items-center gap-12 xl:gap-20">
           <motion.h1
-            variants={container} initial="hidden" animate="show"
-            onAnimationComplete={() => setWordsAnimated(true)}
+            variants={container} initial="hidden" animate={showIntro ? "hidden" : "show"}
+            onAnimationComplete={() => { if (!showIntro) setWordsAnimated(true); }}
             className="font-serif text-foreground leading-[1.05] tracking-tight"
             style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)" }}
           >
@@ -96,13 +96,13 @@ export default function Home() {
         <motion.div
           className="h-px bg-accent mt-8 mb-8 origin-left"
           initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
+          animate={showIntro ? { scaleX: 0, opacity: 0 } : { scaleX: 1, opacity: 1 }}
           transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{ width: "clamp(80px, 12vw, 160px)" }}
         />
 
         <motion.p
-          variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.8 }}
+          variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.8 }}
           className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
         >
           MIT BS '23, MS '25. Helping others through functional and accessible design.
