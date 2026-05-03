@@ -89,7 +89,7 @@ function StickerItem({
         width: size,
         height: size,
         rotate: sticker.rotate,
-        zIndex: isTop ? 60 : 31,
+        zIndex: 100,
         touchAction: 'none',
       }}
       initial={{ opacity: 0, scale: 0.4 }}
