@@ -1,15 +1,17 @@
 import React from 'react';
 import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
 import ImageSlideshow from '@/components/ImageSlideshow';
+import { useLightbox } from '@/contexts/LightboxContext';
 
-  export default function DesignObjects() {
-    return (
-      <ProjectPage title="4.031 — Design Objects + Interaction" subtitle="MIT, 2020">
+export default function DesignObjects() {
+  const { open } = useLightbox();
+  return (
+    <ProjectPage title="4.031 — Design Objects + Interaction" subtitle="MIT, 2020">
       <figure className="my-8 not-prose relative overflow-hidden">
         <div style={{ paddingTop: `calc(100% / ${3240/4000 + 2000/1125} - ${9 / (3240/4000 + 2000/1125)}px)` }} />
         <div className="absolute inset-0 flex gap-[9px]">
-          <img src="/images/4-031/dsc_0752.jpg" alt="" className="h-full object-cover min-w-0" style={{ flex: 3240/4000 }} />
-          <img src="/images/4-031/reflections-lamp-presentation-28.png" alt="" className="h-full object-cover min-w-0" style={{ flex: 2000/1125 }} />
+          <img src="/images/4-031/dsc_0752.jpg" alt="" className="h-full object-cover min-w-0 cursor-zoom-in" style={{ flex: 3240/4000 }} onClick={() => open('/images/4-031/dsc_0752.jpg')} />
+          <img src="/images/4-031/reflections-lamp-presentation-28.png" alt="" className="h-full object-cover min-w-0 cursor-zoom-in" style={{ flex: 2000/1125 }} onClick={() => open('/images/4-031/reflections-lamp-presentation-28.png')} />
         </div>
       </figure>
       <p>{`In Fall 2020 (height of the COVID-19 pandemic), I took 4.031 – Design Objects + Interaction. In it, I worked on two projects from home, a lamp, and a clock.`}</p>
@@ -38,7 +40,7 @@ import ImageSlideshow from '@/components/ImageSlideshow';
       <p>{`You can see more details here on how I narrowed down my options and developed the electronics and controls for Pendronome!`}</p>
       <VideoEmbed src="https://docs.google.com/presentation/d/e/2PACX-1vSndV32H4BLFn239fHQv5wUAjCnllnYIZEbVLCoAD2xJDb_Kb6J7Az_Q9aPNSqDkF53el8LPO_bswyq/embed?start=true&loop=true&delayms=60000" />
       <h4>{`Lamp – Reflections`}</h4>
-      <p>{`I was primarily inspired by Sol LeWitt’s Incomplete Cubes for this project. The final result was not my favorite project, but I really want to highlight my weekly progress!`}</p>
+      <p>{`I was primarily inspired by Sol LeWitt's Incomplete Cubes for this project. The final result was not my favorite project, but I really want to highlight my weekly progress!`}</p>
       <h6>{`Final Presentation`}</h6>
       <ImageSlideshow slides={[
           { src: "/images/4-031/reflections-lamp-presentation-02.png", alt: "" },
@@ -69,7 +71,6 @@ import ImageSlideshow from '@/components/ImageSlideshow';
         ]} />
       <h6>{`Weekly Progress`}</h6>
       <VideoEmbed src="https://docs.google.com/presentation/d/e/2PACX-1vT_8uxoHmHUXqwz0JbJRyrzcdW-oKUKhU-mnrzsMLCDcEcQbXTLvZi50wvo_gToj5CFqkhZBx4IPmNT/embed?start=true&loop=true&delayms=60000" />
-      </ProjectPage>
-    );
-  }
-  
+    </ProjectPage>
+  );
+}

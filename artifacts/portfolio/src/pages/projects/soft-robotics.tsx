@@ -1,12 +1,12 @@
 import React from 'react';
-import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
+import ProjectPage, { LightboxImage, VideoEmbed } from '@/components/ProjectPage';
 import ImageSlideshow from '@/components/ImageSlideshow';
 import ImageGrid from '@/components/ImageGrid';
 
-  export default function SoftRobotics() {
-    return (
-      <ProjectPage title="Soft Robotics Curriculum Research" subtitle="MIT Media Lab, 2020">
-        <img src="/images/soft-robotics/img_0205.png" alt="" />
+export default function SoftRobotics() {
+  return (
+    <ProjectPage title="Soft Robotics Curriculum Research" subtitle="MIT Media Lab, 2020">
+      <LightboxImage src="/images/soft-robotics/img_0205.png" alt="" />
       <p>{`In Summer 2020, I spent my time home remotely working on soft robotics curriculum research. I read around 20 papers over the summer and designed 3 DIY soft robotics projects. Traditional soft robotics actuators rely on two part silicone, which can be expensive, so my projects were aimed at being low cost and relatively easy access for any learner. I will go over two of the three projects here.`}</p>
       <h4>{`Origami Robots`}</h4>
       <p>{`I was inspired by research done at MIT and Harvard to create DIY soft robotic actuators using origami. The idea is simple: fold cardstock paper in a specific pattern, then seal a plastic ziplock bag over it with space left for a straw. From left to right below I used tape, the ziplock itself with a bit of hot glue around the straw, and hot glue.`}</p>
@@ -48,7 +48,7 @@ import ImageGrid from '@/components/ImageGrid';
       <ImageGrid images={[
           { src: "/images/soft-robotics/pump-and-gelatin.gif" },
           { src: "/images/soft-robotics/final-inflate.gif" }
-        ]} cols={2} />
+        ]} />
       <h6>Making the Mold (following <a href="https://youtu.be/uPx8xwRpfFk" target="_blank" rel="noopener noreferrer">this</a> tutorial)</h6>
       <VideoEmbed src="https://www.youtube.com/embed/uPx8xwRpfFk" title="Soft robotics mold-making tutorial" />
       <ImageSlideshow slides={[
@@ -96,7 +96,6 @@ import ImageGrid from '@/components/ImageGrid';
           { src: "/images/soft-robotics/20200818_161040.jpg", alt: "" },
           { src: "/images/soft-robotics/final-inflate.gif", alt: "" }
         ]} />
-      </ProjectPage>
-    );
-  }
-  
+    </ProjectPage>
+  );
+}

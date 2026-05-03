@@ -1,15 +1,17 @@
 import React from 'react';
-import ProjectPage, { VideoEmbed } from '@/components/ProjectPage';
+import ProjectPage, { LightboxImage, VideoEmbed } from '@/components/ProjectPage';
+import { useLightbox } from '@/contexts/LightboxContext';
 
 export default function MedicalDevice() {
+  const { open } = useLightbox();
   return (
     <ProjectPage title="Infant Abdomen Benchtop Model" subtitle="2.750 Medical Device Design, 2022">
 
       <figure className="my-8 not-prose relative overflow-hidden">
         <div style={{ paddingTop: `calc(100% / ${4032/2009 + 3024/4032} - ${9 / (4032/2009 + 3024/4032)}px)` }} />
         <div className="absolute inset-0 flex gap-[9px]">
-          <img src="/images/2-750/vessels-with-blood-4063750325-e1689157690888.jpeg" alt="" className="h-full w-full object-cover min-w-0" style={{ flex: 4032/2009 }} />
-          <img src="/images/2-750/img_6369.jpg" alt="" className="h-full w-full object-cover min-w-0" style={{ flex: 3024/4032 }} />
+          <img src="/images/2-750/vessels-with-blood-4063750325-e1689157690888.jpeg" alt="" className="h-full w-full object-cover min-w-0 cursor-zoom-in" style={{ flex: 4032/2009 }} onClick={() => open('/images/2-750/vessels-with-blood-4063750325-e1689157690888.jpeg')} />
+          <img src="/images/2-750/img_6369.jpg" alt="" className="h-full w-full object-cover min-w-0 cursor-zoom-in" style={{ flex: 3024/4032 }} onClick={() => open('/images/2-750/img_6369.jpg')} />
         </div>
       </figure>
 
@@ -22,15 +24,15 @@ export default function MedicalDevice() {
       <figure className="my-8 not-prose relative overflow-hidden">
         <div style={{ paddingTop: `calc(100% / ${800/634 + 500/609 + 4032/3024} - ${18 / (800/634 + 500/609 + 4032/3024)}px)` }} />
         <div className="absolute inset-0 flex gap-[9px]">
-          <img src="/images/2-750/vasculargif.gif" alt="" className="h-full w-full object-contain bg-white min-w-0" style={{ flex: 800/634 }} />
-          <img src="/images/2-750/superior_mesenteric_a.gif" alt="" className="h-full w-full object-contain bg-white min-w-0" style={{ flex: 500/609 }} />
-          <img src="/images/2-750/img_2361.jpeg" alt="" className="h-full w-full object-cover min-w-0" style={{ flex: 4032/3024 }} />
+          <img src="/images/2-750/vasculargif.gif" alt="" className="h-full w-full object-contain bg-white min-w-0 cursor-zoom-in" style={{ flex: 800/634 }} onClick={() => open('/images/2-750/vasculargif.gif')} />
+          <img src="/images/2-750/superior_mesenteric_a.gif" alt="" className="h-full w-full object-contain bg-white min-w-0 cursor-zoom-in" style={{ flex: 500/609 }} onClick={() => open('/images/2-750/superior_mesenteric_a.gif')} />
+          <img src="/images/2-750/img_2361.jpeg" alt="" className="h-full w-full object-cover min-w-0 cursor-zoom-in" style={{ flex: 4032/3024 }} onClick={() => open('/images/2-750/img_2361.jpeg')} />
         </div>
       </figure>
 
       <h6>{`Blood Flow System`}</h6>
       <figure className="my-8 not-prose">
-        <img src="/images/2-750/final-presentation-2.75-babies-1-3215712255-e1689160894491.png" alt="" className="w-full" />
+        <LightboxImage src="/images/2-750/final-presentation-2.75-babies-1-3215712255-e1689160894491.png" alt="" className="w-full" />
       </figure>
 
       <p>{`I was responsible for designing the flow system. Based on the size of the vascular 3D print, I created a list of compatible pneumatic parts available on McMaster. For ease of prototyping, I chose push-to-connect fittings.`}</p>

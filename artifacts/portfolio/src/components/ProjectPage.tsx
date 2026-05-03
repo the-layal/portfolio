@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
+import { useLightbox } from '@/contexts/LightboxContext';
 
 export default function ProjectPage({
   title,
@@ -40,6 +41,29 @@ export default function ProjectPage({
         {children}
       </div>
     </motion.article>
+  );
+}
+
+export function LightboxImage({
+  src,
+  alt,
+  className,
+  style,
+}: {
+  src: string;
+  alt?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const { open } = useLightbox();
+  return (
+    <img
+      src={src}
+      alt={alt || ''}
+      className={`cursor-zoom-in${className ? ` ${className}` : ''}`}
+      style={style}
+      onClick={() => open(src, alt)}
+    />
   );
 }
 

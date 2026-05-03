@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
+import { useLightbox } from '@/contexts/LightboxContext';
 
-function Figure({ src, alt, caption, width }: { src: string; alt?: string; caption?: string; width?: string }) {
+function Figure({ src, alt, caption, width, open }: { src: string; alt?: string; caption?: string; width?: string; open: (src: string, alt?: string) => void }) {
   return (
     <figure className="my-8 flex flex-col items-center">
       <img
         src={src}
         alt={alt || ''}
         loading="lazy"
-        className="rounded"
+        className="rounded cursor-zoom-in"
         style={{ maxWidth: width || '100%', width: '100%', height: 'auto' }}
+        onClick={() => open(src, alt)}
       />
       {caption && (
         <figcaption className="mt-3 text-center text-base text-muted-foreground italic">
@@ -22,6 +24,8 @@ function Figure({ src, alt, caption, width }: { src: string; alt?: string; capti
 }
 
 export default function MovingThingsWithAdobeAnimate() {
+  const { open } = useLightbox();
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -60,6 +64,7 @@ export default function MovingThingsWithAdobeAnimate() {
           src="/images/blog-post-adobe-animate/ballbounce.gif"
           caption="My first successful animation!"
           width="357px"
+          open={open}
         />
 
         <p>
@@ -72,6 +77,7 @@ export default function MovingThingsWithAdobeAnimate() {
         <Figure
           src="/images/blog-post-adobe-animate/comments.jpg"
           caption="The planned areas of animation."
+          open={open}
         />
 
         <p>
@@ -83,6 +89,7 @@ export default function MovingThingsWithAdobeAnimate() {
         <Figure
           src="/images/blog-post-adobe-animate/try1-2.gif"
           caption="A little too jittery."
+          open={open}
         />
 
         <p>
@@ -110,6 +117,7 @@ export default function MovingThingsWithAdobeAnimate() {
           src="/images/blog-post-adobe-animate/tweening-1.gif"
           caption="Tweened circle, once to the right and once to the left."
           width="693px"
+          open={open}
         />
 
         <p>
@@ -122,6 +130,7 @@ export default function MovingThingsWithAdobeAnimate() {
           src="/images/blog-post-adobe-animate/crop-greedy-1.gif"
           caption="Smooth movements!"
           width="346px"
+          open={open}
         />
 
         <p>
@@ -131,13 +140,13 @@ export default function MovingThingsWithAdobeAnimate() {
         </p>
 
         <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-6 my-8 items-center">
-          <Figure src="/images/blog-post-adobe-animate/mask.png" />
-          <Figure src="/images/blog-post-adobe-animate/mask2.gif" width="382px" />
+          <Figure src="/images/blog-post-adobe-animate/mask.png" open={open} />
+          <Figure src="/images/blog-post-adobe-animate/mask2.gif" width="382px" open={open} />
         </div>
 
         <p>
           By adding a solid water object behind it (especially since there is a gradient), it will
-          show that there is water “flowing” from the can. The last thing to do was to copy, paste,
+          show that there is water "flowing" from the can. The last thing to do was to copy, paste,
           and reverse the animation I just made so that there is a continuous loop. The final
           animation looks like this:
         </p>
@@ -145,6 +154,7 @@ export default function MovingThingsWithAdobeAnimate() {
         <Figure
           src="/images/blog-post-adobe-animate/aye.gif"
           caption="A final animation!!"
+          open={open}
         />
 
         <p>
@@ -155,7 +165,7 @@ export default function MovingThingsWithAdobeAnimate() {
         </p>
 
         <p>
-          This small experiment was really fun, and I am very pleased with the results. I can’t
+          This small experiment was really fun, and I am very pleased with the results. I can't
           wait to learn more about animation and see where I can use it in future projects!
         </p>
       </div>

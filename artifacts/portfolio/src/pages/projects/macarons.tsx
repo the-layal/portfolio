@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectPage, { PdfEmbed } from '@/components/ProjectPage';
+import ProjectPage, { LightboxImage, PdfEmbed } from '@/components/ProjectPage';
 
 export default function Macarons() {
   return (
@@ -16,7 +16,7 @@ export default function Macarons() {
       </p>
 
       <h4>Final Poster</h4>
-      <img src="/images/macarons/tues_e3_barakat_layal-1.png" alt="2.671 final poster" />
+      <LightboxImage src="/images/macarons/tues_e3_barakat_layal-1.png" alt="2.671 final poster" />
 
       <h4>Final Paper</h4>
       <PdfEmbed src="/pdfs/macaron-paper.pdf" label="2.671 Final Paper (PDF)" />

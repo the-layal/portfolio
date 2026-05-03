@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import { useLightbox } from '@/contexts/LightboxContext';
 
 export interface GridImage {
   src: string;
@@ -13,6 +14,8 @@ interface ImageGridProps {
 const GAP = 8; // gap-2
 
 export default function ImageGrid({ images, caption }: ImageGridProps) {
+  const { open } = useLightbox();
+
   if (!images || images.length === 0) return null;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,17 +62,18 @@ export default function ImageGrid({ images, caption }: ImageGridProps) {
         {images.map((img, i) => (
           <div
             key={i}
-            className="overflow-hidden"
+            className="overflow-hidden cursor-zoom-in"
             style={
               allLoaded && ratios[i] != null
                 ? { flex: `${ratios[i]} 1 0`, minWidth: 0 }
                 : { flex: '1 1 0', minWidth: 0 }
             }
+            onClick={() => open(img.src, img.alt)}
           >
             <img
               src={img.src}
               alt={img.alt || ''}
-              className={allLoaded && optimalHeight ? 'w-full h-full object-cover' : 'w-full h-auto'}
+              className={allLoaded && optimalHeight ? 'w-full h-full object-cover pointer-events-none' : 'w-full h-auto pointer-events-none'}
               onLoad={e => handleLoad(i, e)}
               loading="lazy"
             />

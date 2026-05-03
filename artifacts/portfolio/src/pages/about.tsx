@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLightbox } from '@/contexts/LightboxContext';
 
 const PORTRAITS = [
   { src: '/images/about/20250119_134835.jpg', alt: 'Layal Barakat portrait' },
@@ -8,6 +9,7 @@ const PORTRAITS = [
 ];
 
 export default function About() {
+  const { open } = useLightbox();
   return (
     <div className="w-full py-12 md:py-20">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 lg:gap-24 items-start">
@@ -18,25 +20,25 @@ export default function About() {
           className="md:col-span-5 md:sticky md:top-32"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-sm mx-auto sm:max-w-none">
-            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border sm:col-span-2">
+            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border sm:col-span-2 cursor-zoom-in" onClick={() => open(PORTRAITS[0].src, PORTRAITS[0].alt)}>
               <img
                 src={PORTRAITS[0].src}
                 alt={PORTRAITS[0].alt}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover pointer-events-none"
               />
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border">
+            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border cursor-zoom-in" onClick={() => open(PORTRAITS[1].src, PORTRAITS[1].alt)}>
               <img
                 src={PORTRAITS[1].src}
                 alt={PORTRAITS[1].alt}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover pointer-events-none"
               />
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border">
+            <div className="relative aspect-square overflow-hidden rounded-full bg-card border border-border cursor-zoom-in" onClick={() => open(PORTRAITS[2].src, PORTRAITS[2].alt)}>
               <img
                 src={PORTRAITS[2].src}
                 alt={PORTRAITS[2].alt}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover pointer-events-none"
               />
             </div>
           </div>

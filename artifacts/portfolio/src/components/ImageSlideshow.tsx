@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useLightbox } from '@/contexts/LightboxContext';
 
 export interface Slide {
   src: string;
@@ -7,6 +8,7 @@ export interface Slide {
 }
 
 export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
+  const { open } = useLightbox();
   const [i, setI] = useState(0);
   const [maxRatio, setMaxRatio] = useState<number | undefined>(undefined);
 
@@ -34,10 +36,11 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
           src={s.src}
           alt={s.alt || ''}
           onLoad={handleLoad}
+          onClick={() => open(s.src, s.alt)}
           className={
             maxRatio
-              ? 'absolute inset-0 w-full h-full object-contain block'
-              : 'w-full h-auto block'
+              ? 'absolute inset-0 w-full h-full object-contain block cursor-zoom-in'
+              : 'w-full h-auto block cursor-zoom-in'
           }
           loading="lazy"
         />

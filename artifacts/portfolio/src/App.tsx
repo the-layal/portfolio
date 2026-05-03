@@ -28,6 +28,8 @@ import BrushlessMotor from "@/pages/projects/brushless-motor";
 import Penguino from "@/pages/projects/penguino";
 import MakeMIT from "@/pages/projects/makemit";
 import WateringCans from "@/pages/projects/watering-cans";
+import Lightbox from "@/components/Lightbox";
+import { LightboxProvider } from "@/contexts/LightboxContext";
 import CustomCursor from "@/components/ui/CustomCursor";
 import BlueprintOverlay from "@/components/ui/BlueprintOverlay";
 import BlueprintHint from "@/components/ui/BlueprintHint";
@@ -79,19 +81,22 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <BlobBackground isBlueprint={isBlueprint} />
-          <CustomCursor isBlueprint={isBlueprint} />
-          <BlueprintHint isBlueprint={isBlueprint} introVisible={introVisible} />
-          <BlueprintCornerTrigger isBlueprint={isBlueprint} onActivate={toggle} />
-          <AnimatePresence>
-            {isBlueprint && <BlueprintOverlay key="blueprint" />}
-          </AnimatePresence>
-          <Layout>
-            <Router />
-          </Layout>
-          <StickyNote />
-        </WouterRouter>
+        <LightboxProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <BlobBackground isBlueprint={isBlueprint} />
+            <CustomCursor isBlueprint={isBlueprint} />
+            <BlueprintHint isBlueprint={isBlueprint} introVisible={introVisible} />
+            <BlueprintCornerTrigger isBlueprint={isBlueprint} onActivate={toggle} />
+            <AnimatePresence>
+              {isBlueprint && <BlueprintOverlay key="blueprint" />}
+            </AnimatePresence>
+            <Layout>
+              <Router />
+            </Layout>
+            <StickyNote />
+            <Lightbox />
+          </WouterRouter>
+        </LightboxProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
