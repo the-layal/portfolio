@@ -42,29 +42,29 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
           loading="lazy"
         />
         {total > 1 && (
-          <>
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
             <button
               type="button"
               onClick={prev}
               aria-label="Previous slide"
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-background/80 hover:bg-background border border-border text-foreground transition"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-background/80 hover:bg-background border border-border text-foreground transition"
               data-testid="slideshow-prev"
             >
               ‹
             </button>
+            <div className="px-3 py-1 rounded-full bg-background/80 border border-border font-mono text-xs text-muted-foreground">
+              {i + 1} / {total}
+            </div>
             <button
               type="button"
               onClick={next}
               aria-label="Next slide"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-background/80 hover:bg-background border border-border text-foreground transition"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-background/80 hover:bg-background border border-border text-foreground transition"
               data-testid="slideshow-next"
             >
               ›
             </button>
-            <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-background/80 border border-border font-mono text-xs text-muted-foreground">
-              {i + 1} / {total}
-            </div>
-          </>
+          </div>
         )}
       </div>
       {s.caption && (
