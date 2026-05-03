@@ -44,12 +44,12 @@ export default function Navbar() {
           : 'py-6 mix-blend-difference text-white',
       ].join(' ')}
     >
-      <nav className="flex justify-between items-center max-w-7xl mx-auto">
+      <nav className="flex md:flex-row-reverse justify-between items-center max-w-7xl mx-auto">
         <Link
           href="/"
           aria-hidden={scrolled}
           tabIndex={scrolled ? -1 : 0}
-          className="font-serif font-normal tracking-tight hover:opacity-70 transition-opacity duration-500 ease-out"
+          className="hidden md:block font-serif font-normal tracking-tight hover:opacity-70 transition-opacity duration-500 ease-out"
           style={{
             fontSize: scrolled
               ? 'clamp(0.95rem, 1.35vw, 1.15rem)'
