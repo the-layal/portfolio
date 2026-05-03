@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import resume, { ResumeEntry } from '@/data/resume';
 import { PdfEmbed } from '@/components/ProjectPage';
@@ -73,10 +73,15 @@ export default function Resume() {
   const variants = useBlockVariants();
   const [activeEmoji, setActiveEmoji] = useState<string | null>(null);
 
+  useEffect(() => {
+    document.body.classList.add('resume-route');
+    return () => document.body.classList.remove('resume-route');
+  }, []);
+
   return (
     <>
     <EmojiCursor emoji={activeEmoji} />
-    <div className="w-full py-12 md:py-20 max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
+    <div className="page-resume w-full py-12 md:py-20 max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
       <motion.div
         variants={variants}
         initial="hidden"

@@ -57,6 +57,7 @@
 :root {
   --background: 38 31% 95%; /* #F7F4EF */
   --foreground: 27 13% 9%; /* #1A1714 */
+  --body-ink: 27 22% 5%; /* richer, slightly darker than foreground for body text */
   --border: 38 20% 85%;
   
   --card: 38 33% 98%; /* #FCFAF8 */
@@ -76,7 +77,7 @@
   --secondary-border: 38 20% 85%;
 
   --muted: 38 20% 90%;
-  --muted-foreground: 27 5% 45%;
+  --muted-foreground: 27 10% 28%;
   --muted-border: 38 20% 85%;
 
   --accent: 24 67% 53%; /* #D97736 Amber/Terracotta */
@@ -104,6 +105,7 @@
 .dark {
   --background: 27 13% 9%;
   --foreground: 38 31% 95%;
+  --body-ink: 38 31% 95%; /* same as foreground in dark mode */
   --border: 27 10% 20%;
   
   --card: 27 10% 12%;
@@ -140,6 +142,7 @@
 .blueprint {
   --background: 215 60% 10%;
   --foreground: 195 80% 88%;
+  --body-ink: 195 80% 88%; /* same as foreground in blueprint mode */
   --border: 200 60% 25%;
 
   --card: 215 55% 13%;
@@ -256,14 +259,55 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-white;
-    font-size: 0.9375rem;
+    @apply font-serif antialiased bg-background selection:bg-accent selection:text-white;
+    color: hsl(var(--body-ink));
+    font-size: 0.875rem;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
+}
+
+/* Resume page: restore sans-serif, original size, and standard foreground color */
+.page-resume {
+  font-family: var(--app-font-sans);
+  font-size: 0.9375rem;
+  color: hsl(var(--foreground));
+}
+
+/* Restore original text-utility sizes inside the resume so explicit
+   Tailwind classes like text-base/text-lg/text-xl render at the original
+   0.9375rem-based scale, not the globally-reduced one */
+.page-resume :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
+.page-resume :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
+.page-resume :where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
+.page-resume :where(:not(h1,h2,h3,h4,h5,h6)).text-lg   { font-size: 1.055rem; }
+.page-resume :where(:not(h1,h2,h3,h4,h5,h6)).text-xl   { font-size: 1.172rem; }
+
+@media (min-width: 640px) {
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xs   { font-size: 0.703rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-sm   { font-size: 0.82rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-base { font-size: 0.9375rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-lg   { font-size: 1.055rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xl   { font-size: 1.172rem; }
+}
+
+@media (min-width: 768px) {
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xs   { font-size: 0.703rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-sm   { font-size: 0.82rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-base { font-size: 0.9375rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-lg   { font-size: 1.055rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xl   { font-size: 1.172rem; }
+}
+
+@media (min-width: 1024px) {
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xs   { font-size: 0.703rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-sm   { font-size: 0.82rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-base { font-size: 0.9375rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-lg   { font-size: 1.055rem; }
+  .page-resume :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xl   { font-size: 1.172rem; }
 }
 
 /* Only hide the native cursor on viewports wide enough for the custom
@@ -324,33 +368,39 @@
 
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
-:where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
-:where(:not(h1,h2,h3,h4,h5,h6)).text-lg   { font-size: 1.055rem; }
-:where(:not(h1,h2,h3,h4,h5,h6)).text-xl   { font-size: 1.172rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.875rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-lg   { font-size: 1.0rem; }
+:where(:not(h1,h2,h3,h4,h5,h6)).text-xl   { font-size: 1.125rem; }
 
-.prose :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 0.9375rem; }
-.prose-lg :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 1.055rem; }
+.prose :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 0.875rem; }
+.prose-lg :where(p, ul, ol, li, blockquote, figcaption, dt, dd, table, code) { font-size: 0.9375rem; }
 
 @media (min-width: 640px) {
   :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xs   { font-size: 0.703rem; }
   :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-sm   { font-size: 0.82rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-base { font-size: 0.9375rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-lg   { font-size: 1.055rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xl   { font-size: 1.172rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-base { font-size: 0.875rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-lg   { font-size: 1.0rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).sm\:text-xl   { font-size: 1.125rem; }
 }
 
 @media (min-width: 768px) {
   :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xs   { font-size: 0.703rem; }
   :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-sm   { font-size: 0.82rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-base { font-size: 0.9375rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-lg   { font-size: 1.055rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xl   { font-size: 1.172rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-base { font-size: 0.875rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-lg   { font-size: 1.0rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).md\:text-xl   { font-size: 1.125rem; }
 }
 
 @media (min-width: 1024px) {
   :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xs   { font-size: 0.703rem; }
   :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-sm   { font-size: 0.82rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-base { font-size: 0.9375rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-lg   { font-size: 1.055rem; }
-  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xl   { font-size: 1.172rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-base { font-size: 0.875rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-lg   { font-size: 1.0rem; }
+  :where(:not(h1,h2,h3,h4,h5,h6)).lg\:text-xl   { font-size: 1.125rem; }
+}
+
+/* Resume route: restore original muted-foreground across the full page
+   (navbar, footer, and content) so the resume is visually unchanged */
+body.resume-route {
+  --muted-foreground: 27 5% 45%;
 }

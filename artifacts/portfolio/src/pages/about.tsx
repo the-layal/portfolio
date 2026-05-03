@@ -50,8 +50,8 @@ export default function About() {
         >
           <h1 className="text-4xl md:text-6xl font-serif text-foreground mb-12">About Me</h1>
 
-          <div className="prose prose-lg prose-neutral prose-p:font-sans prose-p:text-muted-foreground prose-p:leading-relaxed max-w-none">
-            <p className="text-xl text-foreground font-serif leading-relaxed mb-8">
+          <div className="prose prose-lg prose-neutral prose-p:text-muted-foreground prose-p:leading-relaxed max-w-none">
+            <p className="text-lg text-foreground font-serif leading-relaxed mb-8">
               Hello there, my name is Layal Barakat, and I&rsquo;m an alumnus of the Massachusetts Institute of
               Technology (MIT), having studied Mechanical Engineering for my Master&rsquo;s and Bachelor of Science
               (with a minor in Design). I am interested in the intersection between engineering and design, or in other

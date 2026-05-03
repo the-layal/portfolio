@@ -164,7 +164,7 @@ export default function Home() {
 
           <motion.p
             variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.8 }}
-            className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-relaxed max-w-xl"
+            className="text-base md:text-lg text-muted-foreground font-light leading-relaxed max-w-xl"
             style={{ gridArea: 'tagline' }}
           >
             MIT BS '23, MS '25. Helping others through functional and accessible design.
