@@ -175,10 +175,11 @@
   overflow: hidden;
   padding: 0.7rem 0;
   background: hsl(24 67% 53%);
+  transition: background-color 0.3s ease;
 }
 
 .blueprint .ticker-strip {
-  background: hsl(24 67% 53%);
+  background: hsl(var(--card));
 }
 
 .ticker-track {
@@ -203,12 +204,22 @@
   letter-spacing: 0.12em;
   color: #fff;
   padding: 0 1.6rem;
+  transition: color 0.3s ease;
 }
 
 .ticker-sep {
   color: #fff;
   font-size: clamp(0.7rem, 1vw, 0.9rem);
   flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.blueprint .ticker-item {
+  color: hsl(var(--accent));
+}
+
+.blueprint .ticker-sep {
+  color: hsl(var(--accent) / 0.6);
 }
 
 @layer base {
