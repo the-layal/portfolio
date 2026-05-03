@@ -50,7 +50,6 @@ export default function StickyNote() {
           boxShadow: '0 6px 18px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.1)',
           transform: 'rotate(-6deg)',
           border: 'none',
-          cursor: 'none',
         }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -111,7 +110,6 @@ export default function StickyNote() {
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  cursor: 'none',
                   color: '#5a4416',
                   fontSize: '1.1rem',
                   lineHeight: 1,
