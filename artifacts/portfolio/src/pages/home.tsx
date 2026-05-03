@@ -160,7 +160,7 @@ export default function Home() {
             className="justify-self-start md:justify-self-auto mb-6 md:mb-0"
             style={{ gridArea: 'scrap' }}
           >
-            <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} onAddSticker={addSticker} />
+            <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} onAddSticker={stickers.length === 0 ? addSticker : undefined} />
           </div>
 
           <motion.p
