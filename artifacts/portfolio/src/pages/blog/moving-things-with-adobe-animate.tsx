@@ -13,7 +13,7 @@ function Figure({ src, alt, caption, width }: { src: string; alt?: string; capti
         style={{ maxWidth: width || '100%', width: '100%', height: 'auto' }}
       />
       {caption && (
-        <figcaption className="mt-3 text-center font-sans text-sm text-muted-foreground italic">
+        <figcaption className="mt-3 text-center text-base text-muted-foreground italic">
           {caption}
         </figcaption>
       )}

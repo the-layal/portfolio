@@ -38,7 +38,7 @@ export default function ImageGrid({ images, objectFit = 'cover', caption }: Imag
         })}
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm italic text-muted-foreground">
+        <figcaption className="mt-2 text-center text-base italic text-muted-foreground">
           {caption}
         </figcaption>
       )}

@@ -5,7 +5,7 @@ function CaptionedImage({ src, alt, caption }: { src: string; alt: string; capti
   return (
     <figure className="my-8">
       <img src={src} alt={alt} className="w-full" />
-      <figcaption className="mt-3 text-center font-sans text-sm text-muted-foreground italic">{caption}</figcaption>
+      <figcaption className="mt-3 text-center text-base text-muted-foreground italic">{caption}</figcaption>
     </figure>
   );
 }

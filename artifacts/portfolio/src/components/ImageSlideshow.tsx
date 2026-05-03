@@ -50,7 +50,7 @@ export default function ImageSlideshow({ slides, aspect = 'aspect-[4/3]' }: { sl
         )}
       </div>
       {s.caption && (
-        <p className="mt-3 text-center font-sans text-sm text-muted-foreground italic">{s.caption}</p>
+        <p className="mt-3 text-center text-base text-muted-foreground italic">{s.caption}</p>
       )}
     </div>
   );
