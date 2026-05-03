@@ -15,7 +15,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
   const rafRef = useRef<number | null>(null);
   const hasExited = useRef(false);
 
-  // Guard so onExit is never called twice (skip button + animation end)
   const safeExit = useCallback(() => {
     if (hasExited.current) return;
     hasExited.current = true;
@@ -27,7 +26,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
     setPhase('dissolving');
   }, [phase]);
 
-  // Ink bleed animation — runs when dissolving starts
   useEffect(() => {
     if (phase !== 'dissolving') return;
     const diag = Math.hypot(window.innerWidth, window.innerHeight) / 2 + 80;
@@ -35,7 +33,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
 
     const tick = (now: number) => {
       const t = Math.min((now - start) / ANIM_MS, 1);
-      // Ease-in-out: starts slow (ink drop forming), accelerates outward
       const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
       setBleedRadius(eased * diag);
       if (t < 1) {
@@ -77,18 +74,12 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
   return (
     <div className="fixed inset-0 z-[200] overflow-hidden">
 
-      {/* Ink bleed SVG overlay */}
       <svg
         className="absolute inset-0 w-full h-full"
         aria-hidden
         style={{ pointerEvents: 'none' }}
       >
         <defs>
-          {/*
-            feTurbulence generates organic noise.
-            feDisplacementMap distorts the growing circle's edge using that noise,
-            giving the bleed an irregular, ink-on-paper quality.
-          */}
           <filter id="inkBleedFilter" x="-50%" y="-50%" width="200%" height="200%">
             <feTurbulence
               type="fractalNoise"
@@ -106,7 +97,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
             />
           </filter>
           <mask id="inkBleedMask">
-            {/* White = show dark overlay; black = cut through to reveal site */}
             <rect width="100%" height="100%" fill="white" />
             <circle
               cx="50%"
@@ -120,7 +110,6 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
         <rect width="100%" height="100%" fill={DARK} mask="url(#inkBleedMask)" />
       </svg>
 
-      {/* Content — fades out as the bleed starts */}
       <div
         className="relative z-10 h-full flex flex-col justify-center items-start px-6 md:px-16"
         style={{
