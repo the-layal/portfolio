@@ -167,7 +167,11 @@ export default function Home() {
             className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-xl"
             style={{ gridArea: 'tagline' }}
           >
-            MIT BS '23, MS '25. Helping others through functional and accessible design.
+            MIT BS '23, MS '25. Helping others through{' '}
+            <span className="font-bold transition-colors duration-300 hover:text-tagline-functional">functional</span>
+            {' '}and{' '}
+            <span className="font-bold transition-colors duration-300 hover:text-tagline-accessible">accessible</span>
+            {' '}design.
           </motion.p>
         </div>
         <StickerLayer

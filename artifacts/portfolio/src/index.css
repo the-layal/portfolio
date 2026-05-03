@@ -40,6 +40,9 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-accent-border: var(--accent-border);
 
+  --color-tagline-functional: hsl(var(--tagline-functional));
+  --color-tagline-accessible: hsl(var(--tagline-accessible));
+
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
   --color-destructive-border: var(--destructive-border);
@@ -84,6 +87,9 @@
   --accent-foreground: 38 31% 95%;
   --accent-border: 24 67% 48%;
 
+  --tagline-functional: 340 55% 36%; /* dark rose — WCAG AA on light bg */
+  --tagline-accessible: 168 55% 26%; /* dark teal — WCAG AA on light bg */
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 38 31% 95%;
   --destructive-border: 0 84% 50%;
@@ -127,6 +133,9 @@
   
   --accent: 24 67% 53%;
   --accent-foreground: 38 31% 95%;
+
+  --tagline-functional: 340 55% 68%; /* rose — lighter for dark bg */
+  --tagline-accessible: 168 50% 55%; /* teal — lighter for dark bg */
   
   --destructive: 0 62% 30%;
   --destructive-foreground: 38 31% 95%;
@@ -165,6 +174,9 @@
   --accent: 190 90% 55%;
   --accent-foreground: 215 60% 10%;
   --accent-border: 190 90% 45%;
+
+  --tagline-functional: 320 80% 75%; /* bright pink — readable on blueprint dark bg */
+  --tagline-accessible: 168 80% 62%; /* bright teal — readable on blueprint dark bg */
 
   --input: 215 50% 20%;
   --ring: 190 90% 55%;
