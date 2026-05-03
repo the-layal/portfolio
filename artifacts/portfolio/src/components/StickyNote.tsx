@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'wouter';
 import { useIntroVisible } from '@/hooks/use-intro-state';
 
 const STORAGE_KEY = 'sticky_note_v1';
@@ -70,6 +71,8 @@ export default function StickyNote() {
   const [colorId, setColorId] = useState<string>(DEFAULT_SWATCH_ID);
   const taRef = useRef<HTMLTextAreaElement | null>(null);
   const introVisible = useIntroVisible();
+  const [location] = useLocation();
+  const onHero = location === '/' || location === '';
 
   useEffect(() => {
     try {
@@ -102,11 +105,10 @@ export default function StickyNote() {
 
   return (
     <div
-      className="fixed z-[9990] pointer-events-none"
+      className="sticky-note-anchor z-[9990] pointer-events-none"
+      data-on-hero={onHero ? 'true' : 'false'}
       aria-hidden={introVisible}
       style={{
-        right: 'max(1rem, env(safe-area-inset-right))',
-        bottom: 'max(1rem, env(safe-area-inset-bottom))',
         opacity: introVisible ? 0 : 1,
         visibility: introVisible ? 'hidden' : 'visible',
         transition: 'opacity 0.45s ease-out 0.15s, visibility 0s linear ' +
@@ -120,10 +122,8 @@ export default function StickyNote() {
         whileTap={{ scale: 0.94 }}
         aria-label={open ? 'Close sticky note' : 'Open sticky note'}
         aria-expanded={open}
-        className="pointer-events-auto relative flex items-center justify-center"
+        className="sticky-note-btn pointer-events-auto relative flex items-center justify-center"
         style={{
-          width: 52,
-          height: 52,
           background: swatch.bg,
           color: swatch.ink,
           boxShadow: '0 6px 18px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.1)',
@@ -132,7 +132,7 @@ export default function StickyNote() {
           transition: 'background 0.25s ease, color 0.25s ease',
         }}
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <svg className="sticky-note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9z" />
           <path d="M14 3v6h6" />
           <path d="M8 13h6" />
@@ -153,12 +153,9 @@ export default function StickyNote() {
               opacity: 0, scale: 0.55, x: 40, y: 40, rotate: 6,
               transition: { duration: 0.22, ease: 'easeIn' },
             }}
-            className="pointer-events-auto absolute"
+            className="sticky-note-panel pointer-events-auto absolute"
             style={{
               right: 0,
-              bottom: 64,
-              width: 'min(280px, 78vw)',
-              height: 260,
               background: `linear-gradient(180deg, ${swatch.bgGradientTop} 0%, ${swatch.bgGradientBottom} 100%)`,
               boxShadow:
                 `0 18px 40px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12), inset 0 0 30px ${swatch.innerShadow}`,

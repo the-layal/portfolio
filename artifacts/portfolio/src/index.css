@@ -252,6 +252,62 @@
   color: var(--sticky-placeholder, rgba(0, 0, 0, 0.35));
 }
 
+.sticky-note-anchor {
+  --sticky-btn-size: 52px;
+  --sticky-icon-size: 22px;
+  --sticky-panel-width: min(280px, 78vw);
+  --sticky-panel-height: 260px;
+  --sticky-panel-bottom: 64px;
+  --sticky-edge-x: max(1rem, env(safe-area-inset-right));
+  --sticky-edge-y: max(1rem, env(safe-area-inset-bottom));
+  position: fixed;
+  right: var(--sticky-edge-x);
+  bottom: var(--sticky-edge-y);
+}
+
+.sticky-note-btn {
+  width: var(--sticky-btn-size);
+  height: var(--sticky-btn-size);
+}
+
+.sticky-note-icon {
+  width: var(--sticky-icon-size);
+  height: var(--sticky-icon-size);
+}
+
+.sticky-note-panel {
+  width: var(--sticky-panel-width);
+  height: var(--sticky-panel-height);
+  max-height: calc(100vh - var(--sticky-edge-y) - var(--sticky-panel-bottom) - 1rem);
+  bottom: var(--sticky-panel-bottom);
+}
+
+@media (max-width: 640px) {
+  .sticky-note-anchor {
+    --sticky-btn-size: 44px;
+    --sticky-icon-size: 18px;
+    --sticky-panel-width: min(240px, 88vw);
+    --sticky-panel-height: 240px;
+    --sticky-panel-bottom: 54px;
+    --sticky-edge-x: max(0.5rem, env(safe-area-inset-right));
+    --sticky-edge-y: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* On the home route, narrow viewports park the anchor below the hero
+   words instead of overlapping them. The hero is min-h-[85vh] flex
+   centered, so anchoring at top: ~85vh + offset places the button just
+   under the headline area while keeping it visually bottom-aligned to
+   the hero. */
+@media (max-width: 640px) {
+  .sticky-note-anchor[data-on-hero="true"] {
+    position: absolute;
+    top: calc(85vh + 0.5rem);
+    bottom: auto;
+    right: var(--sticky-edge-x);
+  }
+}
+
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
