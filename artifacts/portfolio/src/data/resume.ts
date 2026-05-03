@@ -6,6 +6,11 @@ export interface ResumeEntry {
   bullets: string[];
 }
 
+export interface Interest {
+  label: string;
+  emoji: string;
+}
+
 export interface ResumeData {
   education: {
     institution: string;
@@ -17,7 +22,7 @@ export interface ResumeData {
   professional: ResumeEntry[];
   leadership: ResumeEntry[];
   languages: string;
-  interests: string[];
+  interests: Interest[];
 }
 
 const resume: ResumeData = {
@@ -124,18 +129,18 @@ const resume: ResumeData = {
   ],
   languages: 'English (native) · Arabic (conversational)',
   interests: [
-    'Reading',
-    'Writing',
-    'Crocheting',
-    '3D Printing',
-    'Prosthetics',
-    'Product Design',
-    'Urban Planning',
-    'Trains',
-    'Traveling',
-    'Hiking',
-    'Pickleball',
-    'Cats',
+    { label: 'Reading',        emoji: '📚' },
+    { label: 'Writing',        emoji: '✍️' },
+    { label: 'Crocheting',     emoji: '🧶' },
+    { label: '3D Printing',    emoji: '🖨️' },
+    { label: 'Prosthetics',    emoji: '🦾' },
+    { label: 'Product Design', emoji: '🎨' },
+    { label: 'Urban Planning', emoji: '🏙️' },
+    { label: 'Trains',         emoji: '🚂' },
+    { label: 'Traveling',      emoji: '✈️' },
+    { label: 'Hiking',         emoji: '🥾' },
+    { label: 'Pickleball',     emoji: '🏓' },
+    { label: 'Cats',           emoji: '🐱' },
   ],
 };
 

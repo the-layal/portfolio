@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import resume, { ResumeEntry } from '@/data/resume';
 import { PdfEmbed } from '@/components/ProjectPage';
+import EmojiCursor from '@/components/EmojiCursor';
 
 function useBlockVariants(): Variants {
   const prefersReducedMotion = useReducedMotion();
@@ -70,7 +71,11 @@ function EntryCard({ entry }: { entry: ResumeEntry }) {
 
 export default function Resume() {
   const variants = useBlockVariants();
+  const [activeEmoji, setActiveEmoji] = useState<string | null>(null);
+
   return (
+    <>
+    <EmojiCursor emoji={activeEmoji} />
     <div className="w-full py-12 md:py-20 max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
       <motion.div
         variants={variants}
@@ -157,12 +162,14 @@ export default function Resume() {
           <SectionHeading>Interests</SectionHeading>
           <Block>
             <div className="flex flex-wrap gap-2">
-              {resume.interests.map((interest) => (
+              {resume.interests.map(({ label, emoji }) => (
                 <span
-                  key={interest}
-                  className="font-sans text-sm uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground"
+                  key={label}
+                  onMouseEnter={() => setActiveEmoji(emoji)}
+                  onMouseLeave={() => setActiveEmoji(null)}
+                  className="font-sans text-sm uppercase tracking-wider px-3 py-1.5 border border-border text-muted-foreground cursor-none"
                 >
-                  {interest}
+                  {label}
                 </span>
               ))}
             </div>
@@ -182,5 +189,6 @@ export default function Resume() {
         </section>
       </div>
     </div>
+    </>
   );
 }
