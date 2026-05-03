@@ -18,7 +18,7 @@ import ImageGrid from '@/components/ImageGrid';
           { src: "/images/2-750/vasculargif.gif" },
           { src: "/images/2-750/superior_mesenteric_a.gif" },
           { src: "/images/2-750/img_2361.jpeg" }
-        ]} cols={3} />
+        ]} cols={3} objectFit="contain" />
       <h6>{`Blood Flow System`}</h6>
       <img src="/images/2-750/final-presentation-2.75-babies-1-3215712255-e1689160894491.png" alt="" />
       <p>{`I was responsible for designing the flow system. Based on the size of the vascular 3D print, I created a list of compatible pneumatic parts available on McMaster. For ease of prototyping, I chose push-to-connect fittings.`}</p>
