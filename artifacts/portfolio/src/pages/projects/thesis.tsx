@@ -38,12 +38,12 @@ export default function Thesis() {
 
       <div className="mt-16" />
       <h4>ISAM Presentation</h4>
-      <div className="my-8 border border-border bg-card relative left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),900px)]">
+      <div className="my-8 border border-border bg-card relative left-1/2 -translate-x-1/2 w-[min(calc(100vw-2rem),760px)]">
         <iframe
           src={ISAM_PRESENTATION_EMBED_URL}
           title="ISAM 2025 Presentation"
           width="100%"
-          style={{ height: 'calc(min(calc(100vw - 2rem), 900px) * 9 / 16 + 90px)' }}
+          style={{ height: 'calc(min(calc(100vw - 2rem), 760px) * 9 / 16 + 90px)' }}
           allowFullScreen
           className="block"
         />
