@@ -9,7 +9,7 @@ interface Burst { id: number; x: number; y: number; color: string; }
 export default function Navbar() {
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const { cycleAccent, accentColor } = useAccentPalette();
+  const { cycleAccent } = useAccentPalette();
   const [bursts, setBursts] = useState<Burst[]>([]);
 
   useEffect(() => {
@@ -38,10 +38,11 @@ export default function Navbar() {
   ];
 
   const handleNameClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+    if (location === '/') {
+      e.preventDefault();
+    }
     const nextColor = cycleAccent();
-    const id = Date.now();
-    setBursts((prev) => [...prev, { id, x: e.clientX, y: e.clientY, color: nextColor }]);
+    setBursts((prev) => [...prev, { id: Date.now(), x: e.clientX, y: e.clientY, color: nextColor }]);
   };
 
   const removeBurst = (id: number) =>
@@ -65,7 +66,7 @@ export default function Navbar() {
         ].join(' ')}
       >
         <nav className="flex justify-between items-center max-w-7xl mx-auto pointer-events-auto">
-          <motion.a
+          <Link
             href="/"
             onClick={handleNameClick}
             aria-hidden={scrolled}
@@ -80,11 +81,11 @@ export default function Navbar() {
               transitionProperty: 'opacity, font-size',
             }}
             data-testid="link-home"
-            whileTap={{ scale: 1.06 }}
-            transition={{ duration: 0.15 }}
           >
-            Layal Barakat
-          </motion.a>
+            <motion.span whileTap={{ scale: 1.06 }} transition={{ duration: 0.15 }}>
+              Layal Barakat
+            </motion.span>
+          </Link>
           <ul
             className="flex items-center space-x-6 md:space-x-8 font-sans tracking-wide transition-[font-size] duration-500 ease-out"
             style={{ fontSize: scrolled ? '0.8125rem' : '0.875rem' }}
