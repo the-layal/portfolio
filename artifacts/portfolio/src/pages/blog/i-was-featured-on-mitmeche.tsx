@@ -1,6 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
+
+declare global {
+  interface Window {
+    instgrm?: { Embeds: { process: () => void } };
+  }
+}
+
+function InstagramEmbed({ url }: { url: string }) {
+  useEffect(() => {
+    const SRC = 'https://www.instagram.com/embed.js';
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${SRC}"]`);
+
+    const process = () => window.instgrm?.Embeds.process();
+
+    if (existing) {
+      process();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = SRC;
+    script.async = true;
+    script.onload = process;
+    document.body.appendChild(script);
+  }, [url]);
+
+  return (
+    <div className="not-prose my-10 flex justify-center">
+      <blockquote
+        className="instagram-media"
+        data-instgrm-captioned
+        data-instgrm-permalink={`${url}?utm_source=ig_embed&utm_campaign=loading`}
+        data-instgrm-version="14"
+        style={{
+          background: '#FFF',
+          border: 0,
+          borderRadius: 3,
+          boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+          margin: 1,
+          maxWidth: 540,
+          minWidth: 326,
+          padding: 0,
+          width: '100%',
+        }}
+      >
+        <a href={url} target="_blank" rel="noreferrer noopener">View this post on Instagram</a>
+      </blockquote>
+    </div>
+  );
+}
 
 export default function IWasFeaturedOnMitmeche() {
   return (
@@ -35,24 +85,7 @@ export default function IWasFeaturedOnMitmeche() {
           I usually do during the semester.
         </p>
 
-        <a
-          href="https://www.instagram.com/p/B8_aQhfjLqJ/"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="not-prose block my-10 border border-border rounded p-6 md:p-8 bg-card hover:border-accent transition-colors no-underline"
-          data-testid="link-instagram-embed"
-        >
-          <p className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-3">View on Instagram</p>
-          <p className="font-sans text-foreground leading-relaxed mb-4">
-            During IAP, sophomore Layal Barakat enjoyed mild winter days biking around Cambridge and
-            Boston. She took class 4.02A, How to Design Intensive, in which she constructed three
-            projects – one 2D project using paper and two 3D projects using styrofoam.
-            📸: Marwa Abdulhai/Layal Barakat
-          </p>
-          <p className="font-sans text-sm text-muted-foreground">
-            A post shared by MIT Mechanical Engineering (@mitmeche) on Feb 25, 2020 at 5:01am PST
-          </p>
-        </a>
+        <InstagramEmbed url="https://www.instagram.com/p/B8_aQhfjLqJ/" />
       </div>
     </motion.article>
   );
