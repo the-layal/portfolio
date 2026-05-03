@@ -134,10 +134,10 @@ export default function Home() {
             variants={container} initial="hidden" animate={showIntro ? "hidden" : "show"}
             onAnimationComplete={() => { if (!showIntro) setWordsAnimated(true); }}
             className="font-serif text-foreground leading-[1.05] tracking-tight"
-            style={{ fontSize: "clamp(3.2rem, 9vw, 7.5rem)", gridArea: 'h1' }}
+            style={{ fontSize: "clamp(2rem, 9vw, 7.5rem)", gridArea: 'h1' }}
           >
             {words.map((word) => (
-              <span key={word} className="block overflow-hidden">
+              <span key={word} className="block overflow-hidden py-[0.1em] -my-[0.1em]">
                 <motion.span
                   className={`block${wordsAnimated ? " transition-colors duration-300 ease-in-out hover:text-accent" : ""}`}
                   variants={wordVariant}
