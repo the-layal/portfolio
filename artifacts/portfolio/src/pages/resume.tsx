@@ -149,7 +149,7 @@ export default function Resume() {
         <section>
           <SectionHeading>Languages</SectionHeading>
           <Block>
-            <p className="font-serif text-lg text-foreground">{resume.languages}</p>
+            <p className="font-serif text-xl text-foreground">{resume.languages}</p>
           </Block>
         </section>
 
