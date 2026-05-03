@@ -37,14 +37,14 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={[
-        'fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12',
+        'fixed top-0 left-0 right-0 z-[9999] px-6 md:px-12 pointer-events-none',
         'transition-[padding,background-color,backdrop-filter,border-color] duration-500 ease-out',
         scrolled
           ? 'py-1.5 bg-background/70 backdrop-blur-md border-b border-border text-foreground'
           : 'py-6 mix-blend-difference text-white',
       ].join(' ')}
     >
-      <nav className="flex justify-between items-center max-w-7xl mx-auto">
+      <nav className="flex justify-between items-center max-w-7xl mx-auto pointer-events-auto">
         <Link
           href="/"
           aria-hidden={scrolled}
