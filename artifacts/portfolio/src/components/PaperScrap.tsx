@@ -21,14 +21,17 @@ const NOTES = [
 interface PaperScrapProps {
   animate: boolean;
   text?: string;
+  dragConstraintsRef?: React.RefObject<HTMLElement | null>;
 }
 
 type Phase = 'idle' | 'typing' | 'pausing' | 'erasing' | 'waiting';
 
-export default function PaperScrap({ animate }: PaperScrapProps) {
+export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapProps) {
   const [revealed, setRevealed] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
   const [phase, setPhase] = useState<Phase>('idle');
+  const [topIdx, setTopIdx] = useState<number>(NOTES.length - 1);
+  const [draggingIdx, setDraggingIdx] = useState<number | null>(null);
   const phraseIndexRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blinkRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -105,6 +108,7 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
   useEffect(() => () => clear(), []);
 
   const size = 'clamp(150px, 17vw, 220px)';
+  const dragEnabled = animate;
 
   return (
     <motion.div
@@ -117,21 +121,45 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
     >
       {NOTES.map((note, i) => {
         const isTop = i === NOTES.length - 1;
+        const isDragging = draggingIdx === i;
+        const zBase = i + 1;
+        const zIndex = isDragging ? 50 : (topIdx === i ? 40 : zBase);
         return (
           <motion.div
             key={i}
-            initial={{ rotate: note.rotate - 4, opacity: 0, scale: 0.92 }}
+            initial={{
+              rotate: note.rotate - 4,
+              opacity: 0,
+              scale: 0.92,
+              x: note.x,
+              y: note.y,
+            }}
             animate={animate
-              ? { rotate: note.rotate, opacity: 1, scale: 1 }
-              : { rotate: note.rotate - 4, opacity: 0, scale: 0.92 }}
+              ? { rotate: note.rotate, opacity: 1, scale: 1, x: note.x, y: note.y }
+              : { rotate: note.rotate - 4, opacity: 0, scale: 0.92, x: note.x, y: note.y }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 + i * 0.08 }}
+            drag={dragEnabled}
+            dragConstraints={dragConstraintsRef}
+            dragElastic={0.08}
+            dragMomentum={false}
+            onDragStart={() => {
+              setDraggingIdx(i);
+              setTopIdx(i);
+            }}
+            onDragEnd={() => setDraggingIdx(null)}
+            whileDrag={{
+              scale: 1.05,
+              boxShadow: '6px 14px 36px rgba(0,0,0,0.28)',
+            }}
+            whileHover={dragEnabled ? { scale: 1.02 } : undefined}
             style={{
               position: 'absolute',
               inset: 0,
               backgroundColor: note.bg,
-              translateX: note.x,
-              translateY: note.y,
               boxShadow: '2px 4px 16px rgba(0,0,0,0.13)',
+              cursor: dragEnabled ? (isDragging ? 'grabbing' : 'grab') : 'default',
+              touchAction: 'none',
+              zIndex,
             }}
           >
             {isTop && (
@@ -143,6 +171,7 @@ export default function PaperScrap({ animate }: PaperScrapProps) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: '18%',
+                  pointerEvents: 'none',
                 }}
               >
                 <p

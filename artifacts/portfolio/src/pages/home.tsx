@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import IntroScreen from '@/components/IntroScreen';
@@ -49,6 +49,7 @@ const fadeUp: Variants = {
 export default function Home() {
   const [active, setActive] = useState<Filter>("All");
   const [wordsAnimated, setWordsAnimated] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
   const [showIntro, setShowIntro] = useState(() => {
     try { return !sessionStorage.getItem('intro_v3'); } catch { return true; }
   });
@@ -65,7 +66,7 @@ export default function Home() {
   return (
     <div className="w-full">
       <AnimatePresence>{showIntro && <IntroScreen onExit={handleIntroExit} />}</AnimatePresence>
-      <section className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
+      <section ref={heroRef} className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden px-6 md:px-12">
         <motion.p
           variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.05 }}
           className="mb-6"
@@ -95,7 +96,7 @@ export default function Home() {
             ))}
           </motion.h1>
 
-          <PaperScrap animate={wordsAnimated} />
+          <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} />
         </div>
 
         <motion.div
