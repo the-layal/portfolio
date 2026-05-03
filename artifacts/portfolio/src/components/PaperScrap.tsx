@@ -188,12 +188,14 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
               boxShadow: '6px 14px 36px rgba(0,0,0,0.28)',
             }}
             whileHover={dragEnabled ? { scale: 1.02 } : undefined}
+            role={dragEnabled ? 'button' : undefined}
+            aria-label={dragEnabled ? 'Draggable paper scrap note' : undefined}
             style={{
               position: 'absolute',
               inset: 0,
               backgroundColor: note.bg,
               boxShadow: '2px 4px 16px rgba(0,0,0,0.13)',
-              cursor: dragEnabled ? (isDragging ? 'grabbing' : 'grab') : 'default',
+              cursor: dragEnabled ? 'none' : 'default',
               touchAction: 'none',
               zIndex,
             }}
