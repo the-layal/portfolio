@@ -26,14 +26,14 @@ export default function ProjectPage({
         <span>←</span> Back to Projects
       </Link>
 
-      <header className="mb-12">
+      <header className="mb-12 text-center">
         {subtitle && (
           <p className="font-sans text-xs uppercase tracking-[0.25em] text-accent mb-4">
             {subtitle}
           </p>
         )}
         <h1 className="font-serif text-4xl md:text-6xl text-foreground leading-tight">{title}</h1>
-        <div className="mt-6 h-px w-24 bg-accent" />
+        <div className="mt-6 h-px w-24 bg-accent mx-auto" />
       </header>
 
       <div className="prose prose-lg prose-neutral max-w-none prose-p:font-sans prose-p:text-muted-foreground prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-foreground prose-h2:mt-12 prose-h3:mt-10 prose-h4:mt-8 prose-h4:text-xl prose-h5:mt-6 prose-h6:mt-6 prose-h6:uppercase prose-h6:tracking-widest prose-h6:text-xs prose-h6:text-muted-foreground prose-img:rounded prose-img:border prose-img:border-border prose-a:text-accent">
