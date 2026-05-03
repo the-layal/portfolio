@@ -137,7 +137,7 @@ export default function MovingThingsWithAdobeAnimate() {
 
         <p>
           By adding a solid water object behind it (especially since there is a gradient), it will
-          show that there is water "flowing" from the can. The last thing to do was to copy, paste,
+          show that there is water “flowing” from the can. The last thing to do was to copy, paste,
           and reverse the animation I just made so that there is a continuous loop. The final
           animation looks like this:
         </p>
@@ -155,7 +155,7 @@ export default function MovingThingsWithAdobeAnimate() {
         </p>
 
         <p>
-          This small experiment was really fun, and I am very pleased with the results. I can't
+          This small experiment was really fun, and I am very pleased with the results. I can’t
           wait to learn more about animation and see where I can use it in future projects!
         </p>
       </div>

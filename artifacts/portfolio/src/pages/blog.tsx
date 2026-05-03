@@ -22,7 +22,7 @@ const POSTS: Post[] = [
     title: 'I was featured on @mitmeche!',
     date: 'March 27, 2020',
     excerpt:
-      "This is a bit overdue, but @mitmeche featured me on their Instagram and Facebook page! The Mechanical Engineering department was highlighting things students did over Indepedent Activities Period (IAP) in January, which is when I took 4.02A-How to Design: Studio Intensive. It was a really fun January overall since I was able to reflect and relax a bit more than I usually do during the semester.",
+      "This is a bit overdue, but @mitmeche featured me on their Instagram and Facebook page! The Mechanical Engineering department was highlighting things students did over Indepedent Activities Period (IAP) in January, which is when I took 4.02A-How to Design: Studio Intensive (which you can see my work for here!). It was a really fun January overall since I was able to reflect and relax a bit more than I usually do during the semester.",
   },
   {
     slug: 'moving-things-with-adobe-animate',
