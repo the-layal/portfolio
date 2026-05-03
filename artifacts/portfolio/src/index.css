@@ -165,14 +165,20 @@
 
 @keyframes ticker-scroll {
   from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-33.3333%, 0, 0); }
+  to   { transform: translate3d(-25%, 0, 0); }
 }
 
 .ticker-strip {
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   overflow: hidden;
   padding: 1.1rem 0;
-  background: hsl(var(--accent));
+  background: hsl(24 67% 53%);
+}
+
+.blueprint .ticker-strip {
+  background: hsl(24 67% 53%);
 }
 
 .ticker-track {

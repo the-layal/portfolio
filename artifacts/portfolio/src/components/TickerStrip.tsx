@@ -36,6 +36,7 @@ export default function TickerStrip() {
         <TickerContent />
         <TickerContent />
         <TickerContent />
+        <TickerContent />
       </div>
     </motion.div>
   );
