@@ -82,7 +82,7 @@ export default function Navbar() {
             }}
             data-testid="link-home"
           >
-            <motion.span whileTap={{ scale: 1.06 }} transition={{ duration: 0.15 }}>
+            <motion.span className="inline-block" whileTap={{ scale: 1.06 }} transition={{ duration: 0.15 }}>
               Layal Barakat
             </motion.span>
           </Link>
