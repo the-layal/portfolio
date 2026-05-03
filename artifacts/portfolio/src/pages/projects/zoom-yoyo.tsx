@@ -48,17 +48,15 @@ export default function ZoomYoyo() {
 
       <p>{`Then, I became familiar with the injection molding machine, as we learned to set up the mold and ejector pins. We also played around with the injection molding settings and amounts of color pellets. to see what we would get as a result. We got short shot, flash, and everything in between.`}</p>
 
-      <figure className="my-8 not-prose">
-        <div className="grid grid-cols-2 gap-[9px]">
-          <img src="/images/zoom-yoyo/20210414_113640-1.jpg" alt="" className="w-full h-auto" />
-          <img src="/images/zoom-yoyo/20210331_152018.jpg" alt="" className="w-full h-auto" />
-        </div>
-        <div className="grid grid-cols-3 gap-[9px] mt-[9px]">
-          <img src="/images/zoom-yoyo/20210331_110334.jpg" alt="" className="w-full h-auto" />
-          <img src="/images/zoom-yoyo/20210331_152049.jpg" alt="" className="w-full h-auto" />
-          <img src="/images/zoom-yoyo/20210331_152034.jpg" alt="" className="w-full h-auto" />
-        </div>
-      </figure>
+      <ImageGrid images={[
+          { src: '/images/zoom-yoyo/20210414_113640-1.jpg' },
+          { src: '/images/zoom-yoyo/20210331_152018.jpg' },
+        ]} />
+      <ImageGrid images={[
+          { src: '/images/zoom-yoyo/20210331_110334.jpg' },
+          { src: '/images/zoom-yoyo/20210331_152049.jpg' },
+          { src: '/images/zoom-yoyo/20210331_152034.jpg' },
+        ]} />
 
       <p>{`We injection molded 100 caps and made a control chart to check that we were staying within spec. It was an assembly line of cutting the gates and sprues, numbering the caps, measuring the inner diameter of the caps in two orientations, and entering the data in a spreadsheet. In the end, combined with the thermoformed logos my teammates, we were able to control the settings and get some awesome yo-yo caps!`}</p>
 

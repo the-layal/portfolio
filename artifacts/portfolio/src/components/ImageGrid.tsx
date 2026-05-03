@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 export interface GridImage {
   src: string;
@@ -7,24 +7,51 @@ export interface GridImage {
 
 interface ImageGridProps {
   images: GridImage[];
-  cols?: 2 | 3;
+  rowHeight?: number;
   caption?: string;
 }
 
-export default function ImageGrid({ images, cols = 2, caption }: ImageGridProps) {
+export default function ImageGrid({ images, rowHeight = 260, caption }: ImageGridProps) {
   if (!images || images.length === 0) return null;
-  const gridClass = cols === 3 ? 'grid-cols-3' : 'grid-cols-2';
+
+  const [ratios, setRatios] = useState<(number | null)[]>(() => images.map(() => null));
+
+  const handleLoad = useCallback((i: number, e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    const r = img.naturalWidth / img.naturalHeight;
+    setRatios(prev => {
+      const next = [...prev];
+      next[i] = r;
+      return next;
+    });
+  }, []);
+
+  const allLoaded = ratios.every(r => r !== null);
+
   return (
     <figure className="my-8">
-      <div className={`grid ${gridClass} gap-2`}>
+      <div
+        className="flex gap-2 overflow-hidden"
+        style={allLoaded ? { height: rowHeight } : undefined}
+      >
         {images.map((img, i) => (
-          <img
+          <div
             key={i}
-            src={img.src}
-            alt={img.alt || ''}
-            className="w-full h-auto"
-            loading="lazy"
-          />
+            className="overflow-hidden"
+            style={
+              allLoaded && ratios[i] != null
+                ? { flex: `${ratios[i]} 1 0`, minWidth: 0 }
+                : { flex: '1 1 0', minWidth: 0 }
+            }
+          >
+            <img
+              src={img.src}
+              alt={img.alt || ''}
+              className={allLoaded ? 'w-full h-full object-contain' : 'w-full h-auto'}
+              onLoad={e => handleLoad(i, e)}
+              loading="lazy"
+            />
+          </div>
         ))}
       </div>
       {caption && (
