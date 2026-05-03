@@ -44,7 +44,7 @@ export default function Navbar() {
           : 'py-6 mix-blend-difference text-white',
       ].join(' ')}
     >
-      <nav className="flex md:flex-row-reverse justify-between items-center max-w-7xl mx-auto">
+      <nav className="flex justify-between items-center max-w-7xl mx-auto">
         <Link
           href="/"
           aria-hidden={scrolled}
