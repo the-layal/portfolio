@@ -12,9 +12,16 @@ const ERASE_MS = 38;
 const PAUSE_AFTER_MS = 1800;
 const PAUSE_BEFORE_MS = 400;
 
-const NOTES = [
-  { bg: '#BAD4D8', rotate: 7,  x: 14, y: 18 },
-  { bg: '#C8D8B0', rotate: -5, x: -8, y: 10 },
+const NOTES: Array<{
+  bg: string;
+  rotate: number;
+  x: number;
+  y: number;
+  text?: string;
+  ink?: string;
+}> = [
+  { bg: '#BAD4D8', rotate: 7,  x: 14, y: 18, text: 'hello :)',              ink: '#1f3b3f' },
+  { bg: '#C8D8B0', rotate: -5, x: -8, y: 10, text: 'welcome to my portfolio', ink: '#3a4a1f' },
   { bg: '#F5E89A', rotate: -2, x: 0,  y: 0  },
 ];
 
@@ -156,7 +163,8 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
       aria-hidden
     >
       {NOTES.map((note, i) => {
-        const isTop = i === NOTES.length - 1;
+        const isYellow = i === NOTES.length - 1;
+        const isTop = topIdx === i;
         const isDragging = draggingIdx === i;
         const zBase = i + 1;
         const zIndex = isDragging ? 50 : (topIdx === i ? 40 : zBase);
@@ -200,7 +208,7 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
               zIndex,
             }}
           >
-            {isTop && (
+            {isTop && (isYellow || note.text) && (
               <div
                 style={{
                   position: 'absolute',
@@ -217,13 +225,19 @@ export default function PaperScrap({ animate, dragConstraintsRef }: PaperScrapPr
                     fontFamily: "'Special Elite', monospace",
                     fontSize: 'clamp(0.8rem, 1.6vw, 1.1rem)',
                     lineHeight: 1.5,
-                    color: '#3a2e1e',
+                    color: isYellow ? '#3a2e1e' : (note.ink ?? '#3a2e1e'),
                     textAlign: 'center',
                     wordBreak: 'break-word',
                   }}
                 >
-                  {revealed}
-                  <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
+                  {isYellow ? (
+                    <>
+                      {revealed}
+                      <span style={{ opacity: cursorVisible ? 1 : 0, transition: 'opacity 0.1s' }}>|</span>
+                    </>
+                  ) : (
+                    note.text
+                  )}
                 </p>
               </div>
             )}
