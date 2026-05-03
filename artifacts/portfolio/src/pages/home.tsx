@@ -70,7 +70,7 @@ export default function Home() {
           variants={fadeUp} initial="hidden" animate={showIntro ? "hidden" : "show"} transition={{ delay: 0.05 }}
           className="mb-6"
         >
-          <span className="inline-block bg-accent text-white font-sans text-xs uppercase tracking-[0.25em] px-3 py-1.5">
+          <span className="inline-block bg-accent text-white font-sans font-bold text-xs uppercase tracking-[0.12em] px-3 py-1.5">
             Layal Barakat &mdash; Portfolio
           </span>
         </motion.p>
