@@ -27,7 +27,7 @@ export default function Thesis() {
       <h4>Thesis</h4>
       <p>
         <a href="https://dspace.mit.edu/handle/1721.1/158817" target="_blank" rel="noopener noreferrer">
-          https://dspace.mit.edu/handle/1721.1/158817
+          View on MIT DSpace →
         </a>
       </p>
       <PdfEmbed src="/pdfs/thesis.pdf" label="MIT Master's Thesis (PDF)" />
