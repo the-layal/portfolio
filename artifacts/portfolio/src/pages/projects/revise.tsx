@@ -65,7 +65,9 @@ import ImageGrid from '@/components/ImageGrid';
       <p>{`I also began working towards the final presentation, as I was one of the presenters. Many hours of rehearsals and slide design sessions later, here is the Pink Team final presentation! (begins at 0:54)`}</p>
       <VideoEmbed src="https://www.youtube.com/embed/pC6GqukR7W4?version=3&rel=1&showsearch=0&showinfo=1&iv_load_policy=1&fs=1&hl=en&autohide=2&wmode=transparent" />
       <p>{`2.009 was an unforgettable experience, made possible by an incredible team and an amazing class staff! Here’s a goodbye from pink team 🙂`}</p>
-      <img src="/images/revise/pinkteamwave.gif" alt="" />
+      <figure className="my-8 flex justify-center not-prose">
+        <img src="/images/revise/pinkteamwave.gif" alt="" className="max-w-full h-auto rounded" />
+      </figure>
       </ProjectPage>
     );
   }
