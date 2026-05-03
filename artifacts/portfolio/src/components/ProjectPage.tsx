@@ -49,41 +49,37 @@ export function PdfEmbed({ src, label, height = 720 }: { src: string; label: str
   React.useEffect(() => {
     let cancelled = false;
     fetch(src, { method: 'HEAD' })
-      .then((r) => { if (!cancelled && !r.ok) setErrored(true); })
+      .then((r) => {
+        if (cancelled) return;
+        const ct = r.headers.get('content-type') ?? '';
+        if (!r.ok || !ct.includes('pdf')) setErrored(true);
+      })
       .catch(() => { if (!cancelled) setErrored(true); });
     return () => { cancelled = true; };
   }, [src]);
+  if (errored) {
+    return (
+      <div className="my-8 border border-border bg-card py-10 flex items-center justify-center">
+        <p className="font-sans text-sm text-muted-foreground">PDF not yet available.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="my-8 border border-border bg-card relative" style={{ minHeight: height }}>
-      {!loaded && !errored && (
+      {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <p className="font-sans text-sm text-muted-foreground">PDF loading…</p>
         </div>
       )}
-      {errored ? (
-        <div className="p-12 text-center">
-          <p className="font-sans text-sm text-muted-foreground mb-4">
-            PDF loading… The file may not be uploaded yet.
-          </p>
-          <a
-            href={src}
-            className="inline-block font-sans text-sm text-accent underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {label}
-          </a>
-        </div>
-      ) : (
-        <iframe
-          src={src}
-          title={label}
-          width="100%"
-          height={height}
-          onLoad={() => setLoaded(true)}
-          className="block"
-        />
-      )}
+      <iframe
+        src={src}
+        title={label}
+        width="100%"
+        height={height}
+        onLoad={() => setLoaded(true)}
+        className="block"
+      />
     </div>
   );
 }
