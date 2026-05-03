@@ -26,8 +26,8 @@ export default function ImageSlideshow({ slides }: { slides: Slide[] }) {
   return (
     <div className="select-none">
       <div
-        className="relative w-full overflow-hidden"
-        style={maxRatio ? { paddingTop: `${maxRatio * 100}%` } : undefined}
+        className="relative w-full"
+        style={maxRatio ? { aspectRatio: `1 / ${maxRatio}` } : undefined}
       >
         <img
           key={s.src}
