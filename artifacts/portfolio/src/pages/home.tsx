@@ -186,34 +186,34 @@ export default function Home() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          {/* Filter bar */}
-          <div className="flex items-center gap-2 flex-wrap mb-12" data-testid="filter-bar">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                data-testid={`filter-${f.toLowerCase()}`}
-                className="relative px-5 py-2 text-sm font-sans tracking-wide rounded-full border transition-colors duration-200 focus:outline-none"
-                style={{
-                  borderColor: active === f ? "hsl(var(--accent))" : "hsl(var(--border))",
-                  color: active === f ? "hsl(var(--background))" : "hsl(var(--muted-foreground))",
-                  backgroundColor: active === f ? "hsl(var(--accent))" : "transparent",
-                }}
-              >
-                {f}
-                {active === f && (
-                  <motion.span
-                    layoutId="filter-pill"
-                    className="absolute inset-0 rounded-full -z-10"
-                    style={{ backgroundColor: "hsl(var(--accent))" }}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-            <span className="ml-auto text-xs font-sans text-muted-foreground uppercase tracking-widest">
-              {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-            </span>
+          {/* Filter bar — ticker-style strip */}
+          <div className="filter-strip mb-10" data-testid="filter-bar">
+            <div className="filter-strip-inner">
+              {FILTERS.map((f, i) => (
+                <React.Fragment key={f}>
+                  {i > 0 && <span className="filter-sep" aria-hidden>✦</span>}
+                  <button
+                    onClick={() => setActive(f)}
+                    data-testid={`filter-${f.toLowerCase()}`}
+                    className="filter-tag focus:outline-none"
+                    aria-pressed={active === f}
+                  >
+                    {active === f && (
+                      <motion.span
+                        layoutId="filter-pill"
+                        className="absolute inset-0 -z-10"
+                        style={{ backgroundColor: "var(--filter-active-bg)" }}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                    {f}
+                  </button>
+                </React.Fragment>
+              ))}
+              <span className="filter-count" aria-live="polite">
+                {filtered.length} {filtered.length === 1 ? "project" : "projects"}
+              </span>
+            </div>
           </div>
 
           {/* Grid */}

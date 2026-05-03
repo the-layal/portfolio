@@ -226,6 +226,93 @@
   color: hsl(var(--accent) / 0.6);
 }
 
+/* ── Filter strip ─────────────────────────────────────────── */
+:root   { --filter-active-bg: hsl(var(--background)); }
+.blueprint { --filter-active-bg: hsl(var(--accent)); }
+
+.filter-strip {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  background: hsl(var(--accent));
+  transition: background-color 0.4s ease;
+  padding: 0.6rem 0;
+}
+
+.filter-strip::-webkit-scrollbar { display: none; }
+
+.blueprint .filter-strip {
+  background: hsl(var(--card));
+}
+
+.filter-strip-inner {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 100%;
+  padding: 0 1.6rem;
+}
+
+.filter-tag {
+  font-family: var(--app-font-sans);
+  font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.72);
+  padding: 0.2rem 1.1rem;
+  position: relative;
+  background: none;
+  border: none;
+  transition: color 0.2s ease;
+}
+
+.filter-tag[aria-pressed="true"] {
+  color: hsl(var(--foreground));
+}
+
+.blueprint .filter-tag {
+  color: hsl(var(--accent) / 0.8);
+}
+
+.blueprint .filter-tag[aria-pressed="true"] {
+  color: hsl(var(--accent-foreground));
+}
+
+.filter-sep {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.blueprint .filter-sep {
+  color: hsl(var(--accent) / 0.4);
+}
+
+.filter-count {
+  margin-left: auto;
+  padding-left: 2.5rem;
+  padding-right: 0.4rem;
+  font-family: var(--app-font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.blueprint .filter-count {
+  color: hsl(var(--accent) / 0.45);
+}
+
 @layer base {
   * {
     @apply border-border;
