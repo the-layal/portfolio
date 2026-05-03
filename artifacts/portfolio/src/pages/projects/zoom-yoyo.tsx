@@ -50,13 +50,13 @@ export default function ZoomYoyo() {
 
       <figure className="my-8 not-prose">
         <div className="grid grid-cols-2 gap-[9px]">
-          <img src="/images/zoom-yoyo/20210414_113640-1.jpg" alt="" className="w-full aspect-[4/3] object-cover" />
-          <img src="/images/zoom-yoyo/20210331_152018.jpg" alt="" className="w-full aspect-[4/3] object-cover" />
+          <img src="/images/zoom-yoyo/20210414_113640-1.jpg" alt="" className="w-full h-auto" />
+          <img src="/images/zoom-yoyo/20210331_152018.jpg" alt="" className="w-full h-auto" />
         </div>
         <div className="grid grid-cols-3 gap-[9px] mt-[9px]">
-          <img src="/images/zoom-yoyo/20210331_110334.jpg" alt="" className="w-full aspect-[3/4] object-cover" />
-          <img src="/images/zoom-yoyo/20210331_152049.jpg" alt="" className="w-full aspect-[3/4] object-cover" />
-          <img src="/images/zoom-yoyo/20210331_152034.jpg" alt="" className="w-full aspect-[3/4] object-cover" />
+          <img src="/images/zoom-yoyo/20210331_110334.jpg" alt="" className="w-full h-auto" />
+          <img src="/images/zoom-yoyo/20210331_152049.jpg" alt="" className="w-full h-auto" />
+          <img src="/images/zoom-yoyo/20210331_152034.jpg" alt="" className="w-full h-auto" />
         </div>
       </figure>
 
