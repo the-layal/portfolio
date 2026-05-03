@@ -10,6 +10,8 @@ import Resume from "@/pages/resume";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import BuildingVirtualRobots from "@/pages/blog/building-virtual-robots";
+import IWasFeaturedOnMitmeche from "@/pages/blog/i-was-featured-on-mitmeche";
+import MovingThingsWithAdobeAnimate from "@/pages/blog/moving-things-with-adobe-animate";
 import Thesis from "@/pages/projects/thesis";
 import MedicalDevice from "@/pages/projects/2-750";
 import ReVise from "@/pages/projects/revise";
@@ -46,6 +48,8 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/building-virtual-robots" component={BuildingVirtualRobots} />
+      <Route path="/blog/i-was-featured-on-mitmeche" component={IWasFeaturedOnMitmeche} />
+      <Route path="/blog/moving-things-with-adobe-animate" component={MovingThingsWithAdobeAnimate} />
       <Route path="/projects/thesis" component={Thesis} />
       <Route path="/projects/2-750" component={MedicalDevice} />
       <Route path="/projects/revise" component={ReVise} />
