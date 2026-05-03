@@ -122,7 +122,7 @@ export default function StickyNote() {
           boxShadow: '0 6px 18px rgba(0,0,0,0.18), 0 1px 2px rgba(0,0,0,0.1)',
           transform: 'rotate(-6deg)',
           border: 'none',
-          transition: 'background-color 0.25s ease, color 0.25s ease',
+          transition: 'background 0.25s ease, color 0.25s ease',
         }}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -235,13 +235,14 @@ export default function StickyNote() {
               onChange={onChange}
               placeholder="jot something down…"
               spellCheck={false}
-              className="pointer-events-auto flex-1 w-full resize-none bg-transparent outline-none border-0 placeholder:text-black/35"
+              className="sticky-note-textarea pointer-events-auto flex-1 w-full resize-none bg-transparent outline-none border-0"
               style={{
                 fontFamily: "'Special Elite', monospace",
                 fontSize: '0.95rem',
                 lineHeight: 1.5,
                 color: swatch.ink,
                 cursor: 'text',
+                ['--sticky-placeholder' as string]: `${swatch.inkSoft}99`,
               }}
             />
           </motion.div>

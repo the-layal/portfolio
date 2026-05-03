@@ -248,6 +248,10 @@
   }
 }
 
+.sticky-note-textarea::placeholder {
+  color: var(--sticky-placeholder, rgba(0, 0, 0, 0.35));
+}
+
 :where(:not(h1,h2,h3,h4,h5,h6)).text-xs   { font-size: 0.703rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-sm   { font-size: 0.82rem; }
 :where(:not(h1,h2,h3,h4,h5,h6)).text-base { font-size: 0.9375rem; }
