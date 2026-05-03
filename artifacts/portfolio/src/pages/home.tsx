@@ -156,7 +156,7 @@ export default function Home() {
 
           <div
             ref={scrapRef}
-            className="justify-self-start xs:justify-self-auto mb-6 xs:mb-0"
+            className="justify-self-start xs:justify-self-auto mb-12 xs:mb-0"
             style={{ gridArea: 'scrap' }}
           >
             <PaperScrap animate={wordsAnimated} dragConstraintsRef={heroRef} onAddSticker={addSticker} />
