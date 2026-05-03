@@ -17,11 +17,8 @@ export default function Macarons() {
 
       <h4>Final Poster</h4>
       <img src="/images/macarons/tues_e3_barakat_layal-1.png" alt="2.671 final poster" />
-      {/* TODO: Layal — upload macaron-poster.pdf to artifacts/portfolio/public/pdfs/ */}
-      <PdfEmbed src="/pdfs/macaron-poster.pdf" label="2.671 Final Poster (PDF)" />
 
       <h4>Final Paper</h4>
-      {/* TODO: Layal — upload macaron-paper.pdf to artifacts/portfolio/public/pdfs/ */}
       <PdfEmbed src="/pdfs/macaron-paper.pdf" label="2.671 Final Paper (PDF)" />
     </ProjectPage>
   );
