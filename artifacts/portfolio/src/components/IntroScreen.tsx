@@ -1,54 +1,52 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import GlitchText from './GlitchText';
 
-const COLS = 28;
-const ROWS = 16;
 const DARK = '#1A1714';
-
-interface Tile {
-  id: number;
-  col: number;
-  row: number;
-  delay: number;
-  duration: number;
-  dx: number;
-  dy: number;
-}
+const ANIM_MS = 1300;
 
 interface IntroScreenProps {
   onExit: () => void;
 }
 
 export default function IntroScreen({ onExit }: IntroScreenProps) {
-  const [phase, setPhase] = useState<'intro' | 'dissolving' | 'done'>('intro');
+  const [phase, setPhase] = useState<'intro' | 'dissolving'>('intro');
+  const [bleedRadius, setBleedRadius] = useState(0);
+  const rafRef = useRef<number | null>(null);
+  const hasExited = useRef(false);
 
-  const tiles = useMemo<Tile[]>(() =>
-    Array.from({ length: COLS * ROWS }, (_, i) => ({
-      id: i,
-      col: i % COLS,
-      row: Math.floor(i / COLS),
-      delay: Math.random() * 1600,
-      duration: 350 + Math.random() * 300,
-      dx: (Math.random() - 0.5) * 50,
-      dy: (Math.random() - 0.5) * 50,
-    })),
-    []
-  );
-
-  const maxDuration = useMemo(() =>
-    Math.max(...tiles.map(t => t.delay + t.duration)),
-    [tiles]
-  );
+  // Guard so onExit is never called twice (skip button + animation end)
+  const safeExit = useCallback(() => {
+    if (hasExited.current) return;
+    hasExited.current = true;
+    onExit();
+  }, [onExit]);
 
   const triggerExit = useCallback(() => {
     if (phase !== 'intro') return;
     setPhase('dissolving');
-    setTimeout(() => {
-      setPhase('done');
-      onExit();
-    }, maxDuration + 300);
-  }, [phase, onExit, maxDuration]);
+  }, [phase]);
+
+  // Ink bleed animation — runs when dissolving starts
+  useEffect(() => {
+    if (phase !== 'dissolving') return;
+    const diag = Math.hypot(window.innerWidth, window.innerHeight) / 2 + 80;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / ANIM_MS, 1);
+      // Ease-in-out: starts slow (ink drop forming), accelerates outward
+      const eased = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      setBleedRadius(eased * diag);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        safeExit();
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [phase, safeExit]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -79,31 +77,50 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
   return (
     <div className="fixed inset-0 z-[200] overflow-hidden">
 
-      {/* Tile grid */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        {tiles.map(tile => (
-          <div
-            key={tile.id}
-            style={{
-              position: 'absolute',
-              left: `${(tile.col / COLS) * 100}%`,
-              top: `${(tile.row / ROWS) * 100}%`,
-              width: `calc(${100 / COLS}% + 2px)`,
-              height: `calc(${100 / ROWS}% + 2px)`,
-              backgroundColor: DARK,
-              willChange: 'opacity, transform',
-              transition: `opacity ${tile.duration}ms ${tile.delay}ms ease-in,
-                           transform ${tile.duration}ms ${tile.delay}ms ease-in`,
-              opacity: dissolving ? 0 : 1,
-              transform: dissolving
-                ? `translate(${tile.dx}px, ${tile.dy}px) scale(0.82)`
-                : 'translate(0,0) scale(1)',
-            }}
-          />
-        ))}
-      </div>
+      {/* Ink bleed SVG overlay */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        aria-hidden
+        style={{ pointerEvents: 'none' }}
+      >
+        <defs>
+          {/*
+            feTurbulence generates organic noise.
+            feDisplacementMap distorts the growing circle's edge using that noise,
+            giving the bleed an irregular, ink-on-paper quality.
+          */}
+          <filter id="inkBleedFilter" x="-50%" y="-50%" width="200%" height="200%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.007"
+              numOctaves="4"
+              seed="8"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="80"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          <mask id="inkBleedMask">
+            {/* White = show dark overlay; black = cut through to reveal site */}
+            <rect width="100%" height="100%" fill="white" />
+            <circle
+              cx="50%"
+              cy="50%"
+              r={bleedRadius}
+              fill="black"
+              filter="url(#inkBleedFilter)"
+            />
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill={DARK} mask="url(#inkBleedMask)" />
+      </svg>
 
-      {/* Content */}
+      {/* Content — fades out as the bleed starts */}
       <div
         className="relative z-10 h-full flex flex-col justify-center items-start px-6 md:px-16"
         style={{
@@ -149,8 +166,10 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.8, duration: 0.6 }}
         >
-          <span className="font-sans text-[10px] uppercase tracking-[0.3em]"
-            style={{ color: 'rgba(247,244,239,0.35)' }}>
+          <span
+            className="font-sans text-[10px] uppercase tracking-[0.3em]"
+            style={{ color: 'rgba(247,244,239,0.35)' }}
+          >
             scroll to enter
           </span>
           <motion.div
@@ -163,9 +182,16 @@ export default function IntroScreen({ onExit }: IntroScreenProps) {
 
         <motion.button
           type="button"
-          onClick={() => { setPhase('done'); onExit(); }}
+          onClick={safeExit}
           className="absolute bottom-12 right-6 md:right-16 font-sans uppercase tracking-[0.25em] pointer-events-auto"
-          style={{ fontSize: '0.65rem', color: 'rgba(247,244,239,0.38)', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0' }}
+          style={{
+            fontSize: '0.65rem',
+            color: 'rgba(247,244,239,0.38)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '4px 0',
+          }}
           whileHover={{ color: 'rgba(247,244,239,0.75)' }}
           aria-label="Skip intro"
         >
