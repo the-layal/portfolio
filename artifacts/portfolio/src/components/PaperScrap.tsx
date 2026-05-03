@@ -181,7 +181,7 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
 
   useEffect(() => {
     if (!dragEnabled) return;
-    if (!window.matchMedia('(pointer: coarse)').matches) return;
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
     setTouchHintOpacity(0.55);
     const timer = setTimeout(() => setTouchHintOpacity(0), 2200);
     return () => clearTimeout(timer);
