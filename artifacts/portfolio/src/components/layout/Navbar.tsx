@@ -24,7 +24,7 @@ export default function Navbar() {
         <Link
           href="/"
           className="font-serif font-normal tracking-tight hover:opacity-70 transition-opacity"
-          style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.1rem)' }}
+          style={{ fontSize: 'clamp(1.05rem, 1.6vw, 1.35rem)' }}
           data-testid="link-home"
         >
           Layal Barakat

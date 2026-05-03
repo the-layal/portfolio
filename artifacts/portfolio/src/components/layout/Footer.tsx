@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start">
           <h2
             className="font-serif font-semibold text-foreground mb-1"
-            style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1.1rem)' }}
+            style={{ fontSize: 'clamp(1.05rem, 1.6vw, 1.35rem)' }}
           >
             Layal Barakat
           </h2>
