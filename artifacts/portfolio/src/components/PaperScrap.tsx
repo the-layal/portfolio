@@ -63,8 +63,10 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
         setDragBounds(null);
         return;
       }
+      const navbar = document.getElementById('site-navbar');
+      const navbarBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
       setDragBounds({
-        top: c.top - s.top,
+        top: navbarBottom - s.top,
         left: c.left - s.left,
         right: c.right - s.right,
         bottom: c.bottom - s.bottom,
@@ -75,10 +77,14 @@ export default function PaperScrap({ animate, dragConstraintsRef, onAddSticker }
     const ro = new ResizeObserver(measure);
     ro.observe(container);
     ro.observe(scrap);
+    const navbar = document.getElementById('site-navbar');
+    if (navbar) ro.observe(navbar, { box: 'border-box' });
     window.addEventListener('resize', measure);
+    window.addEventListener('scroll', measure, { passive: true });
     return () => {
       ro.disconnect();
       window.removeEventListener('resize', measure);
+      window.removeEventListener('scroll', measure);
     };
   }, [dragConstraintsRef, animate]);
   const phraseIndexRef = useRef(0);

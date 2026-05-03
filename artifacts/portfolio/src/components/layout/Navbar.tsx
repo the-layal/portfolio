@@ -54,6 +54,7 @@ export default function Navbar() {
         <AccentBurst key={b.id} x={b.x} y={b.y} color={b.color} onDone={() => removeBurst(b.id)} />
       ))}
       <motion.header
+        id="site-navbar"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
