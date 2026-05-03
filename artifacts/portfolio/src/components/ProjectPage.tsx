@@ -36,7 +36,7 @@ export default function ProjectPage({
         <div className="mt-6 h-px w-24 bg-accent mx-auto" />
       </header>
 
-      <div className="prose prose-lg prose-neutral max-w-none prose-p:font-sans prose-p:text-muted-foreground prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-foreground prose-h2:mt-12 prose-h3:mt-10 prose-h4:mt-8 prose-h4:text-xl prose-h5:mt-6 prose-h6:mt-6 prose-h6:uppercase prose-h6:tracking-widest prose-h6:text-sm prose-h6:text-muted-foreground prose-img:rounded prose-img:border prose-img:border-border prose-a:text-accent">
+      <div className="prose prose-lg prose-neutral max-w-none prose-p:font-sans prose-p:text-muted-foreground prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-foreground prose-h2:mt-12 prose-h3:mt-10 prose-h4:mt-8 prose-h4:text-xl prose-h5:mt-6 prose-h6:mt-6 prose-h6:uppercase prose-h6:tracking-widest prose-h6:text-base prose-h6:font-semibold prose-h6:text-foreground prose-img:rounded prose-img:border prose-img:border-border prose-a:text-accent">
         {children}
       </div>
     </motion.article>
