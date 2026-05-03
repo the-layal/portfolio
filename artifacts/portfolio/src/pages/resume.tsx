@@ -83,10 +83,6 @@ export default function Resume() {
         </a>
       </motion.div>
 
-      <motion.div variants={itemVariants}>
-        <PdfEmbed src="/resume.pdf" label="Layal Barakat resume (PDF)" height={900} />
-      </motion.div>
-
       <div className="space-y-16">
         <section>
           <SectionHeading>Professional Experience</SectionHeading>
@@ -150,6 +146,11 @@ export default function Resume() {
             ))}
           </motion.div>
         </section>
+
+        <motion.section variants={itemVariants}>
+          <SectionHeading>Full Resume (PDF)</SectionHeading>
+          <PdfEmbed src="/resume.pdf" label="Layal Barakat resume (PDF)" height={900} />
+        </motion.section>
       </div>
     </motion.div>
   );
